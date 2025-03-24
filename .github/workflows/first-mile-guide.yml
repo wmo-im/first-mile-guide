@@ -38,7 +38,7 @@ jobs:
           git checkout gh-pages
           git config --global user.email "tomkralidis@gmail.com"
           git config --global user.name "Tom Kralidis"
-          rm -rf first-mile-guide
+          rm -rf guide
           mv -f /tmp/first-mile-guide/* .
           git add .
           git commit -am "update WMO First Mile Data Collection Guide"
