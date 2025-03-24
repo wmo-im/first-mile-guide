@@ -1,0 +1,45 @@
+:title: WMO First Mile Data Collection Guide
+:titletext: {title}
+:version: 0.1
+:date: {docdate}
+:copyright: Copyright © 2025 World Meteorological Organization (WMO)
+:doctype: book
+:encoding: utf-8
+:lang: en
+:toc:
+:toc-placement!:
+:toclevels: 3
+:sectnums:
+:sectnumlevels: 4
+:sectanchors:
+:sectnum-start: 2
+
+= {title}
+
+<<<
+[cols = "<",frame = "none",grid = "none"]
+|===
+|{set:cellbgcolor:#FFFFFF}
+|[big]*World Meteorological Organization*
+|Date: {date}
+|Version: {version}
+|Document status: DRAFT
+|Document location: https://wmo-im.github.io/first-mile-guide/first-mile-guide/first-mile-guide-DRAFT.html
+|Standing Committee on Information Management and Technology (SC-IMT)footnote:[https://community.wmo.int/governance/commission-membership/commission-observation-infrastructures-and-information-systems-infcom/commission-infrastructure-officers/infcom-management-group/standing-committee-information-management-and-technology-sc-imt]
+|Commission for Observation, Infrastructure and Information Systems (INFCOM)footnote:[https://community.wmo.int/governance/commission-membership/infcom]
+|{copyright}
+|===
+
+<<<
+toc::[]
+<<<
+
+include::sections/part1/index.adoc[]
+
+include::sections/part2/index.adoc[]
+
+include::sections/part3/index.adoc[]
+
+include::sections/part4/index.adoc[]
+
+include::sections/part5/index.adoc[]

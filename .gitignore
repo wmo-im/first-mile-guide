@@ -1,0 +1,4 @@
+.asciidoctor/
+first-mile-guide/*.docx
+first-mile-guide/*.html
+first-mile-guide/*.pdf
