@@ -1,0 +1,157 @@
+[
+    {
+        "namespace": "wmo.basic",
+        "type": "record",
+        "doc": "generic record for observations stats",
+        "name": "min_max_block",
+        "fields": [
+                  {
+                    "name": "average",
+                    "doc": "average since last report",
+                    "type": ["float", "null"]
+                  },
+                  {
+                    "name": "max",
+                    "doc": "max value since last report",
+                    "type": ["float", "null"]
+                  },
+                    {
+                    "name": "min",
+                    "doc": "min value since last report",
+                    "type": ["float", "null"]
+                  }
+        ]
+    },
+        {
+        "namespace": "wmo.bom",
+        "type": "record",
+        "doc": "generic record for observations stats",
+        "name": "stdev_block",
+        "fields": [
+                  {
+                    "name": "average",
+                    "doc": "average since last report",
+                    "type": ["float", "null"]
+                  },
+                  {
+                    "name": "minus_std_dev",
+                    "doc": "average minus standard deviation of observations over average period",
+                    "type": ["float", "null"]
+                  },
+                    {
+                    "name": "plus_std_dev",
+                    "doc": "average plus standard deviation of observations over average period",
+                    "type": ["float", "null"]
+                  }
+        ]
+    },
+    {
+        "namespace": "wmo.bom",
+        "type": "record",
+        "doc": "Bureau specific pressure measures including aviation derivatives",
+        "name": "pressure_block",
+        "fields": [
+                  {
+                    "name": "qfe",
+                    "doc": "units=hectopascals",
+                    "type": ["float", "null"]
+                  },
+                  {
+                    "name": "qff",
+                    "doc": "units=hectopascals",
+                    "type": ["float", "null"]
+                  },
+                    {
+                    "name": "qnh",
+                    "doc": "units=hectopascals",
+                    "type": ["float", "null"]
+                  }
+        ]
+    },
+    {
+        "namespace": "wmo.bom",
+        "type": "record",
+        "doc": "Values useful for troubleshooting or other support function. Not Meteorologial observations",
+        "name": "engineering_stats",
+        "fields": [
+                  {
+                    "name": "battery_voltage",
+                    "doc": "Output voltage on internal UPS battery, units=V",
+                    "type": ["float", "null"]
+                  },
+                  {
+                    "name": "internal_temp",
+                    "doc": "Temperature inside AWS cabinet, units=degrees C",
+                    "type": ["float", "null"]
+                  }
+        ]
+    },
+    {
+        "namespace": "wmo.basic",
+        "type": "record",
+        "name": "aws_record",
+        "fields": [
+                    {
+                      "name": "station_wsi",
+                      "doc": "WIGOS Station Identifier",
+                      "type": "string"
+                    },
+                    {
+                      "name": "obs_dt_utc",
+                      "doc": "date and time of observation in UTC",
+                      "type": "long",
+                      "logicalType": "timestamp-millis"
+                    },
+                    {
+                      "name": "wind_speed",
+                      "doc": "Wind Speed at 10m, Units=knots",
+                      "type": ["min_max_block", "null"]
+                    },
+                    {
+                      "name": "air_temperature",
+                      "doc": "air_temperature at 2m, Units=degrees Celsius",
+                      "type": ["min_max_block", "null"]
+                    },
+                    {
+                      "name": "dew_point",
+                      "doc": "dew point temperature at 2m, Units=degrees Celsius",
+                      "type": ["min_max_block", "null"]
+                    },
+                    {
+                      "name": "rel_humidity",
+                      "doc": "relative humidity at 2m, Units=%",
+                      "type": ["min_max_block", "null"]
+                    },
+                    {
+                      "name": "wind_direction",
+                      "doc": "Wind Direction at 10m, Units=degrees from magnetic north",
+                      "type": ["wmo.bom.stdev_block", "null"]
+                    },
+                    {
+                      "name": "cloud",
+                      "doc": "height observations from ceilometer, Units=feet",
+                      "type": {"type": "array", "items": "float", "default": []}
+                    },
+                    {
+                      "name": "visibility",
+                      "doc": "MOR, Units=m",
+                      "type": ["float", "null"]
+                    },
+                    {
+                      "name": "rainfall",
+                      "doc": "accumulation (resets at 9999.9), Units=mm",
+                      "type": ["float", "null"]
+                    },
+                    {
+                      "name": "pressure",
+                      "doc": "barometric pressure and aviation related derived values, Units=hectopascals",
+                      "type": ["wmo.bom.pressure_block", "null"]
+                    },
+                    {
+                      "name": "engineering",
+                      "doc": "data to facilitate engineering support of equipment",
+                      "type": ["wmo.bom.engineering_stats", "null"]
+                    }
+        ]
+    }
+]

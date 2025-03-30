@@ -1,0 +1,23 @@
+aws_message = {
+    records : [* aws_record]
+}
+
+aws_record = {
+    station_wsi: text               ;WIGOS Station Identifier
+    obs_dt_utc: int                 ;date and time of observation in UTC units: milliseconds since Epoch
+    wind_speed: min_max_block       ;Wind Speed at 10m, Units=knots
+    wind_direction: stdev_block     ;Wind Direction at 10m, Units = degrees from magnetic north.
+}
+
+min_max_block = {
+    average: float                  ;average over the measurement period
+    max: float                      ;maximum value in the measurement period
+    min: float                      ;minimum value in the measurement period
+}
+
+stdev_block = {
+    average: float                  ;average over the measurement period
+    minus_std_dev: float            ;average value minus standard deviation of observations over measurement period
+    plus_std_dev: float             ;average value plus standard deviation of observations over measurement period
+}
+
