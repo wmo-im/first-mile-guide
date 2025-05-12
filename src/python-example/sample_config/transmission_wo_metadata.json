@@ -1,0 +1,80 @@
+{
+    "hostId": "TT-1M",
+    "observations": [
+        {
+            "parameterId": 1,
+            "time": "2025-05-06T12:39:31.788803Z",
+            "values": [
+                {
+                    "doubleValue": 12.9
+                },
+                {
+                    "doubleValue": 33.28
+                }
+            ]
+        },
+        {
+            "parameterId": 2,
+            "time": "2025-05-06T12:39:31.788855Z",
+            "values": [
+                {
+                    "doubleValue": 2304.54
+                },
+                {
+                    "doubleValue": 12.3
+                },
+                {
+                    "doubleValue": 1.2
+                },
+                {
+                    "intValue": 232
+                },
+                {
+                    "boolValue": true
+                }
+            ]
+        },
+        {
+            "parameterId": 2,
+            "time": "2025-05-06T12:39:31.788900Z",
+            "values": [
+                {
+                    "doubleValue": 2304.54
+                },
+                {
+                    "doubleValue": 12.3
+                },
+                {
+                    "doubleValue": 1.2
+                },
+                {
+                    "intValue": 232
+                },
+                {
+                    "boolValue": true
+                }
+            ]
+        },
+        {
+            "parameterId": 2,
+            "time": "2025-05-06T12:39:31.788936Z",
+            "values": [
+                {
+                    "doubleValue": 2304.54
+                },
+                {
+                    "doubleValue": 12.3
+                },
+                {
+                    "doubleValue": 1.2
+                },
+                {
+                    "intValue": 232
+                },
+                {
+                    "boolValue": true
+                }
+            ]
+        }
+    ]
+}

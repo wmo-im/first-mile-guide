@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+enum CellMethod {
+  CELL_METHOD_UNSPECIFIED = 0;  // Required default
+  POINT = 1;                    // Instantaneous value at a point
+  SUM = 2;                      // Sum over the cell
+  MEAN = 3;                     // Average over the cell
+  MAXIMUM = 4;                  // Maximum value in the cell
+  MINIMUM = 5;                  // Minimum value in the cell
+  STANDARD_DEVIATION = 6;       // Standard deviation within the cell
+  VARIANCE = 7;                 // Variance within the cell
+  MEDIAN = 8;                   // Median value
+  MODE = 9;                     // Most frequent value
+}
+
+message Parameter {
+  string longName = 1;
+  string unit = 2;
+  string standardName = 3; // according to CF List (WMO)
+  uint32 observerId = 4;
+  CellMethod cellMethod = 5;
+  uint32 cellPeriodSeconds = 6; // period of averaging in seconds, only valid when cell_method = SUM or MEAN
+}
+
+message ParameterDefinition {
+  uint32 id = 1;
+  string description = 2;
+  repeated Parameter parameters = 3;
+}
+
+message Value {
+  oneof kind {
+    double doubleValue = 1;
+    int32 intValue = 2;
+    uint32 unsignedIntValue = 3;
+    string stringValue = 4;
+    bool boolValue = 5;
+    // other types needed?
+  }
+}
+
+message Observation {
+  uint32 parameter_id = 1;
+  google.protobuf.Timestamp time = 2;
+  repeated Value values = 3;
+}
+
+enum ReferenceSurface {
+  REFERENCE_SURFACE_UNSPECIFIED = 0; // Default
+  MSL = 1;                          // Mean Sea Level
+  GEOID = 2;                        // Geoid
+  GL = 3;                           // Ground Level
+  REFERENCE_ELLIPSOID = 4;          // Reference Ellipsoid
+  PRESSURE_1000_HPA = 5;            // 1000 hPa Pressure Level
+}
+
+// can be an observer or host as in OGC OMS - ISO 19136
+message Device {
+  uint32 id = 1;
+  string name = 2;
+  double heightMeter = 3; // above reference surface
+  ReferenceSurface referenceSurface = 4; 
+  double latitude = 5;
+  double longitude = 6;
+  string url = 7; // link to device-metadata according to?
+}
+
+message Transmission {
+  string hostId = 1;
+  repeated Observation observations = 2;
+  Device host = 3;
+  repeated Device observers = 4;
+  repeated ParameterDefinition parameterDefinitions = 5;
+}

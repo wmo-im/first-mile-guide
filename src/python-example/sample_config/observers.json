@@ -1,0 +1,18 @@
+{
+    "bindings" : [{
+            "id": 1,
+            "name": "Pressure Sensor",
+            "latitude": 23.3454,
+            "longitude": -100.2244
+        }, {
+            "id": 2,
+            "name": "Weather Station",
+            "heightMeter": 10.0,
+            "referenceSurface": "GL",
+            "latitude": 23.2992,
+            "longitude": -101.349,
+            "url": "https://org.com/data/obs_meta.json"
+        }
+
+    ]
+}
