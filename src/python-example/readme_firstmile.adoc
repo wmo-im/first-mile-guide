@@ -1,0 +1,46 @@
+= Notations
+
+* *Host*: Device which reads sensors. Often called data-logger. Terminology from OGC OMS.
+* *Observer*: Device which can acquire measurement values, typically called Sensor. Terminology from OGC OMS.
+* *Parameter*: One value from an observer that is logged periodically. Multiple parameters can be read from a single observer.
+
+= How to Run the Example
+
+* Use `pipenv` to install prerequisites.
+* Build proto files.
+
+= `*.proto` File
+
+General structure: The `firstmile.proto` file defines the message `Transmission` which provides the structure for the payload sent by the host. The different message types contained by the `Transmission` message are described below.
+
+While the message always has to contain a `host_id` and `observations`, the metadata can be omitted. However, the data receiver must receive the metadata at least once.
+
+== Devices (Observer, Host)
+
+In a typical station setup, multiple observers are connected to a single host. Both observers and the host are described by the `Device` message type.
+
+The `Transmission` message contains one host and multiple observers. The observers listed in the `observers` field of this message must each contain a unique value in the `id` field. This ID is used in the parameter description to reference a parameter to a certain observer.
+
+If the parameters of the `Device` message are not sufficient, a URL can be specified referencing an external configuration. The format of the configuration in this URL is out of scope for this first-mile protocol.
+
+== Parameter Definitions
+
+A host logs one or multiple parameters from one or multiple observers. The `Parameter` message contains fields to describe these parameters. Multiple `parameters` are combined in a `ParameterDefinition` message. Values logged at the same log-rate can be combined in one definition. One `Transmission` can contain multiple parameter definitions.
+
+The `parameter_id` field allows linking observations to parameter definitions.
+
+= Example: Generate Transmission Payload
+
+== Setup Metadata
+
+In the example, metadata is stored in `parameter.json` and `observers.json`. The Python example shows how to load this data with the protobuf library.
+
+== Write Observations
+
+The example shows how to add actual observations to the payload.
+
+== Export Payload
+
+To verify the message, the example script exports:
+* `transmission_with_metadata.json` — contains the unserialized version of the payload.
+* `transmission_wo_metadata.json` — same as above, but with metadata omitted.

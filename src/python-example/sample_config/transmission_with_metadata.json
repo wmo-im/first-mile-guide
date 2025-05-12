@@ -1,0 +1,133 @@
+{
+    "hostId": "TT-1M",
+    "observations": [
+        {
+            "parameterId": 1,
+            "time": "2025-05-06T12:39:31.788803Z",
+            "values": [
+                {
+                    "doubleValue": 12.9
+                },
+                {
+                    "doubleValue": 33.28
+                }
+            ]
+        },
+        {
+            "parameterId": 2,
+            "time": "2025-05-06T12:39:31.788855Z",
+            "values": [
+                {
+                    "doubleValue": 2304.54
+                },
+                {
+                    "doubleValue": 12.3
+                },
+                {
+                    "doubleValue": 1.2
+                },
+                {
+                    "intValue": 232
+                },
+                {
+                    "boolValue": true
+                }
+            ]
+        },
+        {
+            "parameterId": 2,
+            "time": "2025-05-06T12:39:31.788900Z",
+            "values": [
+                {
+                    "doubleValue": 2304.54
+                },
+                {
+                    "doubleValue": 12.3
+                },
+                {
+                    "doubleValue": 1.2
+                },
+                {
+                    "intValue": 232
+                },
+                {
+                    "boolValue": true
+                }
+            ]
+        },
+        {
+            "parameterId": 2,
+            "time": "2025-05-06T12:39:31.788936Z",
+            "values": [
+                {
+                    "doubleValue": 2304.54
+                },
+                {
+                    "doubleValue": 12.3
+                },
+                {
+                    "doubleValue": 1.2
+                },
+                {
+                    "intValue": 232
+                },
+                {
+                    "boolValue": true
+                }
+            ]
+        }
+    ],
+    "host": {
+        "name": "data-logger"
+    },
+    "observers": [
+        {
+            "id": 2,
+            "name": "Weather Station",
+            "heightMeter": 10.0,
+            "referenceSurface": "GL",
+            "latitude": 23.2992,
+            "longitude": -101.349,
+            "url": "https://org.com/data/obs_meta.json"
+        },
+        {
+            "id": 2,
+            "name": "Weather Station",
+            "heightMeter": 10.0,
+            "referenceSurface": "GL",
+            "latitude": 23.2992,
+            "longitude": -101.349,
+            "url": "https://org.com/data/obs_meta.json"
+        }
+    ],
+    "parameterDefinitions": [
+        {
+            "id": 2,
+            "description": "Internal parameters of the data-logger",
+            "parameters": [
+                {
+                    "longName": "Supply Voltage",
+                    "unit": "V"
+                },
+                {
+                    "longName": "Internal Temperature",
+                    "unit": "°C"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "description": "Internal parameters of the data-logger",
+            "parameters": [
+                {
+                    "longName": "Supply Voltage",
+                    "unit": "V"
+                },
+                {
+                    "longName": "Internal Temperature",
+                    "unit": "°C"
+                }
+            ]
+        }
+    ]
+}
