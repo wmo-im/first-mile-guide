@@ -66,22 +66,33 @@ enum ReferenceSurface {
   PRESSURE_1000_HPA = 5;            // 1000 hPa Pressure Level
 }
 
-// can be an observer or host as in OGC OMS - ISO 19136
-message Device {
-  uint32 id = 1;
-  string name = 2;
+message Location {
+  double latitude = 1;
+  double longitude = 2;
   double heightMeter = 3; // above reference surface
   ReferenceSurface referenceSurface = 4; 
-  double latitude = 5;
-  double longitude = 6;
-  string url = 7; // link to device-metadata according to?
+}
+
+
+message HostDevice {
+  uint32 id = 1;
+  string name = 2;
+  Location location= 3; // OTT
+  string url = 4; // link to device-metadata according to?
+}
+
+message ObserverDevice {
+  uint32 id = 1;
+  string name = 2;
+  Location location= 3;
+  string url = 4; // link to device-metadata according to?
 }
 
 message Transmission {
-  uint32 version = 1;      // The Version of the protobuf schema used; it should be 1 for the first published version of the schema
+  uint32 version = 1;                         // The Version of the protobuf schema used; it should be 1 for the first published version of the schema
   string hostId = 2;
   repeated Observation observations = 3;
-  Device host = 4;
-  repeated Device observers = 5;
+  HostDevice host = 4;                        // The Host device is a single on-site host, such as a datalogger
+  repeated ObserverDevice observers = 5;      // Multiple Observers are possible, these are instruments/sensors
   repeated ParameterDefinition parameterDefinitions = 6;
 }
