@@ -44,9 +44,10 @@ message Value {
     double doubleValue = 1;
     int32 intValue = 2;
     uint32 unsignedIntValue = 3;
+    int64 int64Value = 2;
+    uint64 unsignedInt64Value = 3;
     string stringValue = 4;
     bool boolValue = 5;
-    // other types needed?
   }
 }
 
