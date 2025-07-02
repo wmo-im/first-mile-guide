@@ -2,17 +2,26 @@ syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
+// List of cell methods follows https://cfconventions.org/Data/cf-conventions/cf-conventions-1.12/cf-conventions.html#appendix-cell-methods
 enum CellMethod {
   CELL_METHOD_UNSPECIFIED = 0;  // Required default
   POINT = 1;                    // Instantaneous value at a point
   SUM = 2;                      // Sum over the cell
-  MEAN = 3;                     // Average over the cell
-  MAXIMUM = 4;                  // Maximum value in the cell
-  MINIMUM = 5;                  // Minimum value in the cell
-  STANDARD_DEVIATION = 6;       // Standard deviation within the cell
-  VARIANCE = 7;                 // Variance within the cell
-  MEDIAN = 8;                   // Median value
-  MODE = 9;                     // Most frequent value
+  MAXIMUM = 3;                  // Maximum value
+  MAXIMUM_ABSOLUTE_VALUE = 4;   // Maximum of absolute values
+  MEDIAN = 5;                   // Median value
+  MID_RANGE = 6;                // Average of maximum and minimum
+  MINIMUM = 7;                  // Minimum value
+  MINIMUM_ABSOLUTE_VALUE = 8;   // Minimum of absolute values
+  MEAN = 9;                     // Mean (average) value
+  MEAN_ABSOLUTE_VALUE = 10;     // Mean of absolute values
+  MEAN_OF_UPPER_DECILE = 11;    // Mean of the upper group of data values defined by the upper tenth of their distribution
+  MODE = 12;                    // Mode (most common value)
+  RANGE = 13;                   // Absolute difference between maximum and minimum
+  ROOT_MEAN_SQUARE = 14;        // Root mean square (RMS)
+  STANDARD_DEVIATION = 15;      // Standard deviation within the cell
+  SUM_OF_SQUARES = 16;          // Sum of squares
+  VARIANCE = 17;                // Variance within the cell
 }
 
 message Parameter {
