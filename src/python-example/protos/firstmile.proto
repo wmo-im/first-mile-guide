@@ -30,7 +30,7 @@ message Parameter {
   string standardName = 3; // according to CF List (WMO)
   uint32 observerId = 4;
   CellMethod cellMethod = 5;
-  uint32 cellPeriodSeconds = 6; // period of averaging in seconds, only valid when cell_method = SUM or MEAN
+  uint32 cellPeriodSeconds = 6; // period of averaging in seconds, only valid when cell_method is not POINT
 }
 
 message ParameterDefinition {
