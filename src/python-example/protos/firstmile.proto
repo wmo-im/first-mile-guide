@@ -73,19 +73,22 @@ message Location {
   ReferenceSurface referenceSurface = 4; 
 }
 
-
 message HostDevice {
   uint32 id = 1;
   string name = 2;
-  Location location= 3; // OTT
-  string url = 4; // link to device-metadata according to?
+  Location location= 3;
+  string url = 4;                // link to device-metadata according to?
+  string serialNumber = 5;       // the serial nukber of device, if available
+  string firmwareVersion = 6;    // typicall format examples "5.1" or "2.7.1-alpha"
 }
 
 message ObserverDevice {
   uint32 id = 1;
   string name = 2;
   Location location= 3;
-  string url = 4; // link to device-metadata according to?
+  string url = 4;                // link to device-metadata according to?
+  string serialNumber = 5;       // the serial nukber of device, if available
+  string firmwareVersion = 6;    // typicall format examples "5.1" or "2.7.1-alpha"
 }
 
 message Transmission {
