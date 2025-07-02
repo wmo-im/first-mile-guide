@@ -77,9 +77,10 @@ message Device {
 }
 
 message Transmission {
-  string hostId = 1;
-  repeated Observation observations = 2;
-  Device host = 3;
-  repeated Device observers = 4;
-  repeated ParameterDefinition parameterDefinitions = 5;
+  uint32 version = 1;      // The Version of the protobuf schema used; it should be 1 for the first published version of the schema
+  string hostId = 2;
+  repeated Observation observations = 3;
+  Device host = 4;
+  repeated Device observers = 5;
+  repeated ParameterDefinition parameterDefinitions = 6;
 }
