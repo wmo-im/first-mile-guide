@@ -2,17 +2,23 @@
     "bindings" : [{
             "id": 1,
             "name": "Pressure Sensor",
-            "latitude": 23.3454,
-            "longitude": -100.2244
+            "location": {
+                "latitude": 23.3454,
+                "longitude": -100.2244
+            },
+            "url": "https://org.com/data/obs_meta.json",
+            "serialNumber": "00AB-123456",
+            "firmwareVersion": "5.6A-Rev2"
         }, {
             "id": 2,
             "name": "Weather Station",
-            "heightMeter": 10.0,
-            "referenceSurface": "GL",
-            "latitude": 23.2992,
-            "longitude": -101.349,
+            "location": {
+                "latitude": 23.3454,
+                "longitude": -100.2244,
+                "heightMeter": 13.0,
+                "referenceSurface": "GL"
+            },
             "url": "https://org.com/data/obs_meta.json"
         }
-
     ]
 }
