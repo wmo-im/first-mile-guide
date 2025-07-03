@@ -349,3 +349,11 @@ The data is displayed in equivalent JSON formatting for readability.
     ]
 }
 ----
+
+== Implementation Notes
+
+The PoC Data Sender should be able to:
+
+* Collect measurement data from sensors and encode it into the Protobuf format, depending on the actual setup of the monitoring site.
+* Transmit the Protobuf payload over MQTT to the Data Receiver.
+* Optionally include metadata about the Data Sender and sensors in the Protobuf payload. A simple/naive implementation can transmit the metadata once per day, and then only send the measurement data for the rest of the day.
