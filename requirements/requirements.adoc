@@ -118,7 +118,7 @@ message HostDevice {
   string name = 2;
   Location location= 3;
   string url = 4;
-  string serialNumber = 5;available
+  string serialNumber = 5;
   string firmwareVersion = 6;
 }
 
