@@ -7,7 +7,7 @@ This document defines the technical requirements for the Proof of Concept (PoC) 
 
 * Data Sender - The "thing" that collects and sends data. Typically at the remote site, such as a weather station. This would be a device such as a datalogger or a sensor.
 * Data Receiver - The software at the central server that receives data from the Data Sender and prepares it for further processing. It must be able to receive the data usingthe agreed Data Format and Protocol.
-* Protocol - The IP based set of rules that detemrine how data is transferred from the Data Sender to the Data Receiver.
+* Protocol - The IP based set of rules that determine how data is transferred from the Data Sender to the Data Receiver.
 * Data Format - A data format is the organisation of information according to specifications. It defines how the data is structured and encoded.
 * Data Serialization - The process of converting structured data into a Data Format that can be easily transmitted and reconstructed later.
 * Data Schema - A formal description in the declarative language defining the structure and constraints for the Data Format.
