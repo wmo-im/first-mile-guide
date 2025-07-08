@@ -92,7 +92,7 @@ message Value {
 }
 
 message Observation {
-  uint32 parmeterDefinitionId = 1;
+  uint32 parameterDefinitionId = 1;
   google.protobuf.Timestamp time = 2;
   repeated Value values = 3;
 }
@@ -155,7 +155,7 @@ The fields `host`, `observers` and `parameterDefinitions` are considered Metadat
 
 The `Observation` message contains the following fields:
 
-* `parmeterDefinitionId` - The ID of the parameter being measured, which refers to a specific `ParameterDefinition`.
+* `parameterDefinitionId` - The ID of the parameter being measured, which refers to a specific `ParameterDefinition`.
 * `time` - The timestamp of the observation, using the `google.protobuf.Timestamp` format.
 * `values` - A list of `Value` messages that contain the actual measurement values.
 
