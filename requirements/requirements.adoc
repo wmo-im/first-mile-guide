@@ -147,8 +147,10 @@ The `Transmission` message is the main message that is sent from the Data Sender
 * `hostId` - The unique ID of the Data Sender (host) that collected the data. This could be something like station ID or datalogger serial number.
 * `observations` - A list of `Observation` messages, containing the actual measurement data.
 * `host` - The `HostDevice` message that describes the Data Sender (host), such as the datalogger.
-* `observers` - A list of `ObserverDevice` messages that describe the individual observers (sensors) that are locally connected to the Data Sender (host).
-* `parameterDefinitions` - A list of `ParameterDefinition` messages that describe the parameters used in the observations. This is considered Metadata and can be sent optionally. If it is not sent, the Data Receiver should use last received parameter definitions to decode the observations.
+* `observers` - A list of `ObserverDevice` messages that describe the individual observers (sensors) that are locally connected to the Data Sender (host). 
+* `parameterDefinitions` - A list of `ParameterDefinition` messages that describe the parameters used in the observations.
+
+The fields `host`, `observers` and `parameterDefinitions` are considered Metadata and can be sent optionally. If it is not sent, the Data Receiver should use last received definitions to decode the observations.
 
 
 The `Observation` message contains the following fields:
