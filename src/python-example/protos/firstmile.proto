@@ -52,7 +52,7 @@ message Value {
 }
 
 message Observation {
-  uint32 parameter_id = 1;
+  uint32 parameterDefinitionId = 1;
   google.protobuf.Timestamp time = 2;
   repeated Value values = 3;
 }
