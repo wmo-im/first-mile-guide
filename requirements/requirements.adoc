@@ -390,6 +390,10 @@ As part of the PoC Testing Phase, test cases which anticipate likely implementat
 |Aviation Data feeds at Airports
 |Sensor collects data (for example wind speed/direction) and transmit at 1Hz to a local receiver.
 
+|Site Reconfiguration
+|AWS which is extended with a new instrument
+|Sensor collects data (for example air temp + relative humidity + atmospheric pressure) and transmits evey 5 minutes. Then, a new sensor is added to the AWS (rain gauge). After that the new metadata needs to be transmitted, and the rainfall measurements start to be transferred.
+
 |===
 
 
