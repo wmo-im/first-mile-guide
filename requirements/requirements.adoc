@@ -158,7 +158,7 @@ The `Observation` message contains the following fields:
 
 * `parameterDefinitionId` - The ID of the parameter being measured, which refers to a specific `ParameterDefinition`.
 * `time` - The timestamp of the observation, using the `google.protobuf.Timestamp` format.
-* `values` - A list of `Value` messages that contain the actual measurement values.
+* `values` - A list of `Value` messages that contain the actual measurement values (based on CF Convention list https://cfconventions.org/Data/cf-conventions/cf-conventions-1.12/cf-conventions.html#appendix-cell-methods)
 
 The `Value` message contains the measurement value. It can use any of the allowed different types of values, such as double, int32, uint32, int64, uint64, string, or bool. 
 
@@ -201,6 +201,7 @@ The `Parameter` message contains the following fields:
 * `observer_id` - The ID of the observer (sensor) that collected the data.
 * `cellMethod` - The cell method used for the parameter, such as POINT, SUM, MAXIMUM, etc.
 * `cellPeriodSeconds` - The period of averaging in seconds, only valid when the `cellMethod` is not POINT. This indicates how long the data was averaged over.
+
 
 == Example Payloads
 
