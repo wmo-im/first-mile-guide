@@ -81,13 +81,14 @@ message ParameterDefinition {
 
 message Value {
   oneof kind {
-    double doubleValue = 1;
-    int32 intValue = 2;
-    uint32 unsignedIntValue = 3;
-    int64 int64Value = 2;
-    uint64 unsignedInt64Value = 3;
-    string stringValue = 4;
-    bool boolValue = 5;
+    float floatValue = 1;
+    double doubleValue = 2;
+    int32 intValue = 3;
+    uint32 unsignedIntValue = 4;
+    int64 int64Value = 5;
+    uint64 unsignedInt64Value = 6;
+    string stringValue = 7;
+    bool boolValue = 8;
   }
 }
 
