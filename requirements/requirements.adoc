@@ -145,7 +145,7 @@ message Transmission {
 The `Transmission` message is the main message that is sent from the Data Sender to the Data Receiver. It contains the following fields:
 
 * `version` - The Version of the protobuf schema used; it should be 1 for the first published version of the schema.
-* `hostId` - The unique ID of the Data Sender (host) that collected the data. This could be something like station ID or datalogger serial number.
+* `hostId` - The unique ID of the Data Sender (host) that collected the data. This could be something like station ID or datalogger serial number.  ;do we keep this that open or should we advice xxxx.yyyy xxxx reserved for station and yyyy reserved for logger e.g. serial number (as we could think of stations that have different loggers)
 * `observations` - A list of `Observation` messages, containing the actual measurement data.
 * `host` - The `HostDevice` message that describes the Data Sender (host), such as the datalogger.
 * `observers` - A list of `ObserverDevice` messages that describe the individual observers (sensors) that are locally connected to the Data Sender (host). 
