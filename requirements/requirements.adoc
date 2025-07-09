@@ -359,3 +359,36 @@ The PoC Data Sender should be able to:
 * Collect measurement data from sensors and encode it into the Protobuf format, depending on the actual setup of the monitoring site.
 * Transmit the Protobuf payload over MQTT to the Data Receiver.
 * Optionally include metadata about the Data Sender and sensors in the Protobuf payload. A simple/naive implementation can transmit the metadata once per day, and then only send the measurement data for the rest of the day.
+
+The PoC Data Receiver should be able to:
+
+* Receive the Protobuf payload over MQTT from the Data Sender.
+* Decode the Protobuf payload to JSON to recover the observations data and the included metadata.
+* Correctly assign the payload values to the observed parameter from messages where the parameterDefinitions have not been transmitted.
+
+== Implementation Test Cases
+
+As part of the PoC Testing Phase, test cases which anticipate likely implementations (and associated challenges) will be run.
+
+
+[%header, cols=3*]
+|===
+|Test Case Name
+|Example Site
+|Test Characteristics
+
+|Event Data
+|Hydrology Raingauge
+|Sensor only sends message during event (for example, TBRG tip).  Station will be "silent" (with occasional "heart beat" messages"), but during events (e.g. Heavy rain) there will be multiple messages in a short time
+
+|End Measurement Data Dump
+|Argo Float
+|Sensor collects a multiple observations over a time period/space traverse.  These are transmitted in the one message at the end of the Measurement run
+
+|High Frequency Observation Data
+|Aviation Data feeds at Airports
+|Sensor collects data (for example wind speed/direction) and transmit at 1Hz to a local receiver.
+
+|===
+
+
