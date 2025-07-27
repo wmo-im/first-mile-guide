@@ -1,4 +1,13 @@
 {
     "id": 0,
-    "name": "data-logger"
+    "name": "data-logger",
+    "location": {
+        "latitude": -90,
+        "longitude": 0,
+        "heightMeter": 10.0,
+        "referenceSurface": "GL"
+    },
+    "url": "https://org.com/data/obs_meta.json",
+    "serialNumber": "1234567890",
+    "firmwareVersion": "1.0.0"
 }

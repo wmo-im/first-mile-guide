@@ -1,5 +1,6 @@
 {
-    "hostId": "TT-1M",
+    "version": 1,
+    "hostId": "SouthPoleStation",
     "observations": [
         {
             "parameterId": 1,
@@ -9,7 +10,7 @@
                     "doubleValue": 12.9
                 },
                 {
-                    "doubleValue": 33.28
+                    "doubleValue": -33.28
                 }
             ]
         },
@@ -18,19 +19,7 @@
             "time": "2025-05-06T12:39:31.788855Z",
             "values": [
                 {
-                    "doubleValue": 2304.54
-                },
-                {
-                    "doubleValue": 12.3
-                },
-                {
-                    "doubleValue": 1.2
-                },
-                {
-                    "intValue": 232
-                },
-                {
-                    "boolValue": true
+                    "doubleValue": -40.2
                 }
             ]
         },
@@ -39,19 +28,7 @@
             "time": "2025-05-06T12:39:31.788900Z",
             "values": [
                 {
-                    "doubleValue": 2304.54
-                },
-                {
-                    "doubleValue": 12.3
-                },
-                {
-                    "doubleValue": 1.2
-                },
-                {
-                    "intValue": 232
-                },
-                {
-                    "boolValue": true
+                    "doubleValue": -40.4
                 }
             ]
         },
@@ -60,72 +37,73 @@
             "time": "2025-05-06T12:39:31.788936Z",
             "values": [
                 {
-                    "doubleValue": 2304.54
-                },
-                {
-                    "doubleValue": 12.3
-                },
-                {
-                    "doubleValue": 1.2
-                },
-                {
-                    "intValue": 232
-                },
-                {
-                    "boolValue": true
+                    "doubleValue": -41.1
                 }
             ]
         }
     ],
     "host": {
-        "name": "data-logger"
+        "id": 1,
+        "name": "ArcticX100 Data Logger",
+        "location": {
+            "latitude": -90,
+            "longitude": 0,
+            "heightMeter": 10.0,
+            "referenceSurface": 3
+        },
+        "url": "https://org.com/data/obs_meta.json",
+        "serialNumber": "1234567890",
+        "firmwareVersion": "1.0.0"
     },
     "observers": [
         {
             "id": 2,
-            "name": "Weather Station",
-            "heightMeter": 10.0,
-            "referenceSurface": "GL",
-            "latitude": 23.2992,
-            "longitude": -101.349,
-            "url": "https://org.com/data/obs_meta.json"
-        },
-        {
-            "id": 2,
-            "name": "Weather Station",
-            "heightMeter": 10.0,
-            "referenceSurface": "GL",
-            "latitude": 23.2992,
-            "longitude": -101.349,
-            "url": "https://org.com/data/obs_meta.json"
+            "name": "PT100",
+            "location": {
+                "latitude": -90,
+                "longitude": 0,
+                "heightMeter": 13.0,
+                "referenceSurface": 3
+            },
+            "url": "https://org.com/data/obs_meta.json",
+            "serialNumber": "00AB-123456",
+            "firmwareVersion": "5.6A-Rev2"
         }
     ],
     "parameterDefinitions": [
         {
-            "id": 2,
+            "id": 1,
             "description": "Internal parameters of the data-logger",
             "parameters": [
                 {
                     "longName": "Supply Voltage",
-                    "unit": "V"
+                    "unit": "V",
+                    "standardName": "voltage",
+                    "observerId": 1,
+                    "cellMethod": 9,
+                    "cellPeriodSeconds": 0
                 },
                 {
                     "longName": "Internal Temperature",
-                    "unit": "°C"
+                    "unit": "°C",
+                    "standardName": "",
+                    "observerId": 1,
+                    "cellMethod": 9,
+                    "cellPeriodSeconds": 5
                 }
             ]
         },
         {
             "id": 2,
-            "description": "Internal parameters of the data-logger",
+            "description": "PT100 temperature sensor readings",
             "parameters": [
                 {
-                    "longName": "Supply Voltage",
-                    "unit": "V"
-                },
-                {
-                    "longName": "Internal Temperature",
-                    "unit": "°C"
+                    "longName": "surface air temperature",
+                    "unit": "°C",
+                    "standardName": "air_temperature",
+                    "observerId": 2,
+                    "cellMethod": 9,
+                    "cellPeriodSeconds": 30
                 }
             ]
         }

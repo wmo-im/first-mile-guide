@@ -2,17 +2,26 @@ syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
+// List of cell methods follows https://cfconventions.org/Data/cf-conventions/cf-conventions-1.12/cf-conventions.html#appendix-cell-methods
 enum CellMethod {
   CELL_METHOD_UNSPECIFIED = 0;  // Required default
   POINT = 1;                    // Instantaneous value at a point
   SUM = 2;                      // Sum over the cell
-  MEAN = 3;                     // Average over the cell
-  MAXIMUM = 4;                  // Maximum value in the cell
-  MINIMUM = 5;                  // Minimum value in the cell
-  STANDARD_DEVIATION = 6;       // Standard deviation within the cell
-  VARIANCE = 7;                 // Variance within the cell
-  MEDIAN = 8;                   // Median value
-  MODE = 9;                     // Most frequent value
+  MAXIMUM = 3;                  // Maximum value
+  MAXIMUM_ABSOLUTE_VALUE = 4;   // Maximum of absolute values
+  MEDIAN = 5;                   // Median value
+  MID_RANGE = 6;                // Average of maximum and minimum
+  MINIMUM = 7;                  // Minimum value
+  MINIMUM_ABSOLUTE_VALUE = 8;   // Minimum of absolute values
+  MEAN = 9;                     // Mean (average) value
+  MEAN_ABSOLUTE_VALUE = 10;     // Mean of absolute values
+  MEAN_OF_UPPER_DECILE = 11;    // Mean of the upper group of data values defined by the upper tenth of their distribution
+  MODE = 12;                    // Mode (most common value)
+  RANGE = 13;                   // Absolute difference between maximum and minimum
+  ROOT_MEAN_SQUARE = 14;        // Root mean square (RMS)
+  STANDARD_DEVIATION = 15;      // Standard deviation within the cell
+  SUM_OF_SQUARES = 16;          // Sum of squares
+  VARIANCE = 17;                // Variance within the cell
 }
 
 message Parameter {
@@ -21,7 +30,7 @@ message Parameter {
   string standardName = 3; // according to CF List (WMO)
   uint32 observerId = 4;
   CellMethod cellMethod = 5;
-  uint32 cellPeriodSeconds = 6; // period of averaging in seconds, only valid when cell_method = SUM or MEAN
+  uint32 cellPeriodSeconds = 6; // period of averaging in seconds, only valid when cell_method is not POINT
 }
 
 message ParameterDefinition {
@@ -32,17 +41,19 @@ message ParameterDefinition {
 
 message Value {
   oneof kind {
-    double doubleValue = 1;
-    int32 intValue = 2;
-    uint32 unsignedIntValue = 3;
-    string stringValue = 4;
-    bool boolValue = 5;
-    // other types needed?
+    float floatValue = 1;
+    double doubleValue = 2;
+    int32 intValue = 3;
+    uint32 unsignedIntValue = 4;
+    int64 int64Value = 5;
+    uint64 unsignedInt64Value = 6;
+    string stringValue = 7;
+    bool boolValue = 8;
   }
 }
 
 message Observation {
-  uint32 parameter_id = 1;
+  uint32 parameterDefinitionId = 1;
   google.protobuf.Timestamp time = 2;
   repeated Value values = 3;
 }
@@ -56,21 +67,36 @@ enum ReferenceSurface {
   PRESSURE_1000_HPA = 5;            // 1000 hPa Pressure Level
 }
 
-// can be an observer or host as in OGC OMS - ISO 19136
-message Device {
-  uint32 id = 1;
-  string name = 2;
+message Location {
+  double latitude = 1;
+  double longitude = 2;
   double heightMeter = 3; // above reference surface
   ReferenceSurface referenceSurface = 4; 
-  double latitude = 5;
-  double longitude = 6;
-  string url = 7; // link to device-metadata according to?
+}
+
+message HostDevice {
+  uint32 id = 1;
+  string name = 2;
+  Location location= 3;
+  string url = 4;                // link to device-metadata according to?
+  string serialNumber = 5;       // the serial nukber of device, if available
+  string firmwareVersion = 6;    // typicall format examples "5.1" or "2.7.1-alpha"
+}
+
+message ObserverDevice {
+  uint32 id = 1;
+  string name = 2;
+  Location location= 3;
+  string url = 4;                // link to device-metadata according to?
+  string serialNumber = 5;       // the serial nukber of device, if available
+  string firmwareVersion = 6;    // typicall format examples "5.1" or "2.7.1-alpha"
 }
 
 message Transmission {
-  string hostId = 1;
-  repeated Observation observations = 2;
-  Device host = 3;
-  repeated Device observers = 4;
-  repeated ParameterDefinition parameterDefinitions = 5;
+  uint32 version = 1;                         // The Version of the protobuf schema used; it should be 1 for the first published version of the schema
+  string hostId = 2;
+  repeated Observation observations = 3;
+  HostDevice host = 4;                        // The Host device is a single on-site host, such as a datalogger
+  repeated ObserverDevice observers = 5;      // Multiple Observers are possible, these are instruments/sensors
+  repeated ParameterDefinition parameterDefinitions = 6;
 }
