@@ -1,0 +1,400 @@
+= 1M-TT PoC Implementation Requirements
+
+== Overview
+This document defines the technical requirements for the Proof of Concept (PoC) implementation of the First-Mile Data Collection communication protocol, which is being developed as part of the WMO standardisation initiative by the First-Mile Task Team (1M-TT).
+
+== Glossary
+
+* Data Sender - The "thing" that collects and sends data. Typically at the remote site, such as a weather station. This would be a device such as a datalogger or a sensor.
+* Data Receiver - The software at the central server that receives data from the Data Sender and prepares it for further processing. It must be able to receive the data usingthe agreed Data Format and Protocol.
+* Protocol - The IP based set of rules that determine how data is transferred from the Data Sender to the Data Receiver.
+* Data Format - A data format is the organisation of information according to specifications. It defines how the data is structured and encoded.
+* Data Serialization - The process of converting structured data into a Data Format that can be easily transmitted and reconstructed later.
+* Data Schema - A formal description in the declarative language defining the structure and constraints for the Data Format.
+* Observation - A single measurement data point collected by the Data Sender, such as a temperature reading, humidity level, or wind speed.
+* Metadata - Additional information, such as the monitoring site ID, location, types of sensors, measured variables, measurement units, and other relevant details. It provides context for the data being transmitted.
+
+== Key Principles
+
+The key principles of the protocol are as follows:
+
+* The First-Mile Data Collection protocol facilitates the transfer of data from the Data Sender to the Data Receiver.
+* Communication is strictly unidirectional — data flows only from the Data Sender to the Data Receiver.
+* The transmission of either measurement data alone or both measurement data and related metadata is supported.
+* Protobuf is used as Data Format: Data payloads are encoded using the Protocol Buffers (Protobuf) format, based on a defined and finalized proto schema which is the part of this specification document.
+* The Protocol (communication transport layer) used is MQTT. MQTT serves as the message delivery Protocol for transmitting the Protobuf payloads from the Data Sender to the Data Receiver.
+* For bandwidth-constrained environments (such as satellite links), the "First-Mile" is considered data transmission from the satellite ground base station to the Data Receiver. The actual data transmitted from the datalogger through the satellite link to the ground station can use any suitable Data Format and Protocol. This Data Format should then be transcoded to the First-Mile Data Collection format when the satellite data is transfered from the satellite ground station to the Data Receiver.
+
+== Overview of the Protocol
+
+The Data Sender has some measurement data that it wants to send to the Data Receiver. The Data Sender encodes the measurement data into a Protobuf payload using the agreed/defined Data Schema. The Data Sender then transmits this Protobuf payload over MQTT to the Data Receiver.
+
+The Data Schema allows sending multiple Observations in a single Protobuf payload. Each Observation contains a parameter identifier and a timestamp. The parameter identifier refers to a specific measured variable, such as temperature or humidity. The timestamp indicates when the measurement was taken. 
+
+The Data Schema allows the Data Sender to encode only the Measurement data, or to encode both the measurement data and the metadata. The metadata describes the monitoring site, sensors, measured variables, measurement units, and other relevant information. It is up to the Data Sender to decide whether and when to send the metadata along with the measurement data.
+
+For simplicity, there is no way to send the alarms or other events in the current version of the protocol. The Data Sender can only send the measurement data and metadata. If needed, alarms could be sent as a regular measurement value which is of type bool. The Data Receiver can then interpret this value as an alarm or event based on the context of the measurement.
+
+== Protobuf Schema
+
+[source,proto]
+----
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+enum CellMethod {
+  CELL_METHOD_UNSPECIFIED = 0;  // Required default
+  POINT = 1;                    // Instantaneous value at a point
+  SUM = 2;                      // Sum over the cell
+  MAXIMUM = 3;                  // Maximum value
+  MAXIMUM_ABSOLUTE_VALUE = 4;   // Maximum of absolute values
+  MEDIAN = 5;                   // Median value
+  MID_RANGE = 6;                // Average of maximum and minimum
+  MINIMUM = 7;                  // Minimum value
+  MINIMUM_ABSOLUTE_VALUE = 8;   // Minimum of absolute values
+  MEAN = 9;                     // Mean (average) value
+  MEAN_ABSOLUTE_VALUE = 10;     // Mean of absolute values
+  MEAN_OF_UPPER_DECILE = 11;    // Mean of the upper group of data values defined by the upper tenth of their distribution
+  MODE = 12;                    // Mode (most common value)
+  RANGE = 13;                   // Absolute difference between maximum and minimum
+  ROOT_MEAN_SQUARE = 14;        // Root mean square (RMS)
+  STANDARD_DEVIATION = 15;      // Standard deviation within the cell
+  SUM_OF_SQUARES = 16;          // Sum of squares
+  VARIANCE = 17;                // Variance within the cell
+}
+
+message Parameter {
+  string longName = 1;
+  string unit = 2;
+  string standardName = 3;
+  uint32 observerId = 4;
+  CellMethod cellMethod = 5;
+  uint32 cellPeriodSeconds = 6; 
+}
+
+message ParameterDefinition {
+  uint32 id = 1;
+  string description = 2;
+  repeated Parameter parameters = 3;
+}
+
+message Value {
+  oneof kind {
+    float floatValue = 1;
+    double doubleValue = 2;
+    int32 intValue = 3;
+    uint32 unsignedIntValue = 4;
+    int64 int64Value = 5;
+    uint64 unsignedInt64Value = 6;
+    string stringValue = 7;
+    bool boolValue = 8;
+  }
+}
+
+message Observation {
+  uint32 parameterDefinitionId = 1;
+  google.protobuf.Timestamp time = 2;
+  repeated Value values = 3;
+}
+
+enum ReferenceSurface {
+  REFERENCE_SURFACE_UNSPECIFIED = 0; // Default
+  MSL = 1;                          // Mean Sea Level
+  GEOID = 2;                        // Geoid
+  GL = 3;                           // Ground Level
+  REFERENCE_ELLIPSOID = 4;          // Reference Ellipsoid
+  PRESSURE_1000_HPA = 5;            // 1000 hPa Pressure Level
+}
+
+message Location {
+  double latitude = 1;
+  double longitude = 2;
+  double heightMeter = 3; 
+  ReferenceSurface referenceSurface = 4; 
+}
+
+message HostDevice {
+  uint32 id = 1;
+  string name = 2;
+  Location location= 3;
+  string url = 4;
+  string serialNumber = 5;
+  string firmwareVersion = 6;
+}
+
+message ObserverDevice {
+  uint32 id = 1;
+  string name = 2;
+  Location location= 3;
+  string url = 4;
+  string serialNumber = 5;
+  string firmwareVersion = 6;
+}
+
+message Transmission {
+  uint32 version = 1;                         
+  string hostId = 2;
+  repeated Observation observations = 3;
+  HostDevice host = 4;
+  repeated ObserverDevice observers = 5;
+  repeated ParameterDefinition parameterDefinitions = 6;
+}
+----
+
+The `Transmission` message is the main message that is sent from the Data Sender to the Data Receiver. It contains the following fields:
+
+* `version` - The Version of the protobuf schema used; it should be 1 for the first published version of the schema.
+* `hostId` - The unique ID of the Data Sender (host) that collected the data. This could be something like station ID or datalogger serial number.  ;do we keep this that open or should we advice xxxx.yyyy xxxx reserved for station and yyyy reserved for logger e.g. serial number (as we could think of stations that have different loggers)
+* `observations` - A list of `Observation` messages, containing the actual measurement data.
+* `host` - The `HostDevice` message that describes the Data Sender (host), such as the datalogger.
+* `observers` - A list of `ObserverDevice` messages that describe the individual observers (sensors) that are locally connected to the Data Sender (host). 
+* `parameterDefinitions` - A list of `ParameterDefinition` messages that describe the parameters used in the observations.
+
+The fields `host`, `observers` and `parameterDefinitions` are considered Metadata and can be sent optionally. If it is not sent, the Data Receiver should use last received definitions to decode the observations.
+
+
+The `Observation` message contains the following fields:
+
+* `parameterDefinitionId` - The ID of the parameter being measured, which refers to a specific `ParameterDefinition`.
+* `time` - The timestamp of the observation, using the `google.protobuf.Timestamp` format.
+* `values` - A list of `Value` messages that contain the actual measurement values (based on CF Convention list https://cfconventions.org/Data/cf-conventions/cf-conventions-1.12/cf-conventions.html#appendix-cell-methods)
+
+The `Value` message contains the measurement value. It can use any of the allowed different types of values, such as double, int32, uint32, int64, uint64, string, or bool. 
+
+The `HostDevice` message describes the Data Sender (host) device:
+
+* `id` - The unique ID of the host device.
+* `name` - The name of the host device, it can contain the model name or type.
+* `location` - The location of the host device, using the `Location` message.
+* `url` - A link to the device metadata.
+* `serialNumber` - The serial number of the host device, if available.
+* `firmwareVersion` - The firmware version of the host device, typically in a format like "5.1" or "2.7.1-alpha".
+
+The `ObserverDevice` message describes the individual observer (sensor) devices connected to the Data Sender (host):
+
+* `id` - The unique ID of the observer device.
+* `name` - The name of the observer device, it can contain the model name or type.
+* `location` - The location of the observer device, using the `Location` message.
+* `url` - A link to the observer device metadata.
+* `serialNumber` - The serial number of the observer device, if available.
+* `firmwareVersion` - The firmware version of the observer device, typically in a format like "5.1" or "2.7.1-alpha".
+
+The `Location` message describes the geographical location of the device:
+
+* `latitude` - The latitude of the device location in decimal degrees.
+* `longitude` - The longitude of the device location in decimal degrees.
+* `heightMeter` - The height of the device above the reference surface in meters.
+* `referenceSurface` - The reference surface used for the height, such as Mean Sea Level (MSL), Geoid, Ground Level (GL), Reference Ellipsoid, or 1000 hPa Pressure Level.
+
+The `ParameterDefinition` message describes the parameters used in the observations:
+
+* `id` - The unique ID of the parameter definition.
+* `description` - A description of the parameter.   
+* `parameters` - A list of `Parameter` messages that define the parameters used in the observations.
+
+The `Parameter` message contains the following fields:
+
+* `longName` - The long name of the parameter, such as "Air Temperature" or "Wind Speed".
+* `unit` - The unit of measurement for the parameter, such as "Celsius" or "m/s".
+* `standardName` - The standard name of the parameter according to the CF List (WMO), such as "air_temperature" or "wind_speed".
+* `observer_id` - The ID of the observer (sensor) that collected the data.
+* `cellMethod` - The cell method used for the parameter, such as POINT, SUM, MAXIMUM, etc.
+* `cellPeriodSeconds` - The period of averaging in seconds, only valid when the `cellMethod` is not POINT. This indicates how long the data was averaged over.
+
+
+== Example Payloads
+
+=== Automatic Weather Station (AWS) Data with Metadata
+
+The following example shows a Protobuf payload for an Automatic Weather Station (AWS) that sends both measurement data and metadata, from a weather station consisting of a datalogger and a PT100 temperature sensor. The data includes observations for internal parameters of the datalogger and temperature readings from the PT100 sensor. Multiple air temperature readings are sent at different times, demonstrating the ability to send multiple observations for the same parameter.
+
+The data the is to be encoded in the Protobuf format is here display in equivalent JSON formatting for readability.
+
+[source,json]
+----
+{
+    "version": 1,
+    "hostId": "SouthPoleStation",
+    "observations": [
+        {
+            "parameterId": 1,
+            "time": "2025-05-06T12:39:31.788803Z",
+            "values": [
+                {
+                    "doubleValue": 12.9
+                },
+                {
+                    "doubleValue": -33.28
+                }
+            ]
+        },
+        {
+            "parameterId": 2,
+            "time": "2025-05-06T12:39:31.788855Z",
+            "values": [
+                {
+                    "doubleValue": -40.2
+                }
+            ]
+        },
+        {
+            "parameterId": 2,
+            "time": "2025-05-06T12:39:31.788900Z",
+            "values": [
+                {
+                    "doubleValue": -40.4
+                }
+            ]
+        },
+        {
+            "parameterId": 2,
+            "time": "2025-05-06T12:39:31.788936Z",
+            "values": [
+                {
+                    "doubleValue": -41.1
+                }
+            ]
+        }
+    ],
+    "host": {
+        "id": 1,
+        "name": "ArcticX100 Data Logger",
+        "location": {
+            "latitude": -90,
+            "longitude": 0,
+            "heightMeter": 10.0,
+            "referenceSurface": "GL"
+        },
+        "url": "https://org.com/data/obs_meta.json",
+        "serialNumber": "1234567890",
+        "firmwareVersion": "1.0.0"
+    },
+    "observers": [
+        {
+            "id": 2,
+            "name": "PT100",
+            "location": {
+                "latitude": -90,
+                "longitude": 0,
+                "heightMeter": 13.0,
+                "referenceSurface": "GL"
+            },
+            "url": "https://org.com/data/obs_meta.json",
+            "serialNumber": "00AB-123456",
+            "firmwareVersion": "5.6A-Rev2"
+        }
+    ],
+    "parameterDefinitions": [
+        {
+            "id": 1,
+            "description": "Internal parameters of the data-logger",
+            "parameters": [
+                {
+                    "longName": "Supply Voltage",
+                    "unit": "V",
+                    "standardName": "voltage",
+                    "observerId": 1,
+                    "cellMethod": "POINT",
+                    "cellPeriodSeconds": 0
+                },
+                {
+                    "longName": "Internal Temperature",
+                    "unit": "°C",
+                    "standardName": "",
+                    "observerId": 1,
+                    "cellMethod": "MEAN",
+                    "cellPeriodSeconds": 5
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "description": "PT100 temperature sensor readings",
+            "parameters": [
+                {
+                    "longName": "surface air temperature",
+                    "unit": "°C",
+                    "standardName": "air_temperature",
+                    "observerId": 2,
+                    "cellMethod": "MEAN",
+                    "cellPeriodSeconds": 30
+                }
+            ]
+        }
+    ]
+}
+----
+
+=== Hydrological Station Data without Metadata
+
+The following example shows a Protobuf payload for a hydrological station that sends only measurement data without any metadata. The data includes observations for water level and water temperature. A single Observation is sent for each parameter.
+
+The data is displayed in equivalent JSON formatting for readability.
+
+[source,json]
+----
+{
+    "version": 1,
+    "hostId": "HS-001/27225",
+    "observations": [
+        {
+            "parameterId": 1,
+            "time": "2025-05-06T12:39:31.788803Z",
+            "values": [
+                {
+                    "doubleValue": 3.5
+                },
+                {
+                    "doubleValue": 14.2
+                }
+            ]
+        },
+    ]
+}
+----
+
+== Implementation Notes
+
+The PoC Data Sender should be able to:
+
+* Collect measurement data from sensors and encode it into the Protobuf format, depending on the actual setup of the monitoring site.
+* Transmit the Protobuf payload over MQTT to the Data Receiver.
+* Optionally include metadata about the Data Sender and sensors in the Protobuf payload. A simple/naive implementation can transmit the metadata once per day, and then only send the measurement data for the rest of the day.
+
+The PoC Data Receiver should be able to:
+
+* Receive the Protobuf payload over MQTT from the Data Sender.
+* Decode the Protobuf payload to JSON to recover the observations data and the included metadata.
+* Correctly assign the payload values to the observed parameter from messages where the parameterDefinitions have not been transmitted.
+
+== Implementation Test Cases
+
+As part of the PoC Testing Phase, test cases which anticipate likely implementations (and associated challenges) will be run.
+
+
+[%header, cols=3*]
+|===
+|Test Case Name
+|Example Site
+|Test Characteristics
+
+|Event Data
+|Hydrology Raingauge
+|Sensor only sends message during event (for example, TBRG tip).  Station will be "silent" (with occasional "heart beat" messages"), but during events (e.g. Heavy rain) there will be multiple messages in a short time
+
+|End Measurement Data Dump
+|Argo Float
+|Sensor collects a multiple observations over a time period/space traverse.  These are transmitted in the one message at the end of the Measurement run
+
+|High Frequency Observation Data
+|Aviation Data feeds at Airports
+|Sensor collects data (for example wind speed/direction) and transmit at 1Hz to a local receiver.
+
+|Site Reconfiguration
+|AWS which is extended with a new instrument
+|Sensor collects data (for example air temp + relative humidity + atmospheric pressure) and transmits evey 5 minutes. Then, a new sensor is added to the AWS (rain gauge). After that the new metadata needs to be transmitted, and the rainfall measurements start to be transferred.
+
+|===
+
+
