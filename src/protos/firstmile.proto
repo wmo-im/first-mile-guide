@@ -74,12 +74,11 @@ message Location {
 }
 
 message HostDevice {
-  uint32 id = 1;
-  string name = 2;
-  Location location= 3;
-  string url = 4;
-  string serialNumber = 5;
-  string firmwareVersion = 6;
+  string name = 1;
+  Location location= 2;
+  string url = 3;
+  string serialNumber = 4;
+  string firmwareVersion = 5;
 }
 
 message ObserverDevice {
