@@ -2,7 +2,6 @@ syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
 
-// List of cell methods follows https://cfconventions.org/Data/cf-conventions/cf-conventions-1.12/cf-conventions.html#appendix-cell-methods
 enum CellMethod {
   CELL_METHOD_UNSPECIFIED = 0;  // Required default
   POINT = 1;                    // Instantaneous value at a point
@@ -27,10 +26,10 @@ enum CellMethod {
 message Parameter {
   string longName = 1;
   string unit = 2;
-  string standardName = 3; // according to CF List (WMO)
+  string standardName = 3;
   uint32 observerId = 4;
   CellMethod cellMethod = 5;
-  uint32 cellPeriodSeconds = 6; // period of averaging in seconds, only valid when cell_method is not POINT
+  uint32 cellPeriodSeconds = 6;
 }
 
 message ParameterDefinition {
@@ -70,7 +69,7 @@ enum ReferenceSurface {
 message Location {
   double latitude = 1;
   double longitude = 2;
-  double heightMeter = 3; // above reference surface
+  double heightMeter = 3;
   ReferenceSurface referenceSurface = 4; 
 }
 
@@ -78,25 +77,25 @@ message HostDevice {
   uint32 id = 1;
   string name = 2;
   Location location= 3;
-  string url = 4;                // link to device-metadata according to?
-  string serialNumber = 5;       // the serial nukber of device, if available
-  string firmwareVersion = 6;    // typicall format examples "5.1" or "2.7.1-alpha"
+  string url = 4;
+  string serialNumber = 5;
+  string firmwareVersion = 6;
 }
 
 message ObserverDevice {
   uint32 id = 1;
   string name = 2;
   Location location= 3;
-  string url = 4;                // link to device-metadata according to?
-  string serialNumber = 5;       // the serial nukber of device, if available
-  string firmwareVersion = 6;    // typicall format examples "5.1" or "2.7.1-alpha"
+  string url = 4;
+  string serialNumber = 5;
+  string firmwareVersion = 6;
 }
 
 message Transmission {
-  uint32 version = 1;                         // The Version of the protobuf schema used; it should be 1 for the first published version of the schema
+  uint32 version = 1;
   string hostId = 2;
   repeated Observation observations = 3;
-  HostDevice host = 4;                        // The Host device is a single on-site host, such as a datalogger
-  repeated ObserverDevice observers = 5;      // Multiple Observers are possible, these are instruments/sensors
+  HostDevice host = 4;
+  repeated ObserverDevice observers = 5;
   repeated ParameterDefinition parameterDefinitions = 6;
 }
