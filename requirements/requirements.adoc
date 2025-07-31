@@ -64,7 +64,6 @@ The `Value` message contains the measurement value. It can use any of the allowe
 
 The `HostDevice` message describes the Data Sender (host) device:
 
-* `id` - The unique ID of the host device.
 * `name` - The name of the host device, it can contain the model name or type.
 * `location` - The location of the host device, using the `Location` message.
 * `url` - A link to the device metadata.
@@ -111,6 +110,7 @@ The following example shows a Protobuf payload for an Automatic Weather Station 
 
 The data the is to be encoded in the Protobuf format is here display in equivalent JSON formatting for readability.
 
+Example `data` message:
 [source,json]
 ----
 {
@@ -156,9 +156,15 @@ The data the is to be encoded in the Protobuf format is here display in equivale
                 }
             ]
         }
-    ],
+    ]
+}
+----
+
+Example `metadata` message:
+[source,json]
+----
+{
     "host": {
-        "id": 1,
         "name": "ArcticX100 Data Logger",
         "location": {
             "latitude": -90,
@@ -223,35 +229,7 @@ The data the is to be encoded in the Protobuf format is here display in equivale
             ]
         }
     ]
-}
-----
-
-=== Hydrological Station Data without Metadata
-
-The following example shows a Protobuf payload for a hydrological station that sends only measurement data without any metadata. The data includes observations for water level and water temperature. A single Observation is sent for each parameter.
-
-The data is displayed in equivalent JSON formatting for readability.
-
-[source,json]
-----
-{
-    "version": 1,
-    "hostId": "HS-001/27225",
-    "observations": [
-        {
-            "parameterId": 1,
-            "time": "2025-05-06T12:39:31.788803Z",
-            "values": [
-                {
-                    "doubleValue": 3.5
-                },
-                {
-                    "doubleValue": 14.2
-                }
-            ]
-        },
-    ]
-}
+}    
 ----
 
 == Implementation Notes
@@ -260,7 +238,7 @@ The PoC Data Sender should be able to:
 
 * Collect measurement data from sensors and encode it into the Protobuf format, depending on the actual setup of the monitoring site.
 * Transmit the Protobuf payload over MQTT to the Data Receiver.
-* Optionally include metadata about the Data Sender and sensors in the Protobuf payload. A simple/naive implementation can transmit the metadata once per day, and then only send the measurement data for the rest of the day.
+* Ensure that the `metadata` message is send to the receiver and updated if configuration of the data sender changes.
 
 The PoC Data Receiver should be able to:
 
