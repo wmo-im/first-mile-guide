@@ -4,7 +4,7 @@ verify_ssl = true
 name = "firstmil-proto"
 
 [scripts]
-build-proto = "bash -c 'mkdir -p protospy &&protoc --proto_path=protos/ --python_out=protospy/ protos/firstmile.proto'"
+build-proto = "bash -c 'mkdir -p protospy &&protoc --proto_path=../protos/ --python_out=protospy/ ../protos/firstmile.proto'"
 
 [packages]
 protobuf = "*"
