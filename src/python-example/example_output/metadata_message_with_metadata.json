@@ -1,0 +1,89 @@
+{
+    "host": {
+        "name": "data-logger",
+        "serialNumber": "SN494839"
+    },
+    "observers": [
+        {
+            "id": 1,
+            "name": "Pressure Sensor",
+            "location": {
+                "latitude": 23.3454,
+                "longitude": -100.2244,
+                "heightMeter": -5.3,
+                "referenceSurface": "MSL"
+            },
+            "serialNumber": "PS39482"
+        },
+        {
+            "id": 2,
+            "name": "Weather Station",
+            "location": {
+                "latitude": 23.3454,
+                "longitude": -100.2244,
+                "heightMeter": 10.0,
+                "referenceSurface": "MSL"
+            },
+            "url": "https://org.com/data/obs_meta.json",
+            "serialNumber": "SN293835492",
+            "firmwareVersion": "V1.0.29"
+        }
+    ],
+    "parameterDefinitions": [
+        {
+            "id": 1,
+            "description": "Parameters read by sensors",
+            "parameters": [
+                {
+                    "longName": "Water level",
+                    "unit": "mm",
+                    "standardName": "water_level",
+                    "observerId": 1,
+                    "cellMethod": "POINT"
+                },
+                {
+                    "longName": "Water temperature",
+                    "unit": "°C",
+                    "standardName": "water_temperature",
+                    "observerId": 1,
+                    "cellMethod": "POINT"
+                },
+                {
+                    "longName": "Wind speed 10min",
+                    "unit": "m/s",
+                    "standardName": "wind_speed",
+                    "observerId": 2,
+                    "cellMethod": "MEAN",
+                    "cellPeriodSeconds": 600
+                },
+                {
+                    "longName": "Wind direction 10min",
+                    "unit": "°",
+                    "standardName": "wind_direction",
+                    "observerId": 2,
+                    "cellMethod": "MEAN",
+                    "cellPeriodSeconds": 600
+                },
+                {
+                    "longName": "Alarm water level",
+                    "unit": "event",
+                    "observerId": 1
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "description": "Internal parameters of the data-logger",
+            "parameters": [
+                {
+                    "longName": "Supply Voltage",
+                    "unit": "V"
+                },
+                {
+                    "longName": "Internal Temperature",
+                    "unit": "°C"
+                }
+            ]
+        }
+    ]
+}

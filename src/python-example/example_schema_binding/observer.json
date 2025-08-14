@@ -1,0 +1,27 @@
+{
+    "bindings" : [{
+            "id": 1,
+            "name": "Pressure Sensor",
+            "location" : {
+                "latitude": 23.3454,
+                "longitude": -100.2244,
+                "heightMeter": -5.3,
+                "referenceSurface": 1
+            },
+            "serialNumber": "PS39482"
+        }, {
+            "id": 2,
+            "name": "Weather Station",
+            "location" : {
+                "latitude": 23.3454,
+                "longitude": -100.2244,
+                "heightMeter": 10.0,
+                "referenceSurface": 1
+            },
+            "url": "https://org.com/data/obs_meta.json",
+            "serialNumber": "SN293835492",
+            "firmwareVersion": "V1.0.29"
+        }
+
+    ]
+}
