@@ -15,7 +15,7 @@ from dash import dcc, html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
 import plotly.graph_objs as go
-import protospy.firstmile_pb2 as transmission_pb2
+import firstmile_pb2 as pb2 # Your generated protobuf classes
 from google.protobuf.json_format import MessageToDict
 import threading
 import queue
@@ -23,10 +23,12 @@ import json
 import pandas as pd
 import paho.mqtt.client as mqtt
 import ssl
+import re
 
 
 state = {}
 message_queue = queue.Queue()
+metadata_queue = queue.Queue()
 
 # MQTT Callbacks
 def on_connect(client, userdata, flags, rc):
@@ -37,10 +39,17 @@ def on_message(client, userdata, msg):
     print("Received message on topic:", msg.topic)
     topic = msg.topic
     payload = msg.payload
-    transmission = transmission_pb2.Transmission()
-    transmission.ParseFromString(payload)
-    d = MessageToDict(transmission)
-    message_queue.put((topic, d))
+
+    if re.match(r"firstmile/.*/metadata/.*", topic):
+        metadata = pb2.Metadata()
+        metadata.ParseFromString(payload)
+        d = MessageToDict(metadata)
+        metadata_queue.put((topic, d))
+    elif re.match(r"firstmile/.*/data/.*", topic):
+        transmission = pb2.Data()
+        transmission.ParseFromString(payload)
+        d = MessageToDict(transmission)
+        message_queue.put((topic, d))
 
 
 # MQTT handler
@@ -191,42 +200,66 @@ def render_site_page(topic):
     Input("interval", "n_intervals")
 )
 def update_page(pathname, n_intervals):
-    # Process queued MQTT messages
+    # Process queued MQTT metadata messages
+    while not metadata_queue.empty():
+        topic, msg = metadata_queue.get()
+
+        # use regex to extract vendor and hostid from the topic in format firstmile/{vendor}/metadata/{hostid}
+        match = re.match(r"firstmile/([^/]+)/metadata/([^/]+)", topic)
+        if match:
+            vendor = match.group(1)
+            hostid = match.group(2)
+            key = f"{vendor}/{hostid}"
+
+            if key not in state:
+                state[key] = {
+                    "last_messages": [],
+                    "data": [],
+                    "warnings": []
+                }
+
+            state[key]["metadata"] = msg
+            state[key]["last_messages"].append(msg)
+            state[key]["last_messages"] = state[key]["last_messages"][-20:]
+
+    # Process queued MQTT data messages
     while not message_queue.empty():
         topic, msg = message_queue.get()
 
-        if topic not in state:
-            state[topic] = {
-                "last_messages": [],
-                "data": [],
-                "warnings": []
-            }
+        # use regex to extract vendor and hostid from the topic in format firstmile/{vendor}/metadata/{hostid}
+        match = re.match(r"firstmile/([^/]+)/data/([^/]+)", topic)
+        if match:
+            vendor = match.group(1)
+            hostid = match.group(2)
+            key = f"{vendor}/{hostid}"
 
-        has_metadata = "host" in msg or "parameterDefinitions" in msg
+            if key not in state:
+                state[key] = {
+                    "last_messages": [],
+                    "data": [],
+                    "warnings": []
+                }
 
-        if has_metadata:
-            state[topic]["metadata"] = msg
-        else:
-            if "metadata" not in state[topic]:
+            if "metadata" not in state[key]:
                 warning = f"⚠️ WARNING: Data for topic {topic} arrived with no metadata and no cached metadata."
                 print(warning)
-                state[topic]["warnings"].append(warning)
+                state[key]["warnings"].append(warning)
 
-        state[topic]["last_messages"].append(msg)
-        state[topic]["last_messages"] = state[topic]["last_messages"][-20:]
+            state[key]["last_messages"].append(msg)
+            state[key]["last_messages"] = state[key]["last_messages"][-20:]
 
-        state[topic]["data"].extend(msg.get("observations", []))
-        # Limit stored data to avoid memory growth
-        MAX_OBS = 500
-        if len(state[topic]["data"]) > MAX_OBS:
-            state[topic]["data"] = state[topic]["data"][-MAX_OBS:]
+            state[key]["data"].extend(msg.get("observations", []))
+            # Limit stored data to avoid memory growth
+            MAX_OBS = 500
+            if len(state[key]["data"]) > MAX_OBS:
+                state[key]["data"] = state[key]["data"][-MAX_OBS:]
 
     # Routing
     if pathname == "/" or pathname == "":
         return render_home_page()
     elif pathname.startswith("/site/"):
-        topic = pathname.replace("/site/", "", 1)
-        return render_site_page(topic)
+        key = pathname.replace("/site/", "", 1)
+        return render_site_page(key)
     else:
         return html.P("Unknown page.")
 
