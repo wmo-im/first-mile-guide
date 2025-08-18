@@ -1,11 +1,14 @@
 # Simple data sender
-# Emulates sending single mesasage from an AWS. The simulated AWS sends temperature measurement.
+# Emulates an AWS then sends periodic temperature measurements using 1M-TT protocol.
+# The script will first send a single Metadata message with site configuration info, it will be sent as MQTT retained message.
+# Then it will periodically publish Data messages with temperature and voltage readings. 
 #
-# Example fo running this script to send both measurement and metadata:
-# python3 data-sender.py --broker s87beff9.ala.eu-central-1.emqxsl.com --port 8883 --tls --insecure --topic "firstmile/geolux/test1"  --username geolux --password "XXXX" --metadata
+# Before running this script, ensure that proto schema is compiled and the protobuf classes are generated. This can be achieved by running the
+# following command in protos folder: 
+# protoc -I . --python_out=../python-example/ firstmile.proto 
 #
-# Example fo running this script to send only measurement:
-# python3 data-sender.py --broker s87beff9.ala.eu-central-1.emqxsl.com --port 8883 --tls --insecure --topic "firstmile/geolux/test1"  --username geolux --password "XXXX"
+# Example fo running this script:
+# python3 data-sender.py --period 10 --vendor geolux --hostid "AWS123" --broker s87beff9.ala.eu-central-1.emqxsl.com --username geolux --password "XXXX" --port 8883 --tls --insecure
 
 import argparse
 import random
@@ -14,7 +17,7 @@ import ssl
 from datetime import datetime, timezone
 
 import paho.mqtt.client as mqtt
-import protospy.firstmile_pb2 as pb2 # Your generated protobuf classes
+import firstmile_pb2 as pb2 # Your generated protobuf classes
 from google.protobuf.timestamp_pb2 import Timestamp
 
 
@@ -63,7 +66,7 @@ def define_parameters():
     pd2.description = "PT100 temperature sensor readings"
 
     param_air_temp = pb2.Parameter()
-    param_air_temp.longName = "surface air temperature"
+    param_air_temp.longName = "Surface Air Temperature"
     param_air_temp.unit = "°C"
     param_air_temp.standardName = "air_temperature"
     param_air_temp.observerId = 2
@@ -103,7 +106,6 @@ def generate_observations(parameter_defs):
 def create_metadata():
     # Host device
     host = pb2.HostDevice()
-    host.id = 1
     host.name = "ArcticX100 Data Logger"
     host.location.latitude = -90
     host.location.longitude = 0
@@ -115,7 +117,7 @@ def create_metadata():
 
     # Observer device (PT100)
     observer = pb2.ObserverDevice()
-    observer.id = 2
+    observer.id = 1
     observer.name = "PT100"
     observer.location.latitude = -90
     observer.location.longitude = 0
@@ -127,27 +129,35 @@ def create_metadata():
 
     return host, [observer]
 
-# This is the main function to construct Transmission message
-def build_transmission(with_metadata: bool):
-    transmission = pb2.Transmission()
+# This is the main function to construct Data message
+def build_data_transmission(hostid):
+    transmission = pb2.Data()
     transmission.version = 1
-    transmission.hostId = "SouthPoleStation"
+    transmission.hostId = hostid
 
     param_defs = define_parameters()
     observations = generate_observations(param_defs)
 
     transmission.observations.extend(observations)
 
-    if with_metadata:
-        host, observers = create_metadata()
-        transmission.host.CopyFrom(host)
-        transmission.observers.extend(observers)
-        transmission.parameterDefinitions.extend(param_defs)
-
     return transmission
 
+def build_metadata_transmission():
+    metadata = pb2.Metadata()
+
+    # Define the host device and observers
+    host, observers = create_metadata()
+    metadata.host.CopyFrom(host)
+    metadata.observers.extend(observers)
+
+    # Define the parameter definitions
+    param_defs = define_parameters()
+    metadata.parameterDefinitions.extend(param_defs)
+
+    return metadata
+
 # MQTT(s) data exchange
-def send_mqtt_payload(args, payload_bytes):
+def send_mqtt_payload(args, topic, payload_bytes, retain=False):
     client = mqtt.Client()
 
     if args.username and args.password:
@@ -164,8 +174,8 @@ def send_mqtt_payload(args, payload_bytes):
 
     print(f"Connecting to MQTT broker {args.broker}:{args.port}...")
     client.connect(args.broker, args.port, 60)
-    client.publish(args.topic, payload_bytes, qos=1)
-    print(f"Published payload ({len(payload_bytes)} bytes) to topic '{args.topic}'")
+    client.publish(topic, payload_bytes, qos = 2 if retain else 1, retain = retain)
+    print(f"Published payload ({len(payload_bytes)} bytes) to topic '{topic}'")
     client.disconnect()
 
 # Main
@@ -173,10 +183,11 @@ def main():
     parser = argparse.ArgumentParser(description="AWS MQTT Data Sender PoC")
     parser.add_argument("--broker", required=True, help="MQTT broker address")
     parser.add_argument("--port", type=int, default=1883, help="MQTT broker port")
-    parser.add_argument("--topic", required=True, help="MQTT topic")
+    parser.add_argument("--vendor", required=True, help="Vendor name")
+    parser.add_argument("--hostid", required=True, help="Host ID")
+    parser.add_argument("--period", type=int, default=10, help="Period in seconds between measurements")
     parser.add_argument("--username", help="MQTT username (optional)")
     parser.add_argument("--password", help="MQTT password (optional)")
-    parser.add_argument("--metadata", action="store_true", help="Include metadata in payload")
     parser.add_argument("--tls", action="store_true", help="Enable TLS (MQTTS)")
     parser.add_argument("--ca-cert", help="CA certificate file for TLS connection")
     parser.add_argument("--client-cert", help="Client certificate file for mutual TLS (optional)")
@@ -186,10 +197,21 @@ def main():
 
     args = parser.parse_args()
 
-    transmission = build_transmission(args.metadata)
-    payload_bytes = transmission.SerializeToString()
+    # build and send metadata transmission
+    metadata = build_metadata_transmission()
+    payload_bytes = metadata.SerializeToString()
+    topic = f"firstmile/{args.vendor}/metadata/{args.hostid}"
+    send_mqtt_payload(args, topic, payload_bytes, retain=True)
 
-    send_mqtt_payload(args, payload_bytes)
+    while True:
+        # build and send data transmission
+        data_transmission = build_data_transmission(args.hostid)
+        payload_bytes = data_transmission.SerializeToString()
+        topic = f"firstmile/{args.vendor}/data/{args.hostid}"
+        send_mqtt_payload(args, topic, payload_bytes)
+
+        # wait for the specified period before sending the next measurement
+        time.sleep(args.period)
 
 if __name__ == "__main__":
     main()
