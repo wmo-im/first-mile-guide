@@ -1,0 +1,38 @@
+{
+  "host": {
+    "name": "Hydro-Station-02",
+    "serialNumber": "HYDSTN002-2025"
+  },
+  "observers": [
+    {
+      "id": 1,
+      "name": "Geolux LX-80 Radar Level Sensor"
+    },
+    {
+      "id": 2,
+      "name": "OTT Pluvio² Rain Gauge"
+    }
+  ],
+  "parameterDefinitions": [
+    {
+      "id": 1,
+      "description": "Hydrological parameters",
+      "parameters": [
+        {
+          "longName": "Water Level",
+          "unit": "m",
+          "observerId": 1,
+          "cellMethod": "MEAN",
+          "cellPeriodSeconds": 10
+        },
+        {
+          "longName": "Rainfall Intensity",
+          "unit": "mm/h",
+          "observerId": 2,
+          "cellMethod": "MEAN",
+          "cellPeriodSeconds": 600
+        }
+      ]
+    }
+  ]
+}
