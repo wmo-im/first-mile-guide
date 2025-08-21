@@ -48,7 +48,7 @@ The `Data` message is the main message that is sent from the Data Sender to the 
 * `hostId` - The unique ID of the Data Sender (host) that collected the data. This could be something like station ID or datalogger serial number.  ;do we keep this that open or should we advice xxxx.yyyy xxxx reserved for station and yyyy reserved for logger e.g. serial number (as we could think of stations that have different loggers)
 * `observations` - A list of `Observation` messages, containing the actual measurement data.
 
-The `Metadata` message contains the metadata. The following fields need to be send to the data receiver at least once.
+The `Metadata` message contains the site's configuration details, including the types of sensors installed and the measurement parameters along with their units. This message must be sent to the Data Receiver at least once after each configuration update. It contains the following fields:
 * `host` - The `HostDevice` message that describes the Data Sender (host), such as the datalogger.
 * `observers` - A list of `ObserverDevice` messages that describe the individual observers (sensors) that are locally connected to the Data Sender (host). 
 * `parameterDefinitions` - A list of `ParameterDefinition` messages that describe the parameters used in the observations.
@@ -238,6 +238,8 @@ The PoC Data Sender should be able to:
 
 * Collect measurement data from sensors and encode it into the Protobuf format, depending on the actual setup of the monitoring site.
 * Transmit the Protobuf payload over MQTT to the Data Receiver.
+* The `Metadata` message should be published to topic in the following format: `firstmile/[vendor_name]/metadata/hostId`, with retain flag set to 1 and with QoS=2.
+* The `Data` message should be published to topic in the following format: `firstmile/[vendor_name]/data/hostId`, with retain flag set to 0 and with QoS=1.
 * Ensure that the `metadata` message is send to the receiver and updated if configuration of the data sender changes.
 
 The PoC Data Receiver should be able to:
