@@ -27,3 +27,9 @@ After starting the receiver, open browser and go to the following URL: http://lo
 Example to run the sender to send both measurement and metadata, for site 1:
     
     $ python3 data-sender.py --period 10 --vendor geolux --hostid "AWS123" --broker s87beff9.ala.eu-central-1.emqxsl.com --username geolux --password "XXXX" --port 8883 --tls --insecure
+
+## Run payload generator to create example messages
+
+    $ python3 payload-generator.py
+
+The created JSON files with payloads will be stored to /standard/examples/example_output
