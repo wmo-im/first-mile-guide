@@ -39,7 +39,7 @@ For simplicity, there is no way to send the alarms or other events in the curren
 
 [source,proto]
 ----
-include::../src/protos/firstmile.proto[]
+include::../standard/protobuf-schema/firstmile.proto[]
 ----
 
 The `Data` message is the main message that is sent from the Data Sender to the Data Receiver. It contains the following fields:

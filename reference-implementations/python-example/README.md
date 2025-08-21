@@ -3,6 +3,7 @@
 The demo project consists of two scripts: 
 * `data-sender.py` simulates a Data Sender, a device such as a datalogger that transmits measurement data from the remote AWS.
 * `data-receiver.py` starts a listener that subscribes to a MQTT broker, receives messages published by Data Sender, differentiates them by topic (site), and displays the metadata and received values on graphs. 
+* `payload-generator.py` reads the schema bindings from JSON file, and generates sample Metadata and Data messages (in JSON format for readbility)
 
 ## Install
 
@@ -25,8 +26,4 @@ After starting the receiver, open browser and go to the following URL: http://lo
 
 Example to run the sender to send both measurement and metadata, for site 1:
     
-    $ python3 data-sender.py --broker s87beff9.ala.eu-central-1.emqxsl.com --port 8883 --tls --insecure --topic "firstmile/geolux/test1"  --username geolux --password "XXXX" --metadata
-
-Example to run the sender to send only measurements, for site 2:
-
-    $ python3 data-sender.py --broker s87beff9.ala.eu-central-1.emqxsl.com --port 8883 --tls --insecure --topic "firstmile/geolux/test2"  --username geolux --password "XXXX"
+    $ python3 data-sender.py --period 10 --vendor geolux --hostid "AWS123" --broker s87beff9.ala.eu-central-1.emqxsl.com --username geolux --password "XXXX" --port 8883 --tls --insecure

@@ -1,0 +1,12 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "firstmil-proto"
+
+[scripts]
+build-proto = "bash -c 'mkdir -p protospy &&protoc --proto_path=../../standard/protobuf-schema --python_out=protospy/ ../../standard/protobuf-schema/firstmile.proto'"
+
+[packages]
+protobuf = "*"
+paho-mqtt = "*"
+dash = "*"

@@ -3,11 +3,10 @@
 # The script will first send a single Metadata message with site configuration info, it will be sent as MQTT retained message.
 # Then it will periodically publish Data messages with temperature and voltage readings. 
 #
-# Before running this script, ensure that proto schema is compiled and the protobuf classes are generated. This can be achieved by running the
-# following command in protos folder: 
-# protoc -I . --python_out=../python-example/ firstmile.proto 
+# Before running this script, ensure that proto schema is compiled and the protobuf classes are generated. This can be achieved by running the script:
+# pipenv run build-proto
 #
-# Example fo running this script:
+# Example fo running this script (replace username and password with your own credentials):
 # python3 data-sender.py --period 10 --vendor geolux --hostid "AWS123" --broker s87beff9.ala.eu-central-1.emqxsl.com --username geolux --password "XXXX" --port 8883 --tls --insecure
 
 import argparse
@@ -17,7 +16,7 @@ import ssl
 from datetime import datetime, timezone
 
 import paho.mqtt.client as mqtt
-import firstmile_pb2 as pb2 # Your generated protobuf classes
+from protospy import firstmile_pb2 as pb2
 from google.protobuf.timestamp_pb2 import Timestamp
 
 

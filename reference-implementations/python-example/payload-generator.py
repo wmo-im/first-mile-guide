@@ -5,11 +5,11 @@ from google.protobuf.json_format import ParseDict
 import json
 import os
 
-path_oberservers = "./example_schema_binding/observer.json"
-path_host = "./example_schema_binding/host.json"
-path_parameters = "./example_schema_binding/parameters.json"
+path_oberservers = "../../standard/examples/example_schema_binding/observer.json"
+path_host = "../../standard/examples/example_schema_binding/host.json"
+path_parameters = "../../standard/examples/example_schema_binding/parameters.json"
 
-output_dir = "./example_output"
+output_dir = "../../standard/examples/example_output"
 os.makedirs(output_dir, exist_ok=True)
 
 def read_config_json(json_path, schema):
