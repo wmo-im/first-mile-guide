@@ -26,7 +26,7 @@ enum CellMethod {
 message Parameter {
   string longName = 1;
   string unit = 2;
-  string standardName = 3;
+  optional string standardName = 3;
   uint32 observerId = 4;
   CellMethod cellMethod = 5;
   uint32 cellPeriodSeconds = 6;
@@ -67,8 +67,8 @@ enum ReferenceSurface {
 }
 
 message Location {
-  double latitude = 1;
-  double longitude = 2;
+  optional double latitude = 1;
+  optional double longitude = 2;
   double heightMeter = 3;
   ReferenceSurface referenceSurface = 4; 
 }
