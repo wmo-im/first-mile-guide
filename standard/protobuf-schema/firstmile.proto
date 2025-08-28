@@ -30,6 +30,7 @@ message Parameter {
   uint32 observerId = 4;
   CellMethod cellMethod = 5;
   uint32 cellPeriodSeconds = 6;
+  map<string, string> customName = 7;
 }
 
 message ParameterDefinition {
