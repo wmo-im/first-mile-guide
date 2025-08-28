@@ -27,6 +27,15 @@
             "url": "https://org.com/data/obs_meta.json",
             "serialNumber": "SN293835492",
             "firmwareVersion": "V1.0.29"
+        },
+        {
+            "id": 3,
+            "name": "Soilmoisture probe",
+            "serialNumber": "SM39482"
+        },
+        {
+            "id": 4,
+            "name": "Internal parameters"
         }
     ],
     "parameterDefinitions": [
@@ -37,14 +46,14 @@
                 {
                     "longName": "Water level",
                     "unit": "mm",
-                    "standardName": "water_level",
+                    "standardName": "water_surface_height_above_reference_datum",
                     "observerId": 1,
                     "cellMethod": "POINT"
                 },
                 {
                     "longName": "Water temperature",
                     "unit": "°C",
-                    "standardName": "water_temperature",
+                    "standardName": "river_water_temperature",
                     "observerId": 1,
                     "cellMethod": "POINT"
                 },
@@ -59,7 +68,7 @@
                 {
                     "longName": "Wind direction 10min",
                     "unit": "°",
-                    "standardName": "wind_direction",
+                    "standardName": "wind_from_direction",
                     "observerId": 2,
                     "cellMethod": "MEAN",
                     "cellPeriodSeconds": 600
@@ -67,7 +76,19 @@
                 {
                     "longName": "Alarm water level",
                     "unit": "event",
-                    "observerId": 1
+                    "observerId": 1,
+                    "customName": {
+                        "other_standard_list": "alarm_level",
+                        "custom_list": "alarm"
+                    }
+                },
+                {
+                    "longName": "Soil Moisture 10cm",
+                    "unit": "event",
+                    "observerId": 1,
+                    "customName": {
+                        "custom_list": "soil_moisture_10cm"
+                    }
                 }
             ]
         },
@@ -77,11 +98,19 @@
             "parameters": [
                 {
                     "longName": "Supply Voltage",
-                    "unit": "V"
+                    "unit": "V",
+                    "observerId": 4,
+                    "customName": {
+                        "custom_list": "internal_supply"
+                    }
                 },
                 {
                     "longName": "Internal Temperature",
-                    "unit": "°C"
+                    "unit": "°C",
+                    "observerId": 4,
+                    "customName": {
+                        "custom_list": "internal_temperature"
+                    }
                 }
             ]
         }

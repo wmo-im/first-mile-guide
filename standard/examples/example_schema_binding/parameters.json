@@ -5,13 +5,13 @@
         "parameters": [{
                 "longName": "Water level",
                 "unit": "mm",
-                "standardName": "water_level",
+                "standardName": "water_surface_height_above_reference_datum",
                 "observerId": 1,
                 "cellMethod": "POINT"
             }, {
                 "longName": "Water temperature",
                 "unit": "°C",
-                "standardName": "water_temperature",
+                "standardName": "river_water_temperature",
                 "observerId": 1,
                 "cellMethod": "POINT"
             }, {
@@ -24,14 +24,20 @@
             }, {
                 "longName": "Wind direction 10min",
                 "unit": "°",
-                "standardName": "wind_direction",
+                "standardName": "wind_from_direction",
                 "observerId": 2,
                 "cellMethod": "MEAN",
                 "cellPeriodSeconds": 600
             }, {
                 "longName": "Alarm water level",
                 "unit": "event",
-                "observerId": 1
+                "observerId": 1,
+                "customName": {"custom_list" : "alarm", "other_standard_list": "alarm_level"}
+            }, {
+                "longName": "Soil Moisture 10cm",
+                "unit": "event",
+                "observerId": 1,
+                "customName": {"custom_list" : "soil_moisture_10cm"}
             }
         ]
         } , {
@@ -39,10 +45,14 @@
         "description": "Internal parameters of the data-logger",
         "parameters": [ {
                 "longName": "Supply Voltage",
-                "unit": "V"
+                "observerId": 4,
+                "unit": "V",
+                "customName": {"custom_list" : "internal_supply"}
             }, {
                 "longName": "Internal Temperature",
-                "unit": "°C"
+                "observerId": 4,
+                "unit": "°C",
+                "customName": {"custom_list" : "internal_temperature"}
             } 
         ]
         }

@@ -3,7 +3,7 @@
     "observations": [
         {
             "parameterDefinitionId": 1,
-            "time": "2025-08-21T09:00:31.771499Z",
+            "time": "2025-08-28T05:40:34.448187Z",
             "values": [
                 {
                     "doubleValue": 12.9
@@ -15,7 +15,7 @@
         },
         {
             "parameterDefinitionId": 2,
-            "time": "2025-08-21T09:00:31.771605Z",
+            "time": "2025-08-28T05:40:34.448267Z",
             "values": [
                 {
                     "doubleValue": 2304.54
@@ -36,7 +36,7 @@
         },
         {
             "parameterDefinitionId": 2,
-            "time": "2025-08-21T09:00:31.771612Z",
+            "time": "2025-08-28T05:40:34.448277Z",
             "values": [
                 {
                     "doubleValue": 2304.54
@@ -57,7 +57,7 @@
         },
         {
             "parameterDefinitionId": 2,
-            "time": "2025-08-21T09:00:31.771618Z",
+            "time": "2025-08-28T05:40:34.448283Z",
             "values": [
                 {
                     "doubleValue": 2304.54

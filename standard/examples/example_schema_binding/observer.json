@@ -21,6 +21,13 @@
             "url": "https://org.com/data/obs_meta.json",
             "serialNumber": "SN293835492",
             "firmwareVersion": "V1.0.29"
+        }, {
+            "id": 3,
+            "name": "Soilmoisture probe",
+            "serialNumber": "SM39482"
+        }, {
+            "id": 4,
+            "name": "Internal parameters"
         }
 
     ]
