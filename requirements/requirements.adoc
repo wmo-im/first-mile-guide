@@ -45,7 +45,6 @@ include::../standard/protobuf-schema/firstmile.proto[]
 The `Data` message is the main message that is sent from the Data Sender to the Data Receiver. It contains the following fields:
 
 * `version` - The Version of the protobuf schema used; it should be 1 for the first published version of the schema.
-* `hostId` - The unique ID of the Data Sender (host) that collected the data. This could be something like station ID or datalogger serial number.  ;do we keep this that open or should we advice xxxx.yyyy xxxx reserved for station and yyyy reserved for logger e.g. serial number (as we could think of stations that have different loggers)
 * `observations` - A list of `Observation` messages, containing the actual measurement data.
 
 The `Metadata` message contains the site's configuration details, including the types of sensors installed and the measurement parameters along with their units. This message must be sent to the Data Receiver at least once after each configuration update. It contains the following fields:
@@ -58,9 +57,9 @@ The `Observation` message contains the following fields:
 
 * `parameterDefinitionId` - The ID of the parameter being measured, which refers to a specific `ParameterDefinition`.
 * `time` - The timestamp of the observation, using the `google.protobuf.Timestamp` format.
-* `values` - A list of `Value` messages that contain the actual measurement values (based on CF Convention list https://cfconventions.org/Data/cf-conventions/cf-conventions-1.12/cf-conventions.html#appendix-cell-methods)
+* `values` - A list of `Value` messages that contain the actual measurement values.
 
-The `Value` message contains the measurement value. It can use any of the allowed different types of values, such as double, int32, uint32, int64, uint64, string, or bool. 
+The `Value` message contains the measurement value. It can use any of the allowed different types of values, such as double, int32, uint32, int64, uint64, string, or bool. If a value is not available (e.g. malfunctioning sensor or broken cable), the corresponding field should be send as emptyValue (`google.protobuf.Empty`), indicating that the value is missing - it should not be sent as zero, NaN, and should not be omitted.
 
 The `HostDevice` message describes the Data Sender (host) device:
 
@@ -79,7 +78,7 @@ The `ObserverDevice` message describes the individual observer (sensor) devices 
 * `serialNumber` - The serial number of the observer device, if available.
 * `firmwareVersion` - The firmware version of the observer device, typically in a format like "5.1" or "2.7.1-alpha".
 
-The `Location` message describes the geographical location of the device:
+The `Location` message describes the geographical location of the device. The `latitude` and `longitude` can be omitted if only local height is known.
 
 * `latitude` - The latitude of the device location in decimal degrees.
 * `longitude` - The longitude of the device location in decimal degrees.
@@ -91,15 +90,21 @@ The `ParameterDefinition` message describes the parameters used in the observati
 * `id` - The unique ID of the parameter definition.
 * `description` - A description of the parameter.   
 * `parameters` - A list of `Parameter` messages that define the parameters used in the observations.
+* `namespaces`- Contains a list of key-value pairs that define the namespaces used for custom naming conventions, where the key is the namespace name, and the value contains the corresponding URI or identifier.
 
 The `Parameter` message contains the following fields:
 
 * `longName` - The long name of the parameter, such as "Air Temperature" or "Wind Speed".
 * `unit` - The unit of measurement for the parameter, such as "Celsius" or "m/s".
-* `standardName` - The standard name of the parameter according to the CF List (WMO), such as "air_temperature" or "wind_speed".
-* `observer_id` - The ID of the observer (sensor) that collected the data.
+* `device` - A reference to the device (host or observer) that measures this parameter.
 * `cellMethod` - The cell method used for the parameter, such as POINT, SUM, MAXIMUM, etc.
 * `cellPeriodSeconds` - The period of averaging in seconds, only valid when the `cellMethod` is not POINT. This indicates how long the data was averaged over.
+* `names` - Contains a list of key-value pairs that define custom names for the parameter in different naming conventions, where the key is the namespace name, and the value is the corresponding name for the parameter in that namespace. The namespaces used here must be defined in the `ParameterDefinition` message.
+
+The `DeviceRef` message is used to reference either the host device or an observer device. It uses a `oneof` field to ensure that only one of the two options can be set at a time:
+
+* `host` - If this field is present, it indicates that the parameter is measured by the host device.
+* `observerId` - If this field is set, it indicates that the parameter is measured by the observer device referenced by the the specified ID, which must match the `id` field of one of the `ObserverDevice` messages in the `Metadata`.
 
 
 == Example Payloads
@@ -110,15 +115,14 @@ The following example shows a Protobuf payload for an Automatic Weather Station 
 
 The data the is to be encoded in the Protobuf format is here display in equivalent JSON formatting for readability.
 
-Example `data` message:
+Example `Data` message:
 [source,json]
 ----
 {
     "version": 1,
-    "hostId": "SouthPoleStation",
     "observations": [
         {
-            "parameterId": 1,
+            "parameterDefinitionId": 1,
             "time": "2025-05-06T12:39:31.788803Z",
             "values": [
                 {
@@ -130,7 +134,7 @@ Example `data` message:
             ]
         },
         {
-            "parameterId": 2,
+            "parameterDefinitionId": 2,
             "time": "2025-05-06T12:39:31.788855Z",
             "values": [
                 {
@@ -139,7 +143,7 @@ Example `data` message:
             ]
         },
         {
-            "parameterId": 2,
+            "parameterDefinitionId": 2,
             "time": "2025-05-06T12:39:31.788900Z",
             "values": [
                 {
@@ -148,7 +152,7 @@ Example `data` message:
             ]
         },
         {
-            "parameterId": 2,
+            "parameterDefinitionId": 2,
             "time": "2025-05-06T12:39:31.788936Z",
             "values": [
                 {
@@ -160,10 +164,11 @@ Example `data` message:
 }
 ----
 
-Example `metadata` message:
+Example `Metadata` message:
 [source,json]
 ----
 {
+    "version": 1,
     "host": {
         "name": "ArcticX100 Data Logger",
         "location": {
@@ -178,7 +183,7 @@ Example `metadata` message:
     },
     "observers": [
         {
-            "id": 2,
+            "id": 1,
             "name": "PT100",
             "location": {
                 "latitude": -90,
@@ -199,16 +204,20 @@ Example `metadata` message:
                 {
                     "longName": "Supply Voltage",
                     "unit": "V",
-                    "standardName": "voltage",
-                    "observerId": 1,
+                    "device": 
+                    {
+                        "host": {}
+                    },
                     "cellMethod": "POINT",
                     "cellPeriodSeconds": 0
                 },
                 {
                     "longName": "Internal Temperature",
                     "unit": "°C",
-                    "standardName": "",
-                    "observerId": 1,
+                    "device": 
+                    {
+                        "host": {}
+                    },
                     "cellMethod": "MEAN",
                     "cellPeriodSeconds": 5
                 }
@@ -221,12 +230,21 @@ Example `metadata` message:
                 {
                     "longName": "surface air temperature",
                     "unit": "°C",
-                    "standardName": "air_temperature",
-                    "observerId": 2,
+                    "device": 
+                    {
+                        "observerId": 1
+                    },
                     "cellMethod": "MEAN",
-                    "cellPeriodSeconds": 30
+                    "cellPeriodSeconds": 30,
+                    "names":
+                    {
+                        "cf": "air_temperature"
+                    }
                 }
-            ]
+            ],
+            "namespaces": {
+                "cf": "https://vocab.nerc.ac.uk/collection/P07/current/",
+            }
         }
     ]
 }    
