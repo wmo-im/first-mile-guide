@@ -38,48 +38,48 @@
                 {
                     "longName": "Water level",
                     "unit": "mm",
+                    "standardNames": {
+                        "cf": "water_level"
+                    },
                     "device": {
                         "observerId": 1
                     },
-                    "cellMethod": "POINT",
-                    "names": {
-                        "cf": "water_level"
-                    }
+                    "cellMethod": "POINT"
                 },
                 {
                     "longName": "Water temperature",
                     "unit": "°C",
+                    "standardNames": {
+                        "cf": "water_temperature"
+                    },
                     "device": {
                         "observerId": 1
                     },
-                    "cellMethod": "POINT",
-                    "names": {
-                        "cf": "water_temperature"
-                    }
+                    "cellMethod": "POINT"
                 },
                 {
                     "longName": "Wind speed 10min",
                     "unit": "m/s",
+                    "standardNames": {
+                        "cf": "wind_speed"
+                    },
                     "device": {
                         "observerId": 2
                     },
                     "cellMethod": "MEAN",
-                    "cellPeriodSeconds": 600,
-                    "names": {
-                        "cf": "wind_speed"
-                    }
+                    "cellPeriodSeconds": 600
                 },
                 {
                     "longName": "Wind direction 10min",
                     "unit": "°",
+                    "standardNames": {
+                        "cf": "wind_direction"
+                    },
                     "device": {
                         "observerId": 2
                     },
                     "cellMethod": "MEAN",
-                    "cellPeriodSeconds": 600,
-                    "names": {
-                        "cf": "wind_direction"
-                    }
+                    "cellPeriodSeconds": 600
                 },
                 {
                     "longName": "Alarm water level",
@@ -88,10 +88,7 @@
                         "observerId": 1
                     }
                 }
-            ],
-            "namespaces": {
-                "cf": "https://vocab.nerc.ac.uk/collection/P07/current/"
-            }
+            ]
         },
         {
             "id": 2,
@@ -113,5 +110,8 @@
                 }
             ]
         }
-    ]
+    ],
+    "namespaces": {
+        "cf": "https://vocab.nerc.ac.uk/collection/P07/current/"
+    }
 }

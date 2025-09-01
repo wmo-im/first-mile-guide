@@ -73,11 +73,10 @@ def define_parameters():
         device = pb2.DeviceRef(observerId = 1),
         cellMethod = pb2.MEAN,
         cellPeriodSeconds = 30,
-        names = { "cf": "air_temperature" }
+        standardNames = { "cf": "air_temperature" }
     )
 
     pd2.parameters.extend([param_air_temp])
-    pd2.namespaces["cf"] = "https://vocab.nerc.ac.uk/collection/P07/current/"
 
     return [pd1, pd2]
 
@@ -162,7 +161,8 @@ def build_metadata_transmission():
         version = 1,
         host = host,
         observers = observers,
-        parameterDefinitions = param_defs
+        parameterDefinitions = param_defs,
+        namespaces = {"cf" : "https://vocab.nerc.ac.uk/collection/P07/current/"}
     )
 
     return metadata

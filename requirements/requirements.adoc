@@ -51,6 +51,7 @@ The `Metadata` message contains the site's configuration details, including the 
 * `host` - The `HostDevice` message that describes the Data Sender (host), such as the datalogger.
 * `observers` - A list of `ObserverDevice` messages that describe the individual observers (sensors) that are locally connected to the Data Sender (host). 
 * `parameterDefinitions` - A list of `ParameterDefinition` messages that describe the parameters used in the observations.
+* `namespaces`- Contains a list of key-value pairs that define the namespaces used for custom naming conventions, where the key is the namespace name, and the value contains the corresponding URI or identifier.
 
 
 The `Observation` message contains the following fields:
@@ -90,16 +91,16 @@ The `ParameterDefinition` message describes the parameters used in the observati
 * `id` - The unique ID of the parameter definition.
 * `description` - A description of the parameter.   
 * `parameters` - A list of `Parameter` messages that define the parameters used in the observations.
-* `namespaces`- Contains a list of key-value pairs that define the namespaces used for custom naming conventions, where the key is the namespace name, and the value contains the corresponding URI or identifier.
 
 The `Parameter` message contains the following fields:
 
 * `longName` - The long name of the parameter, such as "Air Temperature" or "Wind Speed".
 * `unit` - The unit of measurement for the parameter, such as "Celsius" or "m/s".
+* `standardNames` - Contains a list of key-value pairs that define standard names for the parameter in different naming conventions, where the key is the namespace name, and the value is the corresponding name for the parameter in that namespace. The namespaces used here must be defined in the `Metadata` message.
 * `device` - A reference to the device (host or observer) that measures this parameter.
 * `cellMethod` - The cell method used for the parameter, such as POINT, SUM, MAXIMUM, etc.
 * `cellPeriodSeconds` - The period of averaging in seconds, only valid when the `cellMethod` is not POINT. This indicates how long the data was averaged over.
-* `names` - Contains a list of key-value pairs that define custom names for the parameter in different naming conventions, where the key is the namespace name, and the value is the corresponding name for the parameter in that namespace. The namespaces used here must be defined in the `ParameterDefinition` message.
+
 
 The `DeviceRef` message is used to reference either the host device or an observer device. It uses a `oneof` field to ensure that only one of the two options can be set at a time:
 
@@ -230,23 +231,23 @@ Example `Metadata` message:
                 {
                     "longName": "surface air temperature",
                     "unit": "°C",
+                    "standardNames":
+                    {
+                        "cf": "air_temperature"
+                    }
                     "device": 
                     {
                         "observerId": 1
                     },
                     "cellMethod": "MEAN",
-                    "cellPeriodSeconds": 30,
-                    "names":
-                    {
-                        "cf": "air_temperature"
-                    }
+                    "cellPeriodSeconds": 30
                 }
-            ],
-            "namespaces": {
-                "cf": "https://vocab.nerc.ac.uk/collection/P07/current/",
-            }
+            ]
         }
-    ]
+    ],
+    "namespaces": {
+        "cf": "https://vocab.nerc.ac.uk/collection/P07/current/"
+    }
 }    
 ----
 

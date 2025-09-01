@@ -11,7 +11,7 @@
                         "observerId": 1
                     },
                     "cellMethod": "POINT",
-                    "names": {
+                    "standardNames": {
                         "cf": "water_level"
                     }
                 },
@@ -22,7 +22,7 @@
                         "observerId": 1
                     },
                     "cellMethod": "POINT",
-                    "names": {
+                    "standardNames": {
                         "cf": "water_temperature"
                     }
                 },
@@ -34,7 +34,7 @@
                     },
                     "cellMethod": "MEAN",
                     "cellPeriodSeconds": 600,
-                    "names": {
+                    "standardNames": {
                         "cf": "wind_speed"
                     }
                 },
@@ -46,7 +46,7 @@
                     },
                     "cellMethod": "MEAN",
                     "cellPeriodSeconds": 600,
-                    "names": {
+                    "standardNames": {
                         "cf": "wind_direction"
                     }
                 },
@@ -57,10 +57,7 @@
                         "observerId": 1
                     }
                 }
-            ],
-            "namespaces": {
-                "cf": "https://vocab.nerc.ac.uk/collection/P07/current/"
-            }
+            ]
         },
         {
             "id": 2,
