@@ -1,5 +1,6 @@
 syntax = "proto3";
 
+import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
 enum CellMethod {
@@ -36,14 +37,14 @@ message Parameter {
   DeviceRef device = 3;
   CellMethod cellMethod = 4;
   uint32 cellPeriodSeconds = 5;
-  optional map<string, string> names = 6;
+  map<string, string> names = 6;
 }
 
 message ParameterDefinition {
   uint32 id = 1;
   string description = 2;
   repeated Parameter parameters = 3;
-  optional map<string, string> namespaces = 4;
+  map<string, string> namespaces = 4;
 }
 
 message Value {
