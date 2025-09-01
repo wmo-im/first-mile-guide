@@ -1,50 +1,86 @@
 {
-    "bindings": [ {
-        "id": 1,
-        "description": "Parameters read by sensors",
-        "parameters": [{
-                "longName": "Water level",
-                "unit": "mm",
-                "standardName": "water_level",
-                "observerId": 1,
-                "cellMethod": "POINT"
-            }, {
-                "longName": "Water temperature",
-                "unit": "°C",
-                "standardName": "water_temperature",
-                "observerId": 1,
-                "cellMethod": "POINT"
-            }, {
-                "longName": "Wind speed 10min",
-                "unit": "m/s",
-                "standardName": "wind_speed",
-                "observerId": 2,
-                "cellMethod": "MEAN",
-                "cellPeriodSeconds": 600
-            }, {
-                "longName": "Wind direction 10min",
-                "unit": "°",
-                "standardName": "wind_direction",
-                "observerId": 2,
-                "cellMethod": "MEAN",
-                "cellPeriodSeconds": 600
-            }, {
-                "longName": "Alarm water level",
-                "unit": "event",
-                "observerId": 1
+    "bindings": [
+        {
+            "id": 1,
+            "description": "Parameters read by sensors",
+            "parameters": [
+                {
+                    "longName": "Water level",
+                    "unit": "mm",
+                    "device": {
+                        "observerId": 1
+                    },
+                    "cellMethod": "POINT",
+                    "names": {
+                        "cf": "water_level"
+                    }
+                },
+                {
+                    "longName": "Water temperature",
+                    "unit": "°C",
+                    "device": {
+                        "observerId": 1
+                    },
+                    "cellMethod": "POINT",
+                    "names": {
+                        "cf": "water_temperature"
+                    }
+                },
+                {
+                    "longName": "Wind speed 10min",
+                    "unit": "m/s",
+                    "device": {
+                        "observerId": 2
+                    },
+                    "cellMethod": "MEAN",
+                    "cellPeriodSeconds": 600,
+                    "names": {
+                        "cf": "wind_speed"
+                    }
+                },
+                {
+                    "longName": "Wind direction 10min",
+                    "unit": "°",
+                    "device": {
+                        "observerId": 2
+                    },
+                    "cellMethod": "MEAN",
+                    "cellPeriodSeconds": 600,
+                    "names": {
+                        "cf": "wind_direction"
+                    }
+                },
+                {
+                    "longName": "Alarm water level",
+                    "unit": "event",
+                    "device": {
+                        "observerId": 1
+                    }
+                }
+            ],
+            "namespaces": {
+                "cf": "https://vocab.nerc.ac.uk/collection/P07/current/"
             }
-        ]
-        } , {
-        "id": 2,
-        "description": "Internal parameters of the data-logger",
-        "parameters": [ {
-                "longName": "Supply Voltage",
-                "unit": "V"
-            }, {
-                "longName": "Internal Temperature",
-                "unit": "°C"
-            } 
-        ]
+        },
+        {
+            "id": 2,
+            "description": "Internal parameters of the data-logger",
+            "parameters": [
+                {
+                    "longName": "Supply Voltage",
+                    "unit": "V",
+                    "device": {
+                        "host": {}
+                    }
+                },
+                {
+                    "longName": "Internal Temperature",
+                    "unit": "°C",
+                    "device": {
+                        "host": {}
+                    }
+                }
+            ]
         }
     ]
 }

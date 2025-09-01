@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "host": {
         "name": "data-logger",
         "serialNumber": "SN494839"
@@ -37,39 +38,60 @@
                 {
                     "longName": "Water level",
                     "unit": "mm",
-                    "standardName": "water_level",
-                    "observerId": 1,
-                    "cellMethod": "POINT"
+                    "device": {
+                        "observerId": 1
+                    },
+                    "cellMethod": "POINT",
+                    "names": {
+                        "cf": "water_level"
+                    }
                 },
                 {
                     "longName": "Water temperature",
                     "unit": "°C",
-                    "standardName": "water_temperature",
-                    "observerId": 1,
-                    "cellMethod": "POINT"
+                    "device": {
+                        "observerId": 1
+                    },
+                    "cellMethod": "POINT",
+                    "names": {
+                        "cf": "water_temperature"
+                    }
                 },
                 {
                     "longName": "Wind speed 10min",
                     "unit": "m/s",
-                    "standardName": "wind_speed",
-                    "observerId": 2,
+                    "device": {
+                        "observerId": 2
+                    },
                     "cellMethod": "MEAN",
-                    "cellPeriodSeconds": 600
+                    "cellPeriodSeconds": 600,
+                    "names": {
+                        "cf": "wind_speed"
+                    }
                 },
                 {
                     "longName": "Wind direction 10min",
                     "unit": "°",
-                    "standardName": "wind_direction",
-                    "observerId": 2,
+                    "device": {
+                        "observerId": 2
+                    },
                     "cellMethod": "MEAN",
-                    "cellPeriodSeconds": 600
+                    "cellPeriodSeconds": 600,
+                    "names": {
+                        "cf": "wind_direction"
+                    }
                 },
                 {
                     "longName": "Alarm water level",
                     "unit": "event",
-                    "observerId": 1
+                    "device": {
+                        "observerId": 1
+                    }
                 }
-            ]
+            ],
+            "namespaces": {
+                "cf": "https://vocab.nerc.ac.uk/collection/P07/current/"
+            }
         },
         {
             "id": 2,
@@ -77,11 +99,17 @@
             "parameters": [
                 {
                     "longName": "Supply Voltage",
-                    "unit": "V"
+                    "unit": "V",
+                    "device": {
+                        "host": {}
+                    }
                 },
                 {
                     "longName": "Internal Temperature",
-                    "unit": "°C"
+                    "unit": "°C",
+                    "device": {
+                        "host": {}
+                    }
                 }
             ]
         }
