@@ -1,4 +1,5 @@
 {
+  "version": 1,
   "host": {
     "name": "Hydro-Station-02",
     "serialNumber": "HYDSTN002-2025"
@@ -21,14 +22,18 @@
         {
           "longName": "Water Level",
           "unit": "m",
-          "observerId": 1,
+          "device": {
+            "observerId": 1
+          },
           "cellMethod": "MEAN",
           "cellPeriodSeconds": 10
         },
         {
           "longName": "Rainfall Intensity",
           "unit": "mm/h",
-          "observerId": 2,
+          "device": {
+            "observerId": 2
+          },
           "cellMethod": "MEAN",
           "cellPeriodSeconds": 600
         }

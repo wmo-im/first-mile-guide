@@ -1,5 +1,5 @@
 {
-  "hostId": "HMSTN001-2025",
+  "version": 1,
   "observations": [
     {
       "parameterDefinitionId": 1,
@@ -7,7 +7,7 @@
       "values": [
         { "doubleValue": 18.6 },
         { "doubleValue": 72.3 },
-        { "doubleValue": 1013.2 },
+        { "emptyValue": {} },
         { "doubleValue": 3.4 },
         { "doubleValue": 215.0 },
         { "doubleValue": 0.4 }
