@@ -23,19 +23,28 @@ enum CellMethod {
   VARIANCE = 17;                // Variance within the cell
 }
 
+message DeviceRef {
+  oneof target {
+    google.protobuf.Empty host = 1; // if field is present => refers to the single host
+    uint32 observerId = 2;
+  }
+}
+
 message Parameter {
   string longName = 1;
   string unit = 2;
   optional string standardName = 3;
-  uint32 observerId = 4;
+  DeviceRef device = 4;
   CellMethod cellMethod = 5;
   uint32 cellPeriodSeconds = 6;
+  repeated map<string, string> names = 7;
 }
 
 message ParameterDefinition {
   uint32 id = 1;
   string description = 2;
   repeated Parameter parameters = 3;
+  repeated map<string, string> namespaces = 4;
 }
 
 message Value {
@@ -48,6 +57,7 @@ message Value {
     uint64 unsignedInt64Value = 6;
     string stringValue = 7;
     bool boolValue = 8;
+    google.protobuf.Empty emptyValue = 9;
   }
 }
 
@@ -92,8 +102,7 @@ message ObserverDevice {
 
 message Data {
   uint32 version = 1;
-  string hostId = 2;
-  repeated Observation observations = 3;
+  repeated Observation observations = 2;
 }
 
 message Metadata {
