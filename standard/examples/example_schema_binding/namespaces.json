@@ -1,0 +1,8 @@
+{
+    "bindings": [
+        {
+            "key": "cf",
+            "value": "https://vocab.nerc.ac.uk/collection/P07/current/"
+        }
+    ]
+}

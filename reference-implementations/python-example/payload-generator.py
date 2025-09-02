@@ -5,11 +5,12 @@ from google.protobuf.json_format import ParseDict
 import json
 import os
 
-path_oberservers = "./example_schema_binding/observer.json"
-path_host = "./example_schema_binding/host.json"
-path_parameters = "./example_schema_binding/parameters.json"
+path_oberservers = "../../standard/examples/example_schema_binding/observer.json"
+path_host = "../../standard/examples/example_schema_binding/host.json"
+path_parameters = "../../standard/examples/example_schema_binding/parameters.json"
+path_namespaces = "../../standard/examples/example_schema_binding/namespaces.json"
 
-output_dir = "./example_output"
+output_dir = "../../standard/examples/example_output"
 os.makedirs(output_dir, exist_ok=True)
 
 def read_config_json(json_path, schema):
@@ -26,6 +27,7 @@ def read_config_json(json_path, schema):
 # load and parse bindings for devices and parameters
 observers = read_config_json(path_oberservers, firstmile_pb2.ObserverDevice)
 parameter_definitions = read_config_json(path_parameters, firstmile_pb2.ParameterDefinition)
+namespace_definitions = read_config_json(path_namespaces, firstmile_pb2.Metadata.NamespacesEntry)
 # read host bindings
 with open(path_host, "r") as f:
     binding_json = f.read()
@@ -60,7 +62,7 @@ for i in range(3):
 
 # create transmission payload with observations only
 data_message = firstmile_pb2.Data()
-data_message.hostId = "TT-1M"
+data_message.version = 1
 data_message.observations.extend(observations)
 
 # generate data message
@@ -72,9 +74,11 @@ with open(f"{output_dir}/data_message.json", "w") as f:
 
 # add metadata
 metadata_message = firstmile_pb2.Metadata()
+metadata_message.version = 1
 metadata_message.host.CopyFrom(host)
 metadata_message.observers.extend(observers)
 metadata_message.parameterDefinitions.extend(parameter_definitions)
+metadata_message.namespaces.update({ns.key: ns.value for ns in namespace_definitions})
 
 # generate output with metadata
 serialized_with_metadata = metadata_message.SerializeToString()

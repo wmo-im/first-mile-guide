@@ -15,7 +15,7 @@ from dash import dcc, html
 import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output
 import plotly.graph_objs as go
-import firstmile_pb2 as pb2 # Your generated protobuf classes
+from protospy import firstmile_pb2 as pb2
 from google.protobuf.json_format import MessageToDict
 import threading
 import queue

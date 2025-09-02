@@ -1,0 +1,83 @@
+{
+    "bindings": [
+        {
+            "id": 1,
+            "description": "Parameters read by sensors",
+            "parameters": [
+                {
+                    "longName": "Water level",
+                    "unit": "mm",
+                    "device": {
+                        "observerId": 1
+                    },
+                    "cellMethod": "POINT",
+                    "standardNames": {
+                        "cf": "water_level"
+                    }
+                },
+                {
+                    "longName": "Water temperature",
+                    "unit": "°C",
+                    "device": {
+                        "observerId": 1
+                    },
+                    "cellMethod": "POINT",
+                    "standardNames": {
+                        "cf": "water_temperature"
+                    }
+                },
+                {
+                    "longName": "Wind speed 10min",
+                    "unit": "m/s",
+                    "device": {
+                        "observerId": 2
+                    },
+                    "cellMethod": "MEAN",
+                    "cellPeriodSeconds": 600,
+                    "standardNames": {
+                        "cf": "wind_speed"
+                    }
+                },
+                {
+                    "longName": "Wind direction 10min",
+                    "unit": "°",
+                    "device": {
+                        "observerId": 2
+                    },
+                    "cellMethod": "MEAN",
+                    "cellPeriodSeconds": 600,
+                    "standardNames": {
+                        "cf": "wind_direction"
+                    }
+                },
+                {
+                    "longName": "Alarm water level",
+                    "unit": "event",
+                    "device": {
+                        "observerId": 1
+                    }
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "description": "Internal parameters of the data-logger",
+            "parameters": [
+                {
+                    "longName": "Supply Voltage",
+                    "unit": "V",
+                    "device": {
+                        "host": {}
+                    }
+                },
+                {
+                    "longName": "Internal Temperature",
+                    "unit": "°C",
+                    "device": {
+                        "host": {}
+                    }
+                }
+            ]
+        }
+    ]
+}

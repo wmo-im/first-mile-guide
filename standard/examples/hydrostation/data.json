@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "observations": [
+    {
+      "parameterDefinitionId": 1,
+      "time": "2025-08-21T08:30:00Z",
+      "values": [
+        { "doubleValue": 3.42 },
+        { "doubleValue": 0.0 }
+      ]
+    },
+    {
+      "parameterDefinitionId": 1,
+      "time": "2025-08-21T08:40:00Z",
+      "values": [
+        { "doubleValue": 3.43 },
+        { "doubleValue": 0.0 }
+      ]
+    },
+    {
+      "parameterDefinitionId": 1,
+      "time": "2025-08-21T08:50:00Z",
+      "values": [
+        { "doubleValue": 3.52 },
+        { "doubleValue": 3.1 }
+      ]
+    }
+  ]
+}

@@ -1,9 +1,9 @@
 {
-    "hostId": "TT-1M",
+    "version": 1,
     "observations": [
         {
             "parameterDefinitionId": 1,
-            "time": "2025-08-14T13:59:11.131714Z",
+            "time": "2025-09-01T20:57:59.961526Z",
             "values": [
                 {
                     "doubleValue": 12.9
@@ -15,7 +15,7 @@
         },
         {
             "parameterDefinitionId": 2,
-            "time": "2025-08-14T13:59:11.131754Z",
+            "time": "2025-09-01T20:57:59.961639Z",
             "values": [
                 {
                     "doubleValue": 2304.54
@@ -36,7 +36,7 @@
         },
         {
             "parameterDefinitionId": 2,
-            "time": "2025-08-14T13:59:11.131784Z",
+            "time": "2025-09-01T20:57:59.961647Z",
             "values": [
                 {
                     "doubleValue": 2304.54
@@ -57,7 +57,7 @@
         },
         {
             "parameterDefinitionId": 2,
-            "time": "2025-08-14T13:59:11.131812Z",
+            "time": "2025-09-01T20:57:59.961653Z",
             "values": [
                 {
                     "doubleValue": 2304.54

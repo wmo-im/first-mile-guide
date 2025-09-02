@@ -3,11 +3,10 @@
 # The script will first send a single Metadata message with site configuration info, it will be sent as MQTT retained message.
 # Then it will periodically publish Data messages with temperature and voltage readings. 
 #
-# Before running this script, ensure that proto schema is compiled and the protobuf classes are generated. This can be achieved by running the
-# following command in protos folder: 
-# protoc -I . --python_out=../python-example/ firstmile.proto 
+# Before running this script, ensure that proto schema is compiled and the protobuf classes are generated. This can be achieved by running the script:
+# pipenv run build-proto
 #
-# Example fo running this script:
+# Example fo running this script (replace username and password with your own credentials):
 # python3 data-sender.py --period 10 --vendor geolux --hostid "AWS123" --broker s87beff9.ala.eu-central-1.emqxsl.com --username geolux --password "XXXX" --port 8883 --tls --insecure
 
 import argparse
@@ -17,8 +16,9 @@ import ssl
 from datetime import datetime, timezone
 
 import paho.mqtt.client as mqtt
-import firstmile_pb2 as pb2 # Your generated protobuf classes
-from google.protobuf.timestamp_pb2 import Timestamp
+from protospy import firstmile_pb2 as pb2
+from google.protobuf import timestamp_pb2 as Timestamp
+from google.protobuf import empty_pb2 as Empty
 
 
 # These function just create some fake measurements
@@ -29,7 +29,7 @@ def random_voltage():
     return round(random.uniform(11.5, 13.0), 2)
 
 def current_timestamp():
-    t = Timestamp()
+    t = Timestamp.Timestamp()
     now = datetime.now(timezone.utc)
     t.FromDatetime(now)
     return t
@@ -38,40 +38,43 @@ def current_timestamp():
 # The following function will create protobuf objects with the parameter definitions
 def define_parameters():
     # Data Logger parameters
-    pd1 = pb2.ParameterDefinition()
-    pd1.id = 1
-    pd1.description = "Internal parameters of the data-logger"
+    pd1 = pb2.ParameterDefinition(
+        id = 1,
+        description = "Internal parameters of the data-logger"
+    )
 
-    param_voltage = pb2.Parameter()
-    param_voltage.longName = "Supply Voltage"
-    param_voltage.unit = "V"
-    param_voltage.standardName = "voltage"
-    param_voltage.observerId = 1
-    param_voltage.cellMethod = pb2.POINT
-    param_voltage.cellPeriodSeconds = 0
+    param_voltage = pb2.Parameter(
+        longName = "Supply Voltage",
+        unit = "V",
+        device = pb2.DeviceRef(host = Empty.Empty()),
+        cellMethod = pb2.POINT,
+        cellPeriodSeconds = 0
+    )
 
-    param_internal_temp = pb2.Parameter()
-    param_internal_temp.longName = "Internal Temperature"
-    param_internal_temp.unit = "°C"
-    param_internal_temp.standardName = ""
-    param_internal_temp.observerId = 1
-    param_internal_temp.cellMethod = pb2.MEAN
-    param_internal_temp.cellPeriodSeconds = 5
+    param_internal_temp = pb2.Parameter(
+        longName = "Internal Temperature",
+        unit = "°C",
+        device = pb2.DeviceRef(host = Empty.Empty()),
+        cellMethod = pb2.MEAN,
+        cellPeriodSeconds = 5
+    )
 
     pd1.parameters.extend([param_voltage, param_internal_temp])
 
     # PT100 sensor parameters
-    pd2 = pb2.ParameterDefinition()
-    pd2.id = 2
-    pd2.description = "PT100 temperature sensor readings"
+    pd2 = pb2.ParameterDefinition(
+        id = 2,
+        description = "PT100 temperature sensor readings"
+    )
 
-    param_air_temp = pb2.Parameter()
-    param_air_temp.longName = "Surface Air Temperature"
-    param_air_temp.unit = "°C"
-    param_air_temp.standardName = "air_temperature"
-    param_air_temp.observerId = 2
-    param_air_temp.cellMethod = pb2.MEAN
-    param_air_temp.cellPeriodSeconds = 30
+    param_air_temp = pb2.Parameter(
+        longName = "Surface Air Temperature",
+        unit = "°C",
+        device = pb2.DeviceRef(observerId = 1),
+        cellMethod = pb2.MEAN,
+        cellPeriodSeconds = 30,
+        standardNames = { "cf": "air_temperature" }
+    )
 
     pd2.parameters.extend([param_air_temp])
 
@@ -91,7 +94,7 @@ def generate_observations(parameter_defs):
         for param in pd.parameters:
             val = pb2.Value()
 
-            if param.standardName == "voltage":
+            if param.longName == "Supply Voltage":
                 val.doubleValue = random_voltage()
             else:
                 val.doubleValue = random_temperature()
@@ -105,54 +108,62 @@ def generate_observations(parameter_defs):
 # Create the metadata
 def create_metadata():
     # Host device
-    host = pb2.HostDevice()
-    host.name = "ArcticX100 Data Logger"
-    host.location.latitude = -90
-    host.location.longitude = 0
-    host.location.heightMeter = 10.0
-    host.location.referenceSurface = pb2.GL
-    host.url = "https://org.com/data/obs_meta.json"
-    host.serialNumber = "1234567890"
-    host.firmwareVersion = "1.0.0"
+    host = pb2.HostDevice(
+        name = "ArcticX100 Data Logger",
+        location = pb2.Location(
+            latitude = -90,
+            longitude = 0,
+            heightMeter = 10.0,
+            referenceSurface = pb2.GL
+        ),
+        url = "https://org.com/data/obs_meta.json",
+        serialNumber = "1234567890",
+        firmwareVersion = "1.0.0"
+    )
 
     # Observer device (PT100)
-    observer = pb2.ObserverDevice()
-    observer.id = 1
-    observer.name = "PT100"
-    observer.location.latitude = -90
-    observer.location.longitude = 0
-    observer.location.heightMeter = 13.0
-    observer.location.referenceSurface = pb2.GL
-    observer.url = "https://org.com/data/obs_meta.json"
-    observer.serialNumber = "00AB-123456"
-    observer.firmwareVersion = "5.6A-Rev2"
+    observer = pb2.ObserverDevice(
+    id = 1,
+    name = "PT100",
+    location = pb2.Location(
+        latitude = -90,
+        longitude = 0,
+        heightMeter = 13.0,
+        referenceSurface = pb2.GL
+    ),
+    url = "https://org.com/data/obs_meta.json",
+    serialNumber = "00AB-123456",
+    firmwareVersion = "5.6A-Rev2"
+    )
 
     return host, [observer]
 
 # This is the main function to construct Data message
 def build_data_transmission(hostid):
-    transmission = pb2.Data()
-    transmission.version = 1
-    transmission.hostId = hostid
+    observations = generate_observations(define_parameters())
 
-    param_defs = define_parameters()
-    observations = generate_observations(param_defs)
-
-    transmission.observations.extend(observations)
+    transmission = pb2.Data(
+        version = 1,
+        observations = observations
+    )
 
     return transmission
 
+# This is the main function to construct Metadata message
 def build_metadata_transmission():
-    metadata = pb2.Metadata()
-
     # Define the host device and observers
     host, observers = create_metadata()
-    metadata.host.CopyFrom(host)
-    metadata.observers.extend(observers)
 
-    # Define the parameter definitions
+    # Define the measurement parameters
     param_defs = define_parameters()
-    metadata.parameterDefinitions.extend(param_defs)
+
+    metadata = pb2.Metadata(
+        version = 1,
+        host = host,
+        observers = observers,
+        parameterDefinitions = param_defs,
+        namespaces = {"cf" : "https://vocab.nerc.ac.uk/collection/P07/current/"}
+    )
 
     return metadata
 
