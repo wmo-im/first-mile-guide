@@ -185,8 +185,16 @@ def send_mqtt_payload(args, topic, payload_bytes, retain=False):
 
     print(f"Connecting to MQTT broker {args.broker}:{args.port}...")
     client.connect(args.broker, args.port, 60)
-    client.publish(topic, payload_bytes, qos = 2 if retain else 1, retain = retain)
-    print(f"Published payload ({len(payload_bytes)} bytes) to topic '{topic}'")
+    client.loop_start()
+
+    msg_info = client.publish(topic, payload_bytes, qos = 2 if retain else 1, retain = retain)
+    msg_info.wait_for_publish(timeout=10)
+    if msg_info.is_published():
+        print(f"Published payload ({len(payload_bytes)} bytes) to topic '{topic}'")
+    else:
+        print("Publication failed")
+
+    client.loop_stop()
     client.disconnect()
 
 # Main
