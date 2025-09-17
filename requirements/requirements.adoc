@@ -124,7 +124,7 @@ Example `Data` message:
     "observations": [
         {
             "parameterDefinitionId": 1,
-            "time": "2025-05-06T12:39:31.788803Z",
+            "time": "2025-05-06T12:39:30.000000Z",
             "values": [
                 {
                     "doubleValue": 12.9
@@ -136,7 +136,7 @@ Example `Data` message:
         },
         {
             "parameterDefinitionId": 2,
-            "time": "2025-05-06T12:39:31.788855Z",
+            "time": "2025-05-06T12:39:30.000000Z",
             "values": [
                 {
                     "doubleValue": -40.2
@@ -145,7 +145,7 @@ Example `Data` message:
         },
         {
             "parameterDefinitionId": 2,
-            "time": "2025-05-06T12:39:31.788900Z",
+            "time": "2025-05-06T12:40:00.000000Z",
             "values": [
                 {
                     "doubleValue": -40.4
@@ -154,7 +154,7 @@ Example `Data` message:
         },
         {
             "parameterDefinitionId": 2,
-            "time": "2025-05-06T12:39:31.788936Z",
+            "time": "2025-05-06T12:40:30.000000Z",
             "values": [
                 {
                     "doubleValue": -41.1
