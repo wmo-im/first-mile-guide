@@ -36,9 +36,8 @@
           "device": {
             "observerId": 1
           },
-          "observerId": 1,
           "cellMethod": "POINT",
-          "names":
+          "standardNames":
           {
               "cf": "air_temperature"
           }
@@ -49,9 +48,8 @@
           "device": {
             "observerId": 1
           },
-          "observerId": 1,
           "cellMethod": "POINT",
-          "names":
+          "standardNames":
           {
               "cf": "relative_humidity"
           }
@@ -62,9 +60,8 @@
           "device": {
             "observerId": 1
           },
-          "observerId": 1,
           "cellMethod": "POINT",
-          "names":
+          "standardNames":
           {
               "cf": "air_pressure"
           }
@@ -75,10 +72,9 @@
           "device": {
             "observerId": 1
           },
-          "observerId": 1,
           "cellMethod": "MEAN",
           "cellPeriodSeconds": 600,
-          "names":
+          "standardNames":
           {
               "cf": "wind_speed"
           }
@@ -89,10 +85,9 @@
           "device": {
             "observerId": 1
           },
-          "observerId": 1,
           "cellMethod": "MEAN",
           "cellPeriodSeconds": 600,
-          "names":
+          "standardNames":
           {
               "cf": "wind_from_direction"
           }
@@ -103,10 +98,9 @@
           "device": {
             "observerId": 1
           },
-          "observerId": 1,
           "cellMethod": "SUM",
           "cellPeriodSeconds": 600,
-          "names":
+          "standardNames":
           {
               "cf": "precipitation_amount"
           }
