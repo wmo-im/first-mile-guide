@@ -107,7 +107,7 @@
         }
       ],
       "namespaces": {
-        "cf": "https://vocab.nerc.ac.uk/collection/P07/current/"
+        "cf": "https://vocab.nerc.ac.uk/standard_name/"
       }
     },
     {
