@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package wmo.firstmile;
 
-option java_package = "int.wmo.firstmile";
+option java_package = "wmo.firstmile";
 option java_outer_classname = "Firstmile";
 
 import "google/protobuf/empty.proto";
