@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package wmo.firstmile;
+package wmo.firstmile.poc1;
 
-option java_package = "wmo.firstmile";
+option java_package = "wmo.firstmile.poc1";
 option java_outer_classname = "Firstmile";
 
 import "google/protobuf/empty.proto";
@@ -105,14 +105,12 @@ message ObserverDevice {
 }
 
 message Data {
-  uint32 version = 1;
-  repeated Observation observations = 2;
+  repeated Observation observations = 1;
 }
 
 message Metadata {
-  uint32 version = 1;
-  HostDevice host = 2;
-  repeated ObserverDevice observers = 3;
-  repeated ParameterDefinition parameterDefinitions = 4;
-  map<string, string> namespaces = 5;
+  HostDevice host = 1;
+  repeated ObserverDevice observers = 2;
+  repeated ParameterDefinition parameterDefinitions = 3;
+  map<string, string> namespaces = 4;
 }
