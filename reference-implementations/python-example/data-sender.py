@@ -20,6 +20,7 @@ from protospy import firstmile_pb2 as pb2
 from google.protobuf import timestamp_pb2 as Timestamp
 from google.protobuf import empty_pb2 as Empty
 
+proto_version = 'poc1' # as defined in firstmile.proto package definition
 
 # These function just create some fake measurements
 def random_temperature():
@@ -143,7 +144,6 @@ def build_data_transmission(hostid):
     observations = generate_observations(define_parameters())
 
     transmission = pb2.Data(
-        version = 1,
         observations = observations
     )
 
@@ -158,7 +158,6 @@ def build_metadata_transmission():
     param_defs = define_parameters()
 
     metadata = pb2.Metadata(
-        version = 1,
         host = host,
         observers = observers,
         parameterDefinitions = param_defs,
@@ -219,14 +218,14 @@ def main():
     # build and send metadata transmission
     metadata = build_metadata_transmission()
     payload_bytes = metadata.SerializeToString()
-    topic = f"firstmile/{args.vendor}/metadata/{args.hostid}"
+    topic = f"firstmile/{proto_version}/{args.vendor}/metadata/{args.hostid}"
     send_mqtt_payload(args, topic, payload_bytes, retain=True)
 
     while True:
         # build and send data transmission
         data_transmission = build_data_transmission(args.hostid)
         payload_bytes = data_transmission.SerializeToString()
-        topic = f"firstmile/{args.vendor}/data/{args.hostid}"
+        topic = f"firstmile/{proto_version}/{args.vendor}/data/{args.hostid}"
         send_mqtt_payload(args, topic, payload_bytes)
 
         # wait for the specified period before sending the next measurement
