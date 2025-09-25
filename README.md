@@ -30,5 +30,9 @@ This is a work in progress folder that everyone interested can have access to.
 It has been decided to open the Proof of Concept work to additional parties as "Data Receivers" only. No support will be given to the "Data Receivers" and they can use the available material without guarantee that it will work.
 
 Access to the shared MQTT broker can be made available as `subscribe` only. Username and password can be requested by creating a new issue on the repository explaining the intention of use and providing some details on the requester. Beyond providing the username/password, no further support will be provided. 
+
+The MQTT Topic Hierarchy used during the Proof Of Concept is : `firstmile/<version>/<vendor>/data/<device-id>`
+The first version is called `poc1`. This string `poc1` is in the topic hierarchy as well as in the protobuf definition.
+
 Additional "Data Receivers" can either use one of the reference implementation provided or develop their own solution. Contributions of additional implementations of "Data Receivers" are welcome.
 
