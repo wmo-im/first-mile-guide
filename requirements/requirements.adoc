@@ -257,8 +257,8 @@ The PoC Data Sender should be able to:
 
 * Collect measurement data from sensors and encode it into the Protobuf format, depending on the actual setup of the monitoring site.
 * Transmit the Protobuf payload over MQTT to the Data Receiver.
-* The `Metadata` message should be published to topic in the following format: `firstmile/[vendor_name]/metadata/hostId`, with retain flag set to 1 and with QoS=2.
-* The `Data` message should be published to topic in the following format: `firstmile/[vendor_name]/data/hostId`, with retain flag set to 0 and with QoS=1.
+* The `Metadata` message should be published to topic in the following format: `firstmile/[version]/[vendor_name]/metadata/hostId`, with retain flag set to 1 and with QoS=2.
+* The `Data` message should be published to topic in the following format: `firstmile/[version]/[vendor_name]/data/hostId`, with retain flag set to 0 and with QoS=1.
 * Ensure that the `metadata` message is send to the receiver and updated if configuration of the data sender changes.
 
 The PoC Data Receiver should be able to:

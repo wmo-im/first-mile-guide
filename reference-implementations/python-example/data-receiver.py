@@ -204,11 +204,12 @@ def update_page(pathname, n_intervals):
     while not metadata_queue.empty():
         topic, msg = metadata_queue.get()
 
-        # use regex to extract vendor and hostid from the topic in format firstmile/{vendor}/metadata/{hostid}
-        match = re.match(r"firstmile/([^/]+)/metadata/([^/]+)", topic)
+        # use regex to extract vendor and hostid from the topic in format firstmile/{version}/{vendor}/metadata/{hostid}
+        match = re.match(r"firstmile/([^/]+)/([^/]+)/metadata/([^/]+)", topic)
         if match:
-            vendor = match.group(1)
-            hostid = match.group(2)
+            version = match.group(1)
+            vendor = match.group(2)
+            hostid = match.group(3)
             key = f"{vendor}/{hostid}"
 
             if key not in state:
@@ -226,11 +227,12 @@ def update_page(pathname, n_intervals):
     while not message_queue.empty():
         topic, msg = message_queue.get()
 
-        # use regex to extract vendor and hostid from the topic in format firstmile/{vendor}/metadata/{hostid}
-        match = re.match(r"firstmile/([^/]+)/data/([^/]+)", topic)
+        # use regex to extract vendor and hostid from the topic in format firstmile/{version}/{vendor}/data/{hostid}
+        match = re.match(r"firstmile/([^/]+)/([^/]+)/data/([^/]+)", topic)
         if match:
-            vendor = match.group(1)
-            hostid = match.group(2)
+            version = match.group(1)
+            vendor = match.group(2)
+            hostid = match.group(3)
             key = f"{vendor}/{hostid}"
 
             if key not in state:
