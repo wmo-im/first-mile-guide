@@ -24,7 +24,7 @@
                     }
                 ],                
                 "time": {
-                    "seconds": 1759343541,
+                    "seconds": 1759343541, // the program sets current time
                     "nanos": 0
                 }
             }
