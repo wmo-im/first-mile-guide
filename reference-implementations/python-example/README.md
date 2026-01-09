@@ -16,7 +16,7 @@ The demo project consists of two scripts:
 
 ## Start receiver
 
-    $ python3 data-receiver.py --broker s87beff9.ala.eu-central-1.emqxsl.com --port 8883 --tls --insecure --topic "firstmile/#"  --username geolux --password "XXXX"
+    $ pipenv run python data-receiver.py --broker s87beff9.ala.eu-central-1.emqxsl.com --port 8883 --tls --insecure --topic "firstmile/#"  --username geolux --password "XXXX"
 
 Replace the broker address, port, topic, username and password with your data.
 

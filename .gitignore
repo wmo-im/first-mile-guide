@@ -2,5 +2,5 @@
 first-mile-guide/*.docx
 first-mile-guide/*.html
 first-mile-guide/*.pdf
-src/python-example/protospy/
+reference-implementations/python-example/protospy/
 reference-implementations/c-nanopb-example/build
