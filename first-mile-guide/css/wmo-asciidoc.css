@@ -1,0 +1,65 @@
+@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";
+@import "https://cdn.jsdelivr.net/gh/asciidoctor/asciidoctor@2.0/data/stylesheets/asciidoctor-default.css";
+
+h1, h2, h3, h4, h5, h6,
+.sidebarblock > .content > .title {
+  color: #005398;
+  font-weight: bold;
+}
+
+#toctitle {
+  color: #005398;
+  font-weight: bold;
+}
+
+#content #toc {
+    border: 1px solid #005398;
+    margin-bottom: 1.25em;
+    padding: 1.25em;
+    background: #ffffff;
+    border-radius: 4px;
+}
+
+#header {
+  border-bottom: 4px solid #005398;
+  margin-top: 10px;
+
+}
+
+#header>h1:first-child {
+    color: #005398;
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+#header::before {
+  content: "";
+  display: block;
+  height: 72px;
+  background: url("images/wmo-logo-en.png") no-repeat left center;
+  background-size: contain;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+.subheader, .admonitionblock td.content>.title, .audioblock>.title, .exampleblock>.title, .imageblock>.title, .listingblock>.title, .literalblock>.title, .stemblock>.title, .openblock>.title, .paragraph>.title, .quoteblock>.title, table.tableblock>.title, .verseblock>.title, .videoblock>.title, .dlist>.title, .olist>.title, .ulist>.title, .qlist>.title, .hdlist>.title {
+    line-height: 1.45;
+    color: #005398;
+    font-weight: 400;
+    margin-top: 0;
+    margin-bottom: .25em;
+}
+
+#footer {
+    max-width: none;
+    background: #005398;
+    padding: 1.25em;
+}
+
+#footer-text {
+    color: #ffffff;
+    line-height: 1.44;
+    font-weight: bold;
+}

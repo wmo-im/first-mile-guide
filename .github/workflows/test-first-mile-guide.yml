@@ -23,6 +23,6 @@ jobs:
       - name: build documentation
         run: |
           cd first-mile-guide \
-          && asciidoctor --trace -o /tmp/first-mile-guide/first-mile-guide/${FILE_BASENAME}.html index.adoc \
+          && asciidoctor --trace -a stylesheet=css/wmo-asciidoc.css -o /tmp/first-mile-guide/first-mile-guide/${FILE_BASENAME}.html index.adoc \
           && asciidoctor -a allow-uri-read --trace --backend docbook --out-file - index.adoc | pandoc --from docbook --to docx --output /tmp/first-mile-guide/first-mile-guide/${FILE_BASENAME}.docx \
           && asciidoctor -a allow-uri-read --trace -r asciidoctor-pdf --trace -b pdf -o /tmp/first-mile-guide/first-mile-guide/${FILE_BASENAME}.pdf index.adoc
