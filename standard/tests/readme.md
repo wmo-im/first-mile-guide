@@ -21,4 +21,4 @@ Place to store the source data accumulated to enable testing of the First Mile S
 
 | Test | Test Aim | Folder |
 | ----- | ----- | -----|
-| Implementation Completeness| First Mile Schema and Sample data that uses all the possible values in the schema to check a Receiver Implementation has covered all the possible content values|  |
+| Implementation Completeness| First Mile Schema and Sample data that uses all the possible values in the schema to check a Receiver Implementation has covered all the possible content values| [first-mile-guide/standard/tests/resilience](./completeness)
