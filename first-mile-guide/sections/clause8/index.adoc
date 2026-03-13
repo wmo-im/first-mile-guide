@@ -1,0 +1,7 @@
+== Standard name binding
+
+=== Namespace declaration
+
+=== Standard name assignment
+
+=== Recommended: CF Conventions binding

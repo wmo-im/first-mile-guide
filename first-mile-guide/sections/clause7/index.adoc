@@ -1,0 +1,36 @@
+== Data model
+
+=== Overview
+
+=== Messages
+
+==== Metadata message
+
+==== Data message
+
+=== Devices
+
+==== Host device
+
+==== Observer device
+
+==== Location and reference surfaces
+
+=== Observations and values
+
+==== Observation
+
+==== Value types
+
+==== Missing and error values
+
+=== Parameter definitions
+
+==== Parameter
+
+==== Cell method
+
+==== Cell period
+
+==== Device reference
+
