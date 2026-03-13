@@ -1,0 +1,17 @@
+== Data sender
+
+=== Metadata publication
+
+==== Mandatory fields
+
+==== Transmission triggers
+
+==== Retained messages
+
+=== Data publication
+
+==== Mandatory fields
+
+==== Observation timestamps
+
+=== Device identification

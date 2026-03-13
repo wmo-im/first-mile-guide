@@ -1,0 +1,13 @@
+== Conformance
+
+=== Conformance Classes
+
+==== Requirements Class: Core Data Model
+
+==== Requirements Class: Standard Name Binding
+
+==== Requirements Class: MQTT Protocol Binding
+
+==== Requirements Class: Data Sender
+
+==== Requirements Class: Data Receiver

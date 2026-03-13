@@ -1,0 +1,34 @@
+== Terms, definitions and abbreviations
+
+=== Terms and definitions
+
+==== First mile
+
+==== Host device
+
+==== Observer device
+
+==== Observation
+
+==== Parameter definition
+
+==== Cell method
+
+==== Cell period
+
+==== Empty value
+
+==== Standard name
+
+==== Namespace
+
+=== Abbreviations
+
+- CF
+- HMEI
+- INFCOM
+- MQTT
+- protobuf
+- QoS
+- SC-IMT
+- WMO

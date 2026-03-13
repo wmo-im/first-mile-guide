@@ -1,0 +1,18 @@
+== Protocol binding
+
+=== Overview
+
+=== MQTT version requirements
+
+=== Topic structure
+
+==== Topic pattern
+
+==== Level definitions and allowed values
+
+=== Quality of service
+
+==== Metadata messages
+
+==== Data messages
+

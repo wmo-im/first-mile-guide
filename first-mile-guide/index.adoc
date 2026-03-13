@@ -34,12 +34,24 @@
 toc::[]
 <<<
 
-include::sections/part1/index.adoc[]
+include::sections/clause1/index.adoc[]
 
-include::sections/part2/index.adoc[]
+include::sections/clause2/index.adoc[]
 
-include::sections/part3/index.adoc[]
+include::sections/clause3/index.adoc[]
 
-include::sections/part4/index.adoc[]
+include::sections/clause4/index.adoc[]
 
-include::sections/part5/index.adoc[]
+include::sections/clause5/index.adoc[]
+
+include::sections/clause6/index.adoc[]
+
+include::sections/clause7/index.adoc[]
+
+include::sections/clause8/index.adoc[]
+
+include::sections/clause9/index.adoc[]
+
+include::sections/clause10/index.adoc[]
+
+include::sections/clause11/index.adoc[]
