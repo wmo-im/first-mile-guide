@@ -12,7 +12,7 @@ Place to store the source data accumulated to enable testing of the First Mile S
 |---------|----------|---------- |---------- |---------- |---------- |
 | Description [from NetCDF CF conventions] | A single data point (having no implied coordinate relationship to other points)  | A series of data points at the same spatial location with time values in strict monotonically increasing order | A series of data points along a path through space with time values in strict monotonically increasing order | An ordered set of data points along a vertical line a a fixed horizontal position and fixed time |  A series of profile features at the same horizontal position with time values in strict monotonically increasing order |
 | Weather |   | [first-mile-guide/standard/tests/flexibility/weather/timeSeries](./BOM_AWS)  | [first-mile-guide/standard/tests/flexibility/weather/trajectory](./AMDAR) |  |  |
-| Climate |   |  |  |  |  |
+| Cryosphere |   |  |  |  |  |
 | Hydrology |   |  |  |  |  |
 | Atmospheric Composition |   |  |  |  |  |
 | Oceans |   |  |  |  |  |
