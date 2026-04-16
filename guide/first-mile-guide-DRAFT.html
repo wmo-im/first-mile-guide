@@ -122,42 +122,447 @@ body {
 <div id="toc" class="toc">
 <div id="toctitle" class="title">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_part_i_introduction">1. PART I. Introduction</a></li>
-<li><a href="#_part_ii_tbd">2. PART II. TBD</a></li>
-<li><a href="#_part_iii_tbd">3. PART III. TBD</a></li>
-<li><a href="#_part_iv_tbd">4. PART IV. TBD</a></li>
-<li><a href="#_part_v_tbd">5. PART V. TBD</a></li>
+<li><a href="#_scope">1. Scope</a></li>
+<li><a href="#_conformance">2. Conformance</a>
+<ul class="sectlevel2">
+<li><a href="#_conformance_classes">2.1. Conformance Classes</a>
+<ul class="sectlevel3">
+<li><a href="#_requirements_class_core_data_model">2.1.1. Requirements Class: Core Data Model</a></li>
+<li><a href="#_requirements_class_standard_name_binding">2.1.2. Requirements Class: Standard Name Binding</a></li>
+<li><a href="#_requirements_class_mqtt_protocol_binding">2.1.3. Requirements Class: MQTT Protocol Binding</a></li>
+<li><a href="#_requirements_class_data_sender">2.1.4. Requirements Class: Data Sender</a></li>
+<li><a href="#_requirements_class_data_receiver">2.1.5. Requirements Class: Data Receiver</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_normative_references">3. Normative references</a></li>
+<li><a href="#_terms_definitions_and_abbreviations">4. Terms, definitions and abbreviations</a>
+<ul class="sectlevel2">
+<li><a href="#_terms_and_definitions">4.1. Terms and definitions</a>
+<ul class="sectlevel3">
+<li><a href="#_first_mile">4.1.1. First mile</a></li>
+<li><a href="#_host_device">4.1.2. Host device</a></li>
+<li><a href="#_observer_device">4.1.3. Observer device</a></li>
+<li><a href="#_observation">4.1.4. Observation</a></li>
+<li><a href="#_parameter_definition">4.1.5. Parameter definition</a></li>
+<li><a href="#_cell_method">4.1.6. Cell method</a></li>
+<li><a href="#_cell_period">4.1.7. Cell period</a></li>
+<li><a href="#_empty_value">4.1.8. Empty value</a></li>
+<li><a href="#_standard_name">4.1.9. Standard name</a></li>
+<li><a href="#_namespace">4.1.10. Namespace</a></li>
+</ul>
+</li>
+<li><a href="#_abbreviations">4.2. Abbreviations</a></li>
+</ul>
+</li>
+<li><a href="#_conventions">5. Conventions</a>
+<ul class="sectlevel2">
+<li><a href="#_schema_notation_protocol_buffers_v3">5.1. Schema notation (Protocol Buffers v3)</a></li>
+<li><a href="#_requirements_recommendations_and_permissions">5.2. Requirements, recommendations and permissions</a></li>
+<li><a href="#_namespace_and_identifier_conventions">5.3. Namespace and identifier conventions</a></li>
+</ul>
+</li>
+<li><a href="#_overview_informative">6. Overview (informative)</a>
+<ul class="sectlevel2">
+<li><a href="#_system_architecture">6.1. System architecture</a></li>
+<li><a href="#_message_flow">6.2. Message flow</a></li>
+<li><a href="#_conformance_class_summary">6.3. Conformance class summary</a></li>
+</ul>
+</li>
+<li><a href="#_data_model">7. Data model</a>
+<ul class="sectlevel2">
+<li><a href="#_overview">7.1. Overview</a></li>
+<li><a href="#_messages">7.2. Messages</a>
+<ul class="sectlevel3">
+<li><a href="#_metadata_message">7.2.1. Metadata message</a></li>
+<li><a href="#_data_message">7.2.2. Data message</a></li>
+</ul>
+</li>
+<li><a href="#_devices">7.3. Devices</a>
+<ul class="sectlevel3">
+<li><a href="#_host_device_2">7.3.1. Host device</a></li>
+<li><a href="#_observer_device_2">7.3.2. Observer device</a></li>
+<li><a href="#_location_and_reference_surfaces">7.3.3. Location and reference surfaces</a></li>
+</ul>
+</li>
+<li><a href="#_observations_and_values">7.4. Observations and values</a>
+<ul class="sectlevel3">
+<li><a href="#_observation_2">7.4.1. Observation</a></li>
+<li><a href="#_value_types">7.4.2. Value types</a></li>
+<li><a href="#_missing_and_error_values">7.4.3. Missing and error values</a></li>
+</ul>
+</li>
+<li><a href="#_parameter_definitions">7.5. Parameter definitions</a>
+<ul class="sectlevel3">
+<li><a href="#_parameter">7.5.1. Parameter</a></li>
+<li><a href="#_cell_method_2">7.5.2. Cell method</a></li>
+<li><a href="#_cell_period_2">7.5.3. Cell period</a></li>
+<li><a href="#_device_reference">7.5.4. Device reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_standard_name_binding">8. Standard name binding</a>
+<ul class="sectlevel2">
+<li><a href="#_namespace_declaration">8.1. Namespace declaration</a></li>
+<li><a href="#_standard_name_assignment">8.2. Standard name assignment</a></li>
+<li><a href="#_recommended_cf_conventions_binding">8.3. Recommended: CF Conventions binding</a></li>
+</ul>
+</li>
+<li><a href="#_protocol_binding">9. Protocol binding</a>
+<ul class="sectlevel2">
+<li><a href="#_overview_2">9.1. Overview</a></li>
+<li><a href="#_mqtt_version_requirements">9.2. MQTT version requirements</a></li>
+<li><a href="#_topic_structure">9.3. Topic structure</a>
+<ul class="sectlevel3">
+<li><a href="#_topic_pattern">9.3.1. Topic pattern</a></li>
+<li><a href="#_level_definitions_and_allowed_values">9.3.2. Level definitions and allowed values</a></li>
+</ul>
+</li>
+<li><a href="#_quality_of_service">9.4. Quality of service</a>
+<ul class="sectlevel3">
+<li><a href="#_metadata_messages">9.4.1. Metadata messages</a></li>
+<li><a href="#_data_messages">9.4.2. Data messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_data_sender">10. Data sender</a>
+<ul class="sectlevel2">
+<li><a href="#_metadata_publication">10.1. Metadata publication</a>
+<ul class="sectlevel3">
+<li><a href="#_mandatory_fields">10.1.1. Mandatory fields</a></li>
+<li><a href="#_transmission_triggers">10.1.2. Transmission triggers</a></li>
+<li><a href="#_retained_messages">10.1.3. Retained messages</a></li>
+</ul>
+</li>
+<li><a href="#_data_publication">10.2. Data publication</a>
+<ul class="sectlevel3">
+<li><a href="#_mandatory_fields_2">10.2.1. Mandatory fields</a></li>
+<li><a href="#_observation_timestamps">10.2.2. Observation timestamps</a></li>
+</ul>
+</li>
+<li><a href="#_device_identification">10.3. Device identification</a></li>
+</ul>
+</li>
+<li><a href="#_data_receiver_structure_tbd">11. Data receiver (structure TBD)</a></li>
 </ul>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_part_i_introduction"><a class="anchor" href="#_part_i_introduction"></a>1. PART I. Introduction</h2>
+<h2 id="_scope"><a class="anchor" href="#_scope"></a>1. Scope</h2>
 <div class="sectionbody">
 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_part_ii_tbd"><a class="anchor" href="#_part_ii_tbd"></a>2. PART II. TBD</h2>
+<h2 id="_conformance"><a class="anchor" href="#_conformance"></a>2. Conformance</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_conformance_classes"><a class="anchor" href="#_conformance_classes"></a>2.1. Conformance Classes</h3>
+<div class="sect3">
+<h4 id="_requirements_class_core_data_model"><a class="anchor" href="#_requirements_class_core_data_model"></a>2.1.1. Requirements Class: Core Data Model</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_requirements_class_standard_name_binding"><a class="anchor" href="#_requirements_class_standard_name_binding"></a>2.1.2. Requirements Class: Standard Name Binding</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_requirements_class_mqtt_protocol_binding"><a class="anchor" href="#_requirements_class_mqtt_protocol_binding"></a>2.1.3. Requirements Class: MQTT Protocol Binding</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_requirements_class_data_sender"><a class="anchor" href="#_requirements_class_data_sender"></a>2.1.4. Requirements Class: Data Sender</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_requirements_class_data_receiver"><a class="anchor" href="#_requirements_class_data_receiver"></a>2.1.5. Requirements Class: Data Receiver</h4>
+
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_normative_references"><a class="anchor" href="#_normative_references"></a>3. Normative references</h2>
 <div class="sectionbody">
 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_part_iii_tbd"><a class="anchor" href="#_part_iii_tbd"></a>3. PART III. TBD</h2>
+<h2 id="_terms_definitions_and_abbreviations"><a class="anchor" href="#_terms_definitions_and_abbreviations"></a>4. Terms, definitions and abbreviations</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_terms_and_definitions"><a class="anchor" href="#_terms_and_definitions"></a>4.1. Terms and definitions</h3>
+<div class="sect3">
+<h4 id="_first_mile"><a class="anchor" href="#_first_mile"></a>4.1.1. First mile</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_host_device"><a class="anchor" href="#_host_device"></a>4.1.2. Host device</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_observer_device"><a class="anchor" href="#_observer_device"></a>4.1.3. Observer device</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_observation"><a class="anchor" href="#_observation"></a>4.1.4. Observation</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_parameter_definition"><a class="anchor" href="#_parameter_definition"></a>4.1.5. Parameter definition</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_cell_method"><a class="anchor" href="#_cell_method"></a>4.1.6. Cell method</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_cell_period"><a class="anchor" href="#_cell_period"></a>4.1.7. Cell period</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_empty_value"><a class="anchor" href="#_empty_value"></a>4.1.8. Empty value</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_standard_name"><a class="anchor" href="#_standard_name"></a>4.1.9. Standard name</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_namespace"><a class="anchor" href="#_namespace"></a>4.1.10. Namespace</h4>
 
 </div>
 </div>
+<div class="sect2">
+<h3 id="_abbreviations"><a class="anchor" href="#_abbreviations"></a>4.2. Abbreviations</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>CF</p>
+</li>
+<li>
+<p>HMEI</p>
+</li>
+<li>
+<p>INFCOM</p>
+</li>
+<li>
+<p>MQTT</p>
+</li>
+<li>
+<p>protobuf</p>
+</li>
+<li>
+<p>QoS</p>
+</li>
+<li>
+<p>SC-IMT</p>
+</li>
+<li>
+<p>WMO</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 <div class="sect1">
-<h2 id="_part_iv_tbd"><a class="anchor" href="#_part_iv_tbd"></a>4. PART IV. TBD</h2>
+<h2 id="_conventions"><a class="anchor" href="#_conventions"></a>5. Conventions</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_schema_notation_protocol_buffers_v3"><a class="anchor" href="#_schema_notation_protocol_buffers_v3"></a>5.1. Schema notation (Protocol Buffers v3)</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_requirements_recommendations_and_permissions"><a class="anchor" href="#_requirements_recommendations_and_permissions"></a>5.2. Requirements, recommendations and permissions</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_namespace_and_identifier_conventions"><a class="anchor" href="#_namespace_and_identifier_conventions"></a>5.3. Namespace and identifier conventions</h3>
 
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="_part_v_tbd"><a class="anchor" href="#_part_v_tbd"></a>5. PART V. TBD</h2>
+<h2 id="_overview_informative"><a class="anchor" href="#_overview_informative"></a>6. Overview (informative)</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_system_architecture"><a class="anchor" href="#_system_architecture"></a>6.1. System architecture</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_message_flow"><a class="anchor" href="#_message_flow"></a>6.2. Message flow</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_conformance_class_summary"><a class="anchor" href="#_conformance_class_summary"></a>6.3. Conformance class summary</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_data_model"><a class="anchor" href="#_data_model"></a>7. Data model</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_overview"><a class="anchor" href="#_overview"></a>7.1. Overview</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_messages"><a class="anchor" href="#_messages"></a>7.2. Messages</h3>
+<div class="sect3">
+<h4 id="_metadata_message"><a class="anchor" href="#_metadata_message"></a>7.2.1. Metadata message</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_data_message"><a class="anchor" href="#_data_message"></a>7.2.2. Data message</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="_devices"><a class="anchor" href="#_devices"></a>7.3. Devices</h3>
+<div class="sect3">
+<h4 id="_host_device_2"><a class="anchor" href="#_host_device_2"></a>7.3.1. Host device</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_observer_device_2"><a class="anchor" href="#_observer_device_2"></a>7.3.2. Observer device</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_location_and_reference_surfaces"><a class="anchor" href="#_location_and_reference_surfaces"></a>7.3.3. Location and reference surfaces</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="_observations_and_values"><a class="anchor" href="#_observations_and_values"></a>7.4. Observations and values</h3>
+<div class="sect3">
+<h4 id="_observation_2"><a class="anchor" href="#_observation_2"></a>7.4.1. Observation</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_value_types"><a class="anchor" href="#_value_types"></a>7.4.2. Value types</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_missing_and_error_values"><a class="anchor" href="#_missing_and_error_values"></a>7.4.3. Missing and error values</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="_parameter_definitions"><a class="anchor" href="#_parameter_definitions"></a>7.5. Parameter definitions</h3>
+<div class="sect3">
+<h4 id="_parameter"><a class="anchor" href="#_parameter"></a>7.5.1. Parameter</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_cell_method_2"><a class="anchor" href="#_cell_method_2"></a>7.5.2. Cell method</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_cell_period_2"><a class="anchor" href="#_cell_period_2"></a>7.5.3. Cell period</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_device_reference"><a class="anchor" href="#_device_reference"></a>7.5.4. Device reference</h4>
+
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_standard_name_binding"><a class="anchor" href="#_standard_name_binding"></a>8. Standard name binding</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_namespace_declaration"><a class="anchor" href="#_namespace_declaration"></a>8.1. Namespace declaration</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_standard_name_assignment"><a class="anchor" href="#_standard_name_assignment"></a>8.2. Standard name assignment</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_recommended_cf_conventions_binding"><a class="anchor" href="#_recommended_cf_conventions_binding"></a>8.3. Recommended: CF Conventions binding</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_protocol_binding"><a class="anchor" href="#_protocol_binding"></a>9. Protocol binding</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_overview_2"><a class="anchor" href="#_overview_2"></a>9.1. Overview</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_mqtt_version_requirements"><a class="anchor" href="#_mqtt_version_requirements"></a>9.2. MQTT version requirements</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_topic_structure"><a class="anchor" href="#_topic_structure"></a>9.3. Topic structure</h3>
+<div class="sect3">
+<h4 id="_topic_pattern"><a class="anchor" href="#_topic_pattern"></a>9.3.1. Topic pattern</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_level_definitions_and_allowed_values"><a class="anchor" href="#_level_definitions_and_allowed_values"></a>9.3.2. Level definitions and allowed values</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="_quality_of_service"><a class="anchor" href="#_quality_of_service"></a>9.4. Quality of service</h3>
+<div class="sect3">
+<h4 id="_metadata_messages"><a class="anchor" href="#_metadata_messages"></a>9.4.1. Metadata messages</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_data_messages"><a class="anchor" href="#_data_messages"></a>9.4.2. Data messages</h4>
+
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_data_sender"><a class="anchor" href="#_data_sender"></a>10. Data sender</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_metadata_publication"><a class="anchor" href="#_metadata_publication"></a>10.1. Metadata publication</h3>
+<div class="sect3">
+<h4 id="_mandatory_fields"><a class="anchor" href="#_mandatory_fields"></a>10.1.1. Mandatory fields</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_transmission_triggers"><a class="anchor" href="#_transmission_triggers"></a>10.1.2. Transmission triggers</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_retained_messages"><a class="anchor" href="#_retained_messages"></a>10.1.3. Retained messages</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="_data_publication"><a class="anchor" href="#_data_publication"></a>10.2. Data publication</h3>
+<div class="sect3">
+<h4 id="_mandatory_fields_2"><a class="anchor" href="#_mandatory_fields_2"></a>10.2.1. Mandatory fields</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_observation_timestamps"><a class="anchor" href="#_observation_timestamps"></a>10.2.2. Observation timestamps</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="_device_identification"><a class="anchor" href="#_device_identification"></a>10.3. Device identification</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_data_receiver_structure_tbd"><a class="anchor" href="#_data_receiver_structure_tbd"></a>11. Data receiver (structure TBD)</h2>
 <div class="sectionbody">
 
 </div>
@@ -174,7 +579,7 @@ body {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-04-16 00:39:19 UTC
+Last updated 2026-04-16 13:23:00 UTC
 </div>
 </div>
 </body>
