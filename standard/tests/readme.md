@@ -13,7 +13,7 @@ Place to store the source data accumulated to enable testing of the First Mile S
 | Description [from NetCDF CF conventions] | A single data point (having no implied coordinate relationship to other points)  | A series of data points at the same spatial location with time values in strict monotonically increasing order | A series of data points along a path through space with time values in strict monotonically increasing order | An ordered set of data points along a vertical line a a fixed horizontal position and fixed time |  A series of profile features at the same horizontal position with time values in strict monotonically increasing order |
 | Weather |   | [first-mile-guide/standard/tests/flexibility/weather/timeSeries](./flexibility/weather/timeSeries/BOM_AWS)  | [first-mile-guide/standard/tests/flexibility/weather/trajectory/AMDAR](./flexibility/weather/trajectory/AMDAR) |  |  |
 | Cryosphere |   |  |  |  |  |
-| Hydrology |   |  |  |  |  |
+| Hydrology |   |[first-mile-guide/standard/tests/flexibility/hydrology/timeSeries](./flexibility/hydrology/timeSeries/BWA)   |  |  |  |
 | Atmospheric Composition |   |  |[first-mile-guide/standard/tests/flexibility/atmospheric_composition/trajectory](./flexibility/atmospheric_composition/trajectory)  |  |  |
 | Oceans |   |  |  |  |  |
 
@@ -22,3 +22,4 @@ Place to store the source data accumulated to enable testing of the First Mile S
 | Test | Test Aim | Folder |
 | ----- | ----- | -----|
 | Implementation Completeness| First Mile Schema and Sample data that uses all the possible values in the schema to check a Receiver Implementation has covered all the possible content values| [first-mile-guide/standard/tests/resilience/completness](./resilience/completeness) |
+| Misaligned MetaData| Short scenario whereby data is sent before the correct MetaData| [first-mile-guide/standard/tests/resilience/misaligned_metadata](./resilience/misaligned_metadata) |
