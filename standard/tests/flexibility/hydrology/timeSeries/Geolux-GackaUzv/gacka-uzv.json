@@ -1,0 +1,296 @@
+[
+  {
+    "host": {
+      "name": "Geolux SmartObserver",
+      "location": {
+        "latitude": 44.826443,
+        "longitude": 15.295639
+      },
+      "serialNumber": "30158",
+      "firmwareVersion": "405"
+    },
+    "observers": [
+      {
+        "id": 1,
+        "name": "Radar Level Sensor"
+      }
+    ],
+    "parameterDefinitions": [
+      {
+        "id": 1,
+        "description": "Internal datalogger parameters",
+        "parameters": [
+          {
+            "longName": "Device Temperature",
+            "unit": "°C",
+            "device": {
+              "host": {}
+            }
+          },
+          {
+            "longName": "Device Relative Humidity",
+            "unit": "%",
+            "device": {
+              "host": {}
+            }
+          },
+          {
+            "longName": "Battery Voltage",
+            "unit": "V",
+            "device": {
+              "host": {}
+            }
+          },
+          {
+            "longName": "Input Voltage",
+            "unit": "V",
+            "device": {
+              "host": {}
+            }
+          },
+          {
+            "longName": "Battery Charge Current",
+            "unit": "A",
+            "device": {
+              "host": {}
+            }
+          },
+          {
+            "longName": "GPRS Modem RSSI",
+            "device": {
+              "host": {}
+            }
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "description": "Radar Level Sensor",
+        "parameters": [
+          {
+            "longName": "Water Level",
+            "unit": "m",
+            "device": {
+              "observerId": 1
+            }
+          },
+          {
+            "longName": "Average Water Level",
+            "unit": "m",
+            "device": {
+              "observerId": 1
+            }
+          },
+          {
+            "longName": "SNR",
+            "unit": "dB",
+            "device": {
+              "observerId": 1
+            }
+          },
+          {
+            "longName": "Tilt Angle on X-axis",
+            "unit": "°",
+            "device": {
+              "observerId": 1
+            }
+          },
+          {
+            "longName": "Tilt Angle on Y-axis",
+            "unit": "°",
+            "device": {
+              "observerId": 1
+            }
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "description": "Indirect/calculated measurements",
+        "parameters": [
+          {
+            "longName": "Absolute Water Level",
+            "unit": "m",
+            "device": {
+              "host": {}
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "observations": [
+      {
+        "parameterDefinitionId": 1,
+        "time": "2026-04-19T19:30:25Z",
+        "values": [
+          {
+            "floatValue": 15
+          },
+          {
+            "floatValue": 60
+          },
+          {
+            "floatValue": 12.607999801635742
+          },
+          {
+            "floatValue": 3.200000047683716
+          },
+          {
+            "floatValue": 0
+          },
+          {
+            "floatValue": 29
+          }
+        ]
+      },
+      {
+        "parameterDefinitionId": 2,
+        "time": "2026-04-19T19:30:25Z",
+        "values": [
+          {
+            "floatValue": 1.8980000019073486
+          },
+          {
+            "floatValue": 1.8980000019073486
+          },
+          {
+            "floatValue": 60
+          },
+          {
+            "floatValue": 1
+          },
+          {
+            "floatValue": -1
+          }
+        ]
+      },
+      {
+        "parameterDefinitionId": 3,
+        "time": "2026-04-19T19:30:25Z",
+        "values": [
+          {
+            "floatValue": 450.04901123046875
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "observations": [
+      {
+        "parameterDefinitionId": 1,
+        "time": "2026-04-19T19:45:25Z",
+        "values": [
+          {
+            "floatValue": 15
+          },
+          {
+            "floatValue": 60
+          },
+          {
+            "floatValue": 12.607999801635742
+          },
+          {
+            "floatValue": 3.200000047683716
+          },
+          {
+            "floatValue": 0
+          },
+          {
+            "floatValue": 29
+          }
+        ]
+      },
+      {
+        "parameterDefinitionId": 2,
+        "time": "2026-04-19T19:45:25Z",
+        "values": [
+          {
+            "floatValue": 1.8990000486373901
+          },
+          {
+            "floatValue": 1.8990000486373901
+          },
+          {
+            "floatValue": 59
+          },
+          {
+            "floatValue": 1
+          },
+          {
+            "floatValue": -1
+          }
+        ]
+      },
+      {
+        "parameterDefinitionId": 3,
+        "time": "2026-04-19T19:45:25Z",
+        "values": [
+          {
+            "floatValue": 450.0480041503906
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "observations": [
+      {
+        "parameterDefinitionId": 1,
+        "time": "2026-04-19T20:00:25Z",
+        "values": [
+          {
+            "floatValue": 14
+          },
+          {
+            "floatValue": 60
+          },
+          {
+            "floatValue": 12.607999801635742
+          },
+          {
+            "floatValue": 3.200000047683716
+          },
+          {
+            "floatValue": 0
+          },
+          {
+            "floatValue": 29
+          }
+        ]
+      },
+      {
+        "parameterDefinitionId": 2,
+        "time": "2026-04-19T20:00:25Z",
+        "values": [
+          {
+            "floatValue": 1.8980000019073486
+          },
+          {
+            "floatValue": 1.8980000019073486
+          },
+          {
+            "floatValue": 59
+          },
+          {
+            "floatValue": 0
+          },
+          {
+            "floatValue": -1
+          }
+        ]
+      },
+      {
+        "parameterDefinitionId": 3,
+        "time": "2026-04-19T20:00:25Z",
+        "values": [
+          {
+            "floatValue": 450.04901123046875
+          }
+        ]
+      }
+    ]
+  }
+]
