@@ -1,7 +1,8 @@
 # Simple data sender
 # Emulates an AWS then sends periodic temperature measurements using 1M-TT protocol.
 # The script will first send a single Metadata message with site configuration info, it will be sent as MQTT retained message.
-# Then it will periodically publish Data messages with temperature and voltage readings. 
+# Then it will periodically publish Data messages with temperature and voltage readings.
+# Both message types are wrapped in a FirstMileMessage and published to the same unified topic. 
 #
 # Before running this script, ensure that proto schema is compiled and the protobuf classes are generated. This can be achieved by running the script:
 # pipenv run build-proto
@@ -186,7 +187,7 @@ def send_mqtt_payload(args, topic, payload_bytes, retain=False):
     client.connect(args.broker, args.port, 60)
     client.loop_start()
 
-    msg_info = client.publish(topic, payload_bytes, qos = 2 if retain else 1, retain = retain)
+    msg_info = client.publish(topic, payload_bytes, qos = 1, retain = retain)
     msg_info.wait_for_publish(timeout=10)
     if msg_info.is_published():
         print(f"Published payload ({len(payload_bytes)} bytes) to topic '{topic}'")
@@ -215,17 +216,20 @@ def main():
 
     args = parser.parse_args()
 
-    # build and send metadata transmission
+    # unified topic for both metadata and data
+    topic = f"firstmile/{proto_version}/{args.vendor}/{args.hostid}"
+
+    # build and send metadata transmission (retained)
     metadata = build_metadata_transmission()
-    payload_bytes = metadata.SerializeToString()
-    topic = f"firstmile/{proto_version}/{args.vendor}/metadata/{args.hostid}"
+    msg = pb2.FirstMileMessage(metadata=metadata)
+    payload_bytes = msg.SerializeToString()
     send_mqtt_payload(args, topic, payload_bytes, retain=True)
 
     while True:
-        # build and send data transmission
+        # build and send data transmission (not retained)
         data_transmission = build_data_transmission(args.hostid)
-        payload_bytes = data_transmission.SerializeToString()
-        topic = f"firstmile/{proto_version}/{args.vendor}/data/{args.hostid}"
+        msg = pb2.FirstMileMessage(data=data_transmission)
+        payload_bytes = msg.SerializeToString()
         send_mqtt_payload(args, topic, payload_bytes)
 
         # wait for the specified period before sending the next measurement

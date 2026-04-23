@@ -114,3 +114,13 @@ message Metadata {
   repeated ParameterDefinition parameterDefinitions = 3;
   map<string, string> namespaces = 4;
 }
+
+message FirstMileMessage {
+  oneof content {
+    // MUST be published with retained flag
+    Metadata metadata = 1;
+
+    // MUST NOT be published with retained flag
+    Data data = 2;
+  }
+}

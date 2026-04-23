@@ -1,8 +1,8 @@
 # Simple data receiver
 # Connects to the broker and subscribes to a topic
 #
-# Expects that stations are differentiated by topics. 
-# Receives both the metadata and the values; stores the latest metadata and displays received values on the graph. 
+# Expects that stations are differentiated by topics.
+# Receives FirstMileMessage wrappers containing either metadata or data; stores the latest metadata and displays received values on the graph.
 #
 # Run it as in the following example:
 # python3 data-receiver.py --broker s87beff9.ala.eu-central-1.emqxsl.com --port 8883 --tls --insecure --topic "firstmile/#"  --username geolux --password "XXXX"
@@ -40,15 +40,15 @@ def on_message(client, userdata, msg):
     topic = msg.topic
     payload = msg.payload
 
-    if re.match(r"firstmile/.*/metadata/.*", topic):
-        metadata = pb2.Metadata()
-        metadata.ParseFromString(payload)
-        d = MessageToDict(metadata)
+    message = pb2.FirstMileMessage()
+    message.ParseFromString(payload)
+
+    content_type = message.WhichOneof('content')
+    if content_type == 'metadata':
+        d = MessageToDict(message.metadata)
         metadata_queue.put((topic, d))
-    elif re.match(r"firstmile/.*/data/.*", topic):
-        transmission = pb2.Data()
-        transmission.ParseFromString(payload)
-        d = MessageToDict(transmission)
+    elif content_type == 'data':
+        d = MessageToDict(message.data)
         message_queue.put((topic, d))
 
 
@@ -204,8 +204,8 @@ def update_page(pathname, n_intervals):
     while not metadata_queue.empty():
         topic, msg = metadata_queue.get()
 
-        # use regex to extract vendor and hostid from the topic in format firstmile/{version}/{vendor}/metadata/{hostid}
-        match = re.match(r"firstmile/([^/]+)/([^/]+)/metadata/([^/]+)", topic)
+        # use regex to extract vendor and hostid from the topic in format firstmile/{version}/{vendor}/{hostid}
+        match = re.match(r"firstmile/([^/]+)/([^/]+)/([^/]+)", topic)
         if match:
             version = match.group(1)
             vendor = match.group(2)
@@ -227,8 +227,8 @@ def update_page(pathname, n_intervals):
     while not message_queue.empty():
         topic, msg = message_queue.get()
 
-        # use regex to extract vendor and hostid from the topic in format firstmile/{version}/{vendor}/data/{hostid}
-        match = re.match(r"firstmile/([^/]+)/([^/]+)/data/([^/]+)", topic)
+        # use regex to extract vendor and hostid from the topic in format firstmile/{version}/{vendor}/{hostid}
+        match = re.match(r"firstmile/([^/]+)/([^/]+)/([^/]+)", topic)
         if match:
             version = match.group(1)
             vendor = match.group(2)
