@@ -73,9 +73,9 @@ def define_parameters():
         unit = "°C",
         device = pb2.DeviceRef(observerId = 1),
         cellMethod = pb2.MEAN,
-        cellPeriodSeconds = 30,
-        standardNames = { "cf": "air_temperature" }
+        cellPeriodSeconds = 30
     )
+    param_air_temp.standardNames["cf"] = "air_temperature"
 
     pd2.parameters.extend([param_air_temp])
 

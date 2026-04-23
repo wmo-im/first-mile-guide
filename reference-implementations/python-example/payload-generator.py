@@ -62,7 +62,6 @@ for i in range(3):
 
 # create transmission payload with observations only
 data_message = firstmile_pb2.Data()
-data_message.version = 1
 data_message.observations.extend(observations)
 
 # generate data message
@@ -74,7 +73,6 @@ with open(f"{output_dir}/data_message.json", "w") as f:
 
 # add metadata
 metadata_message = firstmile_pb2.Metadata()
-metadata_message.version = 1
 metadata_message.host.CopyFrom(host)
 metadata_message.observers.extend(observers)
 metadata_message.parameterDefinitions.extend(parameter_definitions)
