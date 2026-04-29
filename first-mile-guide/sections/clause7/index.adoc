@@ -234,6 +234,9 @@ The `ReferenceSurface` enumeration defines the following values:
 |===
 |Value |Description
 
+|REFERENCE_SURFACE_UNSPECIFIED
+|Reserved default value. Shall not be explicitly set by Data Senders.
+
 |MSL
 |Mean Sea Level - the average height of the ocean's surface
 
@@ -448,6 +451,9 @@ The `cellMethod` field specifies how measurement data is aggregated or processed
 [cols="2,6"]
 |===
 |Value |Description
+
+|CELL_METHOD_UNSPECIFIED
+|Reserved default value. Shall not be explicitly set by Data Senders.
 
 |POINT
 |Instantaneous value at a specific point in time (no aggregation)
