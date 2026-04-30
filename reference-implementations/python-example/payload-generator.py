@@ -62,27 +62,29 @@ for i in range(3):
 
 # create transmission payload with observations only
 data_message = firstmile_pb2.Data()
-data_message.version = 1
 data_message.observations.extend(observations)
 
+data_wrapper = firstmile_pb2.FirstMileMessage(data=data_message)
+
 # generate data message
-serialized_data_message =  data_message.SerializeToString()
+serialized_data_message = data_wrapper.SerializeToString()
 print(f"Length of data message: {len(serialized_data_message)}")
 with open(f"{output_dir}/data_message.json", "w") as f:
-    json_str = json.loads(MessageToJson(data_message))
+    json_str = json.loads(MessageToJson(data_wrapper))
     f.write(json.dumps(json_str, indent=4, ensure_ascii=False))
 
 # add metadata
 metadata_message = firstmile_pb2.Metadata()
-metadata_message.version = 1
 metadata_message.host.CopyFrom(host)
 metadata_message.observers.extend(observers)
 metadata_message.parameterDefinitions.extend(parameter_definitions)
 metadata_message.namespaces.update({ns.key: ns.value for ns in namespace_definitions})
 
+metadata_wrapper = firstmile_pb2.FirstMileMessage(metadata=metadata_message)
+
 # generate output with metadata
-serialized_with_metadata = metadata_message.SerializeToString()
+serialized_with_metadata = metadata_wrapper.SerializeToString()
 print(f"Length of metadata message: {len(serialized_with_metadata)}")
 with open(f"{output_dir}/metadata_message_with_metadata.json", "w") as f:
-    json_str = json.loads(MessageToJson(metadata_message))
+    json_str = json.loads(MessageToJson(metadata_wrapper))
     f.write(json.dumps(json_str, indent=4, ensure_ascii=False))

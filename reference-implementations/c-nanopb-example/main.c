@@ -80,7 +80,11 @@ int main() {
     data.observations.funcs.encode = &encode_observations;
     data.observations.arg = NULL;
 
-    bool status = pb_encode(&stream, wmo_firstmile_poc1_Data_fields, &data);
+    wmo_firstmile_poc1_FirstMileMessage msg = wmo_firstmile_poc1_FirstMileMessage_init_zero;
+    msg.which_content = wmo_firstmile_poc1_FirstMileMessage_data_tag;
+    msg.content.data = data;
+
+    bool status = pb_encode(&stream, wmo_firstmile_poc1_FirstMileMessage_fields, &msg);
     size_t message_length = stream.bytes_written;
 
     if (!status) {

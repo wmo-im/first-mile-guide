@@ -1,10 +1,10 @@
 [[source]]
 url = "https://pypi.python.org/simple"
 verify_ssl = true
-name = "firstmil-proto"
+name = "firstmile-proto"
 
 [scripts]
-build-proto = "bash -c 'mkdir -p protospy &&protoc --experimental_allow_proto3_optional --proto_path=../../standard/protobuf-schema --python_out=protospy/ ../../standard/protobuf-schema/firstmile.proto'"
+build-proto = "bash -c 'mkdir -p protospy && python -m grpc_tools.protoc --experimental_allow_proto3_optional --proto_path=../../standard/protobuf-schema --python_out=protospy/ ../../standard/protobuf-schema/firstmile.proto'"
 
 [packages]
 protobuf = "*"
@@ -13,3 +13,4 @@ dash = "*"
 dash-bootstrap-components = "*"
 plotly = "*"
 pandas = "*"
+grpcio-tools = "*"
