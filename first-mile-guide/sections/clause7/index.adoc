@@ -347,6 +347,17 @@ The `Value` message is a polymorphic container that can represent measurement da
 
 The choice of value type should be appropriate for the parameter being measured. Numeric measurements typically use `doubleValue` or `floatValue`, while categorical observations may use `stringValue`. Boolean parameters (such as alarm states) use `boolValue`.
 
+[NOTE]
+====
+The `stringValue` field is intended for text data only and shall NOT be used to transmit:
+
+* Binary data, including base64-encoded binary blobs
+* Serialized objects or data structures
+* Structured data formats such as JSON, XML, or similar encodings
+
+Binary data transmission and complex structured data are outside the scope of this standard.
+====
+
 ==== Missing and error values
 
 When a measurement value is unavailable due to sensor malfunction, communication error, or other causes, the value shall be represented using the `emptyValue` field of type `google.protobuf.Empty`.
