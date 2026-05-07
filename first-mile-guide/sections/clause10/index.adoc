@@ -1,10 +1,39 @@
 == Data sender
 
 === Metadata publication
+A key feature of the First Mile Format, is the structured inclusion of metadata.  This enables
+
+|===
+| Benefit | Definition | Required in implementation
+| Machine Translation | Received data can be correctly assigned to observations in database without human interpretation/intervention | Standard Names
+| Stranger Interpretation | Siting (particularly location and height of observations) and equipment can be deduced from data, enabling assessment of observation quality without access to other information | Location, URL (for additional information)
+| Efficient Communication | Metadata is not included in every message (reducing bandwidth requirements), only to ensure efficient processing by the Receiver| Transmission Triggers
+|===
+
 
 ==== Mandatory fields
+To enable evolution of the First Mile Standard, while maximising backward compatability, the Protobuf *REQUIRED* keyword is not used.  However, omission of key values can render the other included information unusable as it is ambiguous as to how it is related to the other content.
+
+
+|===
+|Message|Field|Justification
+|HostDevice|name|Enables the identification of the end node
+|ObserverDevice|id| Enables parameters (observation data) to be matched to the sensing/observing/measuring device
+|ParameterDefinition|id|Enables content from Data messages to be interpreted
+|Parameter|unit| Critical to hub interpretation of received data
+|Parameter|DeviceRef|Enables sensors/observers to be matched  to their data
+|===
+
+If machine to machine translation is expected, then the following following additional fields must be included
+|===
+|Message|Field|Justification
+|Parameter|standardNames|Enables machine to machine translation of definition, irrespective of parameter name
+|Parameter|CellMethod|If any data processing is done at the edge, this enables for example the mean and standard deviation to be differentiated (as they will have the same standardNames, units)
+|===
 
 ==== Transmission triggers
+The hub is unable to process any Data Messages without a current Metadata Message.  
+
 
 ==== Retained messages
 
