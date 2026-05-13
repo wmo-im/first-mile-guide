@@ -1,7 +1,53 @@
 == Overview (informative)
 
+This clause provides a high-level view of the First-Mile Data Collection Guide. Communication is strictly unidirectional, with the Data Sender transmitting protobuf payloads over MQTT to the Data Receiver. The two top-level payloads are the `Data` message, which carries Observation content, and the `Metadata` message, which carries the descriptive context needed to interpret those observations.
+
 === System architecture
+
+The Data Sender represents the remote station or logger through a Host Device and may describe attached sensors as Observer Device entries. The `Metadata` message carries the Host Device, Observer Device, Parameter Definition, and namespace information, while the `Data` message carries one or more Observation instances that refer to those Parameter Definition identifiers. Detailed message structure is described in Clause 7, standard name binding in Clause 8, and MQTT protocol binding in Clause 9.
+
+[source,text]
+----
+	+-------------------+            +-------------------+
+	| Data Sender A     |            | Data Sender B     |
+	| Host Device       |            | Host Device       |
+	| + Observers       |            | + Observers       |
+	+-------------------+            +-------------------+
+						|                                |
+						| Metadata and Data messages     | Metadata and Data messages
+						| over MQTT                      | over MQTT
+						v                                v
+	+----------------------------------------------------------+
+	|                      Data Receiver                        |
+	| Receives, decodes, and interprets protobuf payloads      |
+	+----------------------------------------------------------+
+
+										Multiple Data Senders may publish
+										to a single Data Receiver.
+----
 
 === Message flow
 
+In typical operation, the `Metadata` message is sent when the Data Sender is initialized and whenever the station configuration changes, and the `Data` message is sent as observations become available. This separates relatively stable descriptive information from frequently changing measurement values and supports both individual and batched Observation delivery. Where a measurement is unavailable, the value is represented explicitly using `emptyValue` rather than being inferred from zero or omission.
+
 === Conformance class summary
+
+[cols="2,5"]
+|===
+|Conformance class |Summary
+
+|Core Data Model
+|Covers the protobuf structure and semantics of the `Data` message, `Metadata` message, Observation content, devices, Parameter Definition content, and explicit missing values.
+
+|Standard Name Binding
+|Covers how Parameter Definition entries associate parameters with controlled standard-name vocabularies and namespaces.
+
+|MQTT Protocol Binding
+|Covers how protobuf payloads are conveyed over MQTT in the unidirectional exchange between Data Sender and Data Receiver.
+
+|Data Sender
+|Covers the sender-side behavior for constructing and publishing `Metadata` message and `Data` message payloads.
+
+|Data Receiver
+|Covers the receiver-side behavior for accepting, decoding, and interpreting payloads received from the Data Sender.
+|===
