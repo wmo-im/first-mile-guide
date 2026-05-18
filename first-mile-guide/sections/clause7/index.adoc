@@ -9,7 +9,7 @@ The data model supports two primary use cases:
 1. **Transmission of observation data** - The Data Sender transmits measurement values collected from sensors
 2. **Transmission of metadata** - The Data Sender transmits information about the monitoring site, devices, and parameter definitions
 
-These use cases are supported by two top-level message types: the `Data` message containing observations, and the `Metadata` message containing configuration and contextual information.
+These use cases are supported by two top-level message types: the `Data` message containing observations, and the `Metadata` message containing configuration and contextual information. Both messages are defined in a single protobuf schema and transmitted as independent payloads over MQTT. The `Metadata` message provides the necessary context for interpreting the `Data` message, including descriptions of devices and parameters.
 
 ==== Communication pattern
 
