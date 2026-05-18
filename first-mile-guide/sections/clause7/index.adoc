@@ -2,31 +2,31 @@
 
 === Overview
 
-The data model defines the structure and organization of information transmitted from the Data Sender to the Data Receiver using Protocol Buffers (Protobuf) as the Data Format. The data model is formally specified in the protobuf schema `firstmile.proto`.
+The data model defines the structure and organization of information transmitted from the Node to the Host using Protocol Buffers (Protobuf) as the Data Format. The data model is formally specified in the protobuf schema `firstmile.proto`.
 
 The data model supports two primary use cases:
 
-1. **Transmission of observation data** - The Data Sender transmits measurement values collected from sensors
-2. **Transmission of metadata** - The Data Sender transmits information about the monitoring site, devices, and parameter definitions
+1. **Transmission of observation data** - The Node transmits measurement values collected from sensors
+2. **Transmission of metadata** - The Node transmits information about the monitoring site, devices, and parameter definitions
 
 These use cases are supported by two top-level message types: the `Data` message containing observations, and the `Metadata` message containing configuration and contextual information.
 
 ==== Communication pattern
 
-The communication follows a unidirectional pattern where data flows from the Data Sender to the Data Receiver. The Data Sender may transmit messages in the following patterns:
+The communication follows a unidirectional pattern where data flows from the Node to the Host. The Node may transmit messages in the following patterns:
 
 * **Data-only transmission** - Frequent transmission of `Data` messages containing current or batched observations
 * **Metadata transmission** - Transmission of `Metadata` messages when the configuration changes or upon initialization
 
-The Data Sender should transmit the `Metadata` message at least once after initialization and whenever the configuration of devices or parameter definitions changes. The `Data` message may be transmitted as frequently as needed to deliver observations.
-The Data Receiver can only intepret data correctly if it has received the relevant `Metadata` message that defines the devices and parameters being observed. Therefore, it is recommended to transmit the `Metadata` message at least once before transmitting any `Data` messages.
+The Node should transmit the `Metadata` message at least once after initialization and whenever the configuration of devices or parameter definitions changes. The `Data` message may be transmitted as frequently as needed to deliver observations.
+The Host can only intepret data correctly if it has received the relevant `Metadata` message that defines the devices and parameters being observed. Therefore, it is recommended to transmit the `Metadata` message at least once before transmitting any `Data` messages.
 
 ==== Message hierarchy
 
 The data model organizes information hierarchically:
 
 * **Messages** - Top-level containers (`Data` and `Metadata`) that are transmitted as independent payloads
-* **Devices** - Descriptions of physical equipment including the Host Device (data sender) and Observer Devices (sensors)
+* **Devices** - Descriptions of physical equipment including the Node Device (node) and Observer Devices (sensors)
 * **Observations** - Measurement data points consisting of a parameter identifier, timestamp, and one or more values
 * **Parameter definitions** - Metadata describing what is being measured, including units, aggregation methods, and standard name mappings. Parameter definitions also describe how observations are structured in `Data` messages.
 * **Values** - The actual measurement data, supporting multiple numeric types, strings, booleans, and explicit representation of missing data
@@ -48,7 +48,7 @@ The data model is designed according to the following principles:
 
 ==== Metadata message
 
-The `Metadata` message provides configuration and contextual information about the Data Sender, including descriptions of devices and the parameters they measure. This message shall be transmitted at least once after Data Sender initialization and whenever the configuration changes.
+The `Metadata` message provides configuration and contextual information about the Node, including descriptions of devices and the parameters they measure. This message shall be transmitted at least once after Node initialization and whenever the configuration changes.
 
 The `Metadata` message contains the following fields:
 
@@ -56,15 +56,15 @@ The `Metadata` message contains the following fields:
 |===
 |Field |Type |Cardinality |Description
 
-|host
-|HostDevice
+|node
+|Node
 |required
-|Description of the Data Sender device (datalogger or station)
+|Description of the Node device (datalogger or station)
 
 |observers
 |ObserverDevice
 |repeated
-|Descriptions of individual sensor devices connected to the host
+|Descriptions of individual sensor devices connected to the node
 
 |parameterDefinitions
 |ParameterDefinition
@@ -82,7 +82,7 @@ The `namespaces` field provides the mapping between namespace keys used in `Para
 
 ==== Data message
 
-The `Data` message is the primary container for transmitting observation data from the Data Sender to the Data Receiver. This message may be transmitted as frequently as needed to deliver current or batched observations.
+The `Data` message is the primary container for transmitting observation data from the Node to the Host. This message may be transmitted as frequently as needed to deliver current or batched observations.
 
 The `Data` message contains the following fields:
 
@@ -101,16 +101,16 @@ A `Data` message may contain multiple `Observation` messages, enabling efficient
 
 [NOTE]
 ====
-The Data Sender may transmit `Data` messages containing observations that reference parameter definitions not yet received by the Data Receiver. In this case, the Data Receiver shall buffer or queue such observations until the corresponding `Metadata` message is received.
+The Node may transmit `Data` messages containing observations that reference parameter definitions not yet received by the Host. In this case, the Host shall buffer or queue such observations until the corresponding `Metadata` message is received.
 ====
 
 === Devices
 
-==== Host device
+==== Node device
 
-The `HostDevice` message describes the Data Sender device itself, typically a datalogger or observation station.
+The `Node` message describes the Node device itself, typically a datalogger or observation station.
 
-The `HostDevice` message contains the following fields:
+The `Node` message contains the following fields:
 
 [cols="2,2,1,5"]
 |===
@@ -119,12 +119,12 @@ The `HostDevice` message contains the following fields:
 |name
 |string
 |required
-|Name or model designation of the host device
+|Name or model designation of the node device
 
 |location
 |Location
 |optional
-|Geographic location of the host device
+|Geographic location of the node device
 
 |url
 |string
@@ -147,7 +147,7 @@ The `name` field should contain a human-readable identification of the device, s
 
 ==== Observer device
 
-The `ObserverDevice` message describes an individual sensor or measurement device connected to the Host Device.
+The `ObserverDevice` message describes an individual sensor or measurement device connected to the Node Device.
 
 The `ObserverDevice` message contains the following fields:
 
@@ -158,7 +158,7 @@ The `ObserverDevice` message contains the following fields:
 |id
 |uint32
 |required
-|Unique identifier for this observer within the context of this host
+|Unique identifier for this observer within the context of this node
 
 |name
 |string
@@ -187,16 +187,16 @@ The `ObserverDevice` message contains the following fields:
 
 |===
 
-The `id` field shall be unique among all observers associated with a single host device. This identifier is used by the `DeviceRef` message to associate parameters with specific observer devices.
+The `id` field shall be unique among all observers associated with a single node device. This identifier is used by the `DeviceRef` message to associate parameters with specific observer devices.
 
 [IMPORTANT]
 ====
-Observer device identifiers shall remain stable across Data Sender restarts and metadata updates to ensure consistent parameter-to-device associations.
+Observer device identifiers shall remain stable across Node restarts and metadata updates to ensure consistent parameter-to-device associations.
 ====
 
 ==== Location and reference surfaces
 
-The `Location` message specifies the geographic position of a device (either host or observer).
+The `Location` message specifies the geographic position of a device (either node or observer).
 
 The `Location` message contains the following fields:
 
@@ -235,7 +235,7 @@ The `ReferenceSurface` enumeration defines the following values:
 |Value |Description
 
 |REFERENCE_SURFACE_UNSPECIFIED
-|Reserved default value. Shall not be explicitly set by Data Senders.
+|Reserved default value. Shall not be explicitly set by Nodes.
 
 |MSL
 |Mean Sea Level - the average height of the ocean's surface
@@ -437,7 +437,7 @@ The `Parameter` message contains the following fields:
 |device
 |DeviceRef
 |required
-|Reference to the device (host or observer) that measures this parameter
+|Reference to the device (node or observer) that measures this parameter
 
 |cellMethod
 |CellMethod
@@ -451,9 +451,9 @@ The `Parameter` message contains the following fields:
 
 |===
 
-The `standardNames` field enables mapping to external naming conventions such as Climate and Forecast (CF) standard names. This allows parameters to be referenced by different standard parameter types according to the target application of the device using the protocol. The Data Sender is not bound to a specific standard but may include mappings to multiple standards as appropriate for the intended use case. The keys in this map shall correspond to namespace prefixes defined in `Metadata.namespaces`.
+The `standardNames` field enables mapping to external naming conventions such as Climate and Forecast (CF) standard names. This allows parameters to be referenced by different standard parameter types according to the target application of the device using the protocol. The Node is not bound to a specific standard but may include mappings to multiple standards as appropriate for the intended use case. The keys in this map shall correspond to namespace prefixes defined in `Metadata.namespaces`.
 
-The `device` field specifies which device (either the host or a specific observer) performs this measurement.
+The `device` field specifies which device (either the node or a specific observer) performs this measurement.
 
 ==== Cell method
 
@@ -464,7 +464,7 @@ The `cellMethod` field specifies how measurement data is aggregated or processed
 |Value |Description
 
 |CELL_METHOD_UNSPECIFIED
-|Reserved default value. Shall not be explicitly set by Data Senders.
+|Reserved default value. Shall not be explicitly set by Nodes.
 
 |POINT
 |Instantaneous value at a specific point in time (no aggregation)
@@ -538,7 +538,7 @@ For example:
 
 ==== Device reference
 
-The `DeviceRef` message associates a parameter with the device that measures it. This message uses a `oneof` field to reference either the host device or a specific observer device.
+The `DeviceRef` message associates a parameter with the device that measures it. This message uses a `oneof` field to reference either the node device or a specific observer device.
 
 The `DeviceRef` message contains exactly one of the following fields:
 
@@ -546,9 +546,9 @@ The `DeviceRef` message contains exactly one of the following fields:
 |===
 |Field |Type |Description
 
-|host
+|node
 |google.protobuf.Empty
-|References the host device; the presence of this field (even though empty) indicates the parameter is measured by the host
+|References the node device; the presence of this field (even though empty) indicates the parameter is measured by the node
 
 |observerId
 |uint32
@@ -558,5 +558,5 @@ The `DeviceRef` message contains exactly one of the following fields:
 
 The `oneof` constraint ensures that exactly one of these fields is set, unambiguously identifying which device performs the measurement.
 
-When the `host` field is present, the parameter is measured by the Host Device itself (such as internal voltage or temperature of a datalogger). When the `observerId` field is set, it shall match the `id` of an `ObserverDevice` defined in the `Metadata` message.
+When the `node` field is present, the parameter is measured by the Node Device itself (such as internal voltage or temperature of a datalogger). When the `observerId` field is set, it shall match the `id` of an `ObserverDevice` defined in the `Metadata` message.
 

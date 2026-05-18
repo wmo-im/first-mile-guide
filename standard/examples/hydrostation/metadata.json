@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "host": {
+  "node": {
     "name": "Hydro-Station-02",
     "serialNumber": "HYDSTN002-2025"
   },

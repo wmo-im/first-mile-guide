@@ -5,35 +5,35 @@ This document defines the technical requirements for the Proof of Concept (PoC) 
 
 == Glossary
 
-* Data Sender - The "thing" that collects and sends data. Typically at the remote site, such as a weather station. This would be a device such as a datalogger or a sensor.
-* Data Receiver - The software at the central server that receives data from the Data Sender and prepares it for further processing. It must be able to receive the data usingthe agreed Data Format and Protocol.
-* Protocol - The IP based set of rules that determine how data is transferred from the Data Sender to the Data Receiver.
+* Node - The "thing" that collects and sends data. Typically at the remote site, such as a weather station. This would be a device such as a datalogger or a sensor.
+* Host - The software at the central server that receives data from the Node and prepares it for further processing. It must be able to receive the data usingthe agreed Data Format and Protocol.
+* Protocol - The IP based set of rules that determine how data is transferred from the Node to the Host.
 * Data Format - A data format is the organisation of information according to specifications. It defines how the data is structured and encoded.
 * Data Serialization - The process of converting structured data into a Data Format that can be easily transmitted and reconstructed later.
 * Data Schema - A formal description in the declarative language defining the structure and constraints for the Data Format.
-* Observation - A single measurement data point collected by the Data Sender, such as a temperature reading, humidity level, or wind speed.
+* Observation - A single measurement data point collected by the Node, such as a temperature reading, humidity level, or wind speed.
 * Metadata - Additional information, such as the monitoring site ID, location, types of sensors, measured variables, measurement units, and other relevant details. It provides context for the data being transmitted.
 
 == Key Principles
 
 The key principles of the protocol are as follows:
 
-* The First-Mile Data Collection protocol facilitates the transfer of data from the Data Sender to the Data Receiver.
-* Communication is strictly unidirectional — data flows only from the Data Sender to the Data Receiver.
+* The First-Mile Data Collection protocol facilitates the transfer of data from the Node to the Host.
+* Communication is strictly unidirectional — data flows only from the Node to the Host.
 * The transmission of either measurement data alone or both measurement data and related metadata is supported.
 * Protobuf is used as Data Format: Data payloads are encoded using the Protocol Buffers (Protobuf) format, based on a defined and finalized proto schema which is the part of this specification document.
-* The Protocol (communication transport layer) used is MQTT. MQTT serves as the message delivery Protocol for transmitting the Protobuf payloads from the Data Sender to the Data Receiver.
-* For bandwidth-constrained environments (such as satellite links), the "First-Mile" is considered data transmission from the satellite ground base station to the Data Receiver. The actual data transmitted from the datalogger through the satellite link to the ground station can use any suitable Data Format and Protocol. This Data Format should then be transcoded to the First-Mile Data Collection format when the satellite data is transfered from the satellite ground station to the Data Receiver.
+* The Protocol (communication transport layer) used is MQTT. MQTT serves as the message delivery Protocol for transmitting the Protobuf payloads from the Node to the Host.
+* For bandwidth-constrained environments (such as satellite links), the "First-Mile" is considered data transmission from the satellite ground base station to the Host. The actual data transmitted from the datalogger through the satellite link to the ground station can use any suitable Data Format and Protocol. This Data Format should then be transcoded to the First-Mile Data Collection format when the satellite data is transfered from the satellite ground station to the Host.
 
 == Overview of the Protocol
 
-The Data Sender has some measurement data that it wants to send to the Data Receiver. The Data Sender encodes the measurement data into a Protobuf payload using the agreed/defined Data Schema. The Data Sender then transmits this Protobuf payload over MQTT to the Data Receiver.
+The Node has some measurement data that it wants to send to the Host. The Node encodes the measurement data into a Protobuf payload using the agreed/defined Data Schema. The Node then transmits this Protobuf payload over MQTT to the Host.
 
 The Data Schema allows sending multiple Observations in a single Protobuf payload. Each Observation contains a parameter identifier and a timestamp. The parameter identifier refers to a specific measured variable, such as temperature or humidity. The timestamp indicates when the measurement was taken. 
 
-The Data Schema allows the Data Sender to encode only the Measurement data, or to encode both the measurement data and the metadata. The metadata describes the monitoring site, sensors, measured variables, measurement units, and other relevant information. It is up to the Data Sender to decide whether and when to send the metadata along with the measurement data.
+The Data Schema allows the Node to encode only the Measurement data, or to encode both the measurement data and the metadata. The metadata describes the monitoring site, sensors, measured variables, measurement units, and other relevant information. It is up to the Node to decide whether and when to send the metadata along with the measurement data.
 
-For simplicity, there is no way to send the alarms or other events in the current version of the protocol. The Data Sender can only send the measurement data and metadata. If needed, alarms could be sent as a regular measurement value which is of type bool. The Data Receiver can then interpret this value as an alarm or event based on the context of the measurement.
+For simplicity, there is no way to send the alarms or other events in the current version of the protocol. The Node can only send the measurement data and metadata. If needed, alarms could be sent as a regular measurement value which is of type bool. The Host can then interpret this value as an alarm or event based on the context of the measurement.
 
 == Protobuf Schema
 
@@ -42,14 +42,14 @@ For simplicity, there is no way to send the alarms or other events in the curren
 include::../standard/protobuf-schema/firstmile.proto[]
 ----
 
-The `Data` message is the main message that is sent from the Data Sender to the Data Receiver. It contains the following fields:
+The `Data` message is the main message that is sent from the Node to the Host. It contains the following fields:
 
 * `version` - The Version of the protobuf schema used; it should be 1 for the first published version of the schema.
 * `observations` - A list of `Observation` messages, containing the actual measurement data.
 
-The `Metadata` message contains the site's configuration details, including the types of sensors installed and the measurement parameters along with their units. This message must be sent to the Data Receiver at least once after each configuration update. It contains the following fields:
-* `host` - The `HostDevice` message that describes the Data Sender (host), such as the datalogger.
-* `observers` - A list of `ObserverDevice` messages that describe the individual observers (sensors) that are locally connected to the Data Sender (host). 
+The `Metadata` message contains the site's configuration details, including the types of sensors installed and the measurement parameters along with their units. This message must be sent to the Host at least once after each configuration update. It contains the following fields:
+* `node` - The `Node` message that describes the Node, such as the datalogger.
+* `observers` - A list of `ObserverDevice` messages that describe the individual observers (sensors) that are locally connected to the Node. 
 * `parameterDefinitions` - A list of `ParameterDefinition` messages that describe the parameters used in the observations.
 * `namespaces`- Contains a list of key-value pairs that define the namespaces used for custom naming conventions, where the key is the namespace name, and the value contains the corresponding URI or identifier.
 
@@ -62,15 +62,15 @@ The `Observation` message contains the following fields:
 
 The `Value` message contains the measurement value. It can use any of the allowed different types of values, such as double, int32, uint32, int64, uint64, string, or bool. If a value is not available (e.g. malfunctioning sensor or broken cable), the corresponding field should be send as emptyValue (`google.protobuf.Empty`), indicating that the value is missing - it should not be sent as zero, NaN, and should not be omitted.
 
-The `HostDevice` message describes the Data Sender (host) device:
+The `Node` message describes the Node device:
 
-* `name` - The name of the host device, it can contain the model name or type.
-* `location` - The location of the host device, using the `Location` message.
+* `name` - The name of the node device, it can contain the model name or type.
+* `location` - The location of the node device, using the `Location` message.
 * `url` - A link to the device metadata.
-* `serialNumber` - The serial number of the host device, if available.
-* `firmwareVersion` - The firmware version of the host device, typically in a format like "5.1" or "2.7.1-alpha".
+* `serialNumber` - The serial number of the node device, if available.
+* `firmwareVersion` - The firmware version of the node device, typically in a format like "5.1" or "2.7.1-alpha".
 
-The `ObserverDevice` message describes the individual observer (sensor) devices connected to the Data Sender (host):
+The `ObserverDevice` message describes the individual observer (sensor) devices connected to the Node:
 
 * `id` - The unique ID of the observer device.
 * `name` - The name of the observer device, it can contain the model name or type.
@@ -97,14 +97,14 @@ The `Parameter` message contains the following fields:
 * `longName` - The long name of the parameter, such as "Air Temperature" or "Wind Speed".
 * `unit` - The unit of measurement for the parameter, such as "Celsius" or "m/s".
 * `standardNames` - Contains a list of key-value pairs that define standard names for the parameter in different naming conventions, where the key is the namespace name, and the value is the corresponding name for the parameter in that namespace. The namespaces used here must be defined in the `Metadata` message.
-* `device` - A reference to the device (host or observer) that measures this parameter.
+* `device` - A reference to the device (node or observer) that measures this parameter.
 * `cellMethod` - The cell method used for the parameter, such as POINT, SUM, MAXIMUM, etc.
 * `cellPeriodSeconds` - The period of averaging in seconds, only valid when the `cellMethod` is not POINT. This indicates how long the data was averaged over.
 
 
-The `DeviceRef` message is used to reference either the host device or an observer device. It uses a `oneof` field to ensure that only one of the two options can be set at a time:
+The `DeviceRef` message is used to reference either the node device or an observer device. It uses a `oneof` field to ensure that only one of the two options can be set at a time:
 
-* `host` - If this field is present, it indicates that the parameter is measured by the host device.
+* `node` - If this field is present, it indicates that the parameter is measured by the node device.
 * `observerId` - If this field is set, it indicates that the parameter is measured by the observer device referenced by the the specified ID, which must match the `id` field of one of the `ObserverDevice` messages in the `Metadata`.
 
 
@@ -170,7 +170,7 @@ Example `Metadata` message:
 ----
 {
     "version": 1,
-    "host": {
+    "node": {
         "name": "ArcticX100 Data Logger",
         "location": {
             "latitude": -90,
@@ -207,7 +207,7 @@ Example `Metadata` message:
                     "unit": "V",
                     "device": 
                     {
-                        "host": {}
+                        "node": {}
                     },
                     "cellMethod": "POINT",
                     "cellPeriodSeconds": 0
@@ -217,7 +217,7 @@ Example `Metadata` message:
                     "unit": "°C",
                     "device": 
                     {
-                        "host": {}
+                        "node": {}
                     },
                     "cellMethod": "MEAN",
                     "cellPeriodSeconds": 5
@@ -253,18 +253,18 @@ Example `Metadata` message:
 
 == Implementation Notes
 
-The PoC Data Sender should be able to:
+The PoC Node should be able to:
 
 * Collect measurement data from sensors and encode it into the Protobuf format, depending on the actual setup of the monitoring site.
-* Transmit the Protobuf payload over MQTT to the Data Receiver.
-* Both `Metadata` and `Data` messages should be wrapped in a `FirstMileMessage` and published to topic in the following format: `firstmile/[version]/[vendor_name]/hostId`, with QoS=1.
+* Transmit the Protobuf payload over MQTT to the Host.
+* Both `Metadata` and `Data` messages should be wrapped in a `FirstMileMessage` and published to topic in the following format: `firstmile/[version]/[vendor_name]/nodeId`, with QoS=1.
 * The `Metadata` message (wrapped in `FirstMileMessage`) should be published with retain flag set to 1.
 * The `Data` message (wrapped in `FirstMileMessage`) should be published with retain flag set to 0.
-* Ensure that the `metadata` message is send to the receiver and updated if configuration of the data sender changes.
+* Ensure that the `metadata` message is send to the receiver and updated if configuration of the node changes.
 
-The PoC Data Receiver should be able to:
+The PoC Host should be able to:
 
-* Receive the Protobuf payload over MQTT from the Data Sender.
+* Receive the Protobuf payload over MQTT from the Node.
 * Decode the Protobuf payload to JSON to recover the observations data and the included metadata.
 * Correctly assign the payload values to the observed parameter from messages where the parameterDefinitions have not been transmitted.
 

@@ -8,6 +8,6 @@
 
 ==== Requirements Class: MQTT Protocol Binding
 
-==== Requirements Class: Data Sender
+==== Requirements Class: Node
 
-==== Requirements Class: Data Receiver
+==== Requirements Class: Host

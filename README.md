@@ -15,7 +15,7 @@ This repository is a placeholder for :
 The Proof Of Concept is based on :
 
 * a protobuf data schema
-* a MQTT broker that wil be used to exchange the data between the "Data Senders" (a predifined list of HMEI and WMO Members with publication access rights) and "Data Receivers". Many members of the Task Team will work on their own implementation of a Data Receiver software compliant with the agreed solution.
+* a MQTT broker that wil be used to exchange the data between the "Nodes" (a predifined list of HMEI and WMO Members with publication access rights) and "Hosts". Many members of the Task Team will work on their own implementation of a Host software compliant with the agreed solution.
 
 The folder structure is :
 
@@ -27,12 +27,12 @@ The folder structure is :
 
 This is a work in progress folder that everyone interested can have access to.
 
-It has been decided to open the Proof of Concept work to additional parties as "Data Receivers" only. No support will be given to the "Data Receivers" and they can use the available material without guarantee that it will work.
+It has been decided to open the Proof of Concept work to additional parties as "Hosts" only. No support will be given to the "Hosts" and they can use the available material without guarantee that it will work.
 
 Access to the shared MQTT broker can be made available as `subscribe` only. Username and password can be requested by creating a new issue on the repository explaining the intention of use and providing some details on the requester. Beyond providing the username/password, no further support will be provided. 
 
 The MQTT Topic Hierarchy used during the Proof Of Concept is : `firstmile/<version>/<vendor>/<device-id>`
 The first version is called `poc1`. This string `poc1` is in the topic hierarchy as well as in the protobuf definition.
 
-Additional "Data Receivers" can either use one of the reference implementation provided or develop their own solution. Contributions of additional implementations of "Data Receivers" are welcome.
+Additional "Hosts" can either use one of the reference implementation provided or develop their own solution. Contributions of additional implementations of "Hosts" are welcome.
 

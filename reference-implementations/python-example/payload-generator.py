@@ -6,7 +6,7 @@ import json
 import os
 
 path_oberservers = "../../standard/examples/example_schema_binding/observer.json"
-path_host = "../../standard/examples/example_schema_binding/host.json"
+path_node = "../../standard/examples/example_schema_binding/host.json"
 path_parameters = "../../standard/examples/example_schema_binding/parameters.json"
 path_namespaces = "../../standard/examples/example_schema_binding/namespaces.json"
 
@@ -28,11 +28,11 @@ def read_config_json(json_path, schema):
 observers = read_config_json(path_oberservers, firstmile_pb2.ObserverDevice)
 parameter_definitions = read_config_json(path_parameters, firstmile_pb2.ParameterDefinition)
 namespace_definitions = read_config_json(path_namespaces, firstmile_pb2.Metadata.NamespacesEntry)
-# read host bindings
-with open(path_host, "r") as f:
+# read node bindings
+with open(path_node, "r") as f:
     binding_json = f.read()
-    host = firstmile_pb2.HostDevice()
-    Parse(binding_json, host)
+    node = firstmile_pb2.Node()
+    Parse(binding_json, node)
 
 # generate internal observations
 observations = []
@@ -75,7 +75,7 @@ with open(f"{output_dir}/data_message.json", "w") as f:
 
 # add metadata
 metadata_message = firstmile_pb2.Metadata()
-metadata_message.host.CopyFrom(host)
+metadata_message.node.CopyFrom(node)
 metadata_message.observers.extend(observers)
 metadata_message.parameterDefinitions.extend(parameter_definitions)
 metadata_message.namespaces.update({ns.key: ns.value for ns in namespace_definitions})

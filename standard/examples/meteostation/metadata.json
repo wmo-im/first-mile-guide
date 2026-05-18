@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "host": {
+  "node": {
     "name": "Campbell CR3000 Datalogger",
     "serialNumber": "CR3K-2025-99384",
     "location": {
@@ -118,7 +118,7 @@
           "longName": "Battery Voltage",
           "unit": "V",
           "device": {
-            "host": {}
+            "node": {}
           },
           "cellMethod": "POINT",
           "cellPeriodSeconds": 0
@@ -127,7 +127,7 @@
           "longName": "Solar Panel Voltage",
           "unit": "V",
           "device": {
-            "host": {}
+            "node": {}
           },
           "cellMethod": "POINT",
           "cellPeriodSeconds": 0
@@ -136,7 +136,7 @@
           "longName": "Internal Logger Temperature",
           "unit": "°C",
           "device": {
-            "host": {}
+            "node": {}
           },
           "cellMethod": "POINT",
           "cellPeriodSeconds": 0
