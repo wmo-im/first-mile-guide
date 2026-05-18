@@ -1,7 +1,7 @@
 # Hydrological Station Example
 
 This example simulates a simple hydrological gauging station.  
-**Host:** the host/datalogger purely acts as a gateway, does not provide any internal diagnostics or measurements and metadata does not contain any specific info about the host device. 
+**Node:** the node/datalogger purely acts as a gateway, does not provide any internal diagnostics or measurements and metadata does not contain any specific info about the node device. 
 **Observers:** Geolux Radar (water level) + OTT Pluvio² (rainfall).  
 
 

@@ -31,7 +31,7 @@ enum CellMethod {
 
 message DeviceRef {
   oneof target {
-    google.protobuf.Empty host = 1; // if field is present => refers to the single host
+    google.protobuf.Empty node = 1; // if field is present => refers to the single node
     uint32 observerId = 2;
   }
 }
@@ -87,7 +87,7 @@ message Location {
   ReferenceSurface referenceSurface = 4; 
 }
 
-message HostDevice {
+message Node {
   string name = 1;
   optional Location location= 2;
   optional string url = 3;
@@ -109,7 +109,7 @@ message Data {
 }
 
 message Metadata {
-  HostDevice host = 1;
+  Node node = 1;
   repeated ObserverDevice observers = 2;
   repeated ParameterDefinition parameterDefinitions = 3;
   map<string, string> namespaces = 4;

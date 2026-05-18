@@ -1,4 +1,4 @@
-# Simple data receiver
+# Simple host
 # Connects to the broker and subscribes to a topic
 #
 # Expects that stations are differentiated by topics.
@@ -204,13 +204,13 @@ def update_page(pathname, n_intervals):
     while not metadata_queue.empty():
         topic, msg = metadata_queue.get()
 
-        # use regex to extract vendor and hostid from the topic in format firstmile/{version}/{vendor}/{hostid}
+        # use regex to extract vendor and nodeid from the topic in format firstmile/{version}/{vendor}/{nodeid}
         match = re.match(r"firstmile/([^/]+)/([^/]+)/([^/]+)", topic)
         if match:
             version = match.group(1)
             vendor = match.group(2)
-            hostid = match.group(3)
-            key = f"{vendor}/{hostid}"
+            nodeid = match.group(3)
+            key = f"{vendor}/{nodeid}"
 
             if key not in state:
                 state[key] = {
@@ -227,13 +227,13 @@ def update_page(pathname, n_intervals):
     while not message_queue.empty():
         topic, msg = message_queue.get()
 
-        # use regex to extract vendor and hostid from the topic in format firstmile/{version}/{vendor}/{hostid}
+        # use regex to extract vendor and nodeid from the topic in format firstmile/{version}/{vendor}/{nodeid}
         match = re.match(r"firstmile/([^/]+)/([^/]+)/([^/]+)", topic)
         if match:
             version = match.group(1)
             vendor = match.group(2)
-            hostid = match.group(3)
-            key = f"{vendor}/{hostid}"
+            nodeid = match.group(3)
+            key = f"{vendor}/{nodeid}"
 
             if key not in state:
                 state[key] = {
@@ -266,7 +266,7 @@ def update_page(pathname, n_intervals):
         return html.P("Unknown page.")
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="AWS MQTT Data Receiver PoC")
+    parser = argparse.ArgumentParser(description="AWS MQTT Host PoC")
     parser.add_argument("--broker", required=True, help="MQTT broker address")
     parser.add_argument("--port", type=int, default=1883, help="MQTT broker port")
     parser.add_argument("--topic", required=True, help="MQTT topic")
