@@ -1,7 +1,181 @@
 == Standard name binding
 
+=== Overview
+
+Standard name binding enables `Parameter` definitions within a `Metadata` message to be associated with controlled vocabulary entries from external naming conventions. This allows observation data to be unambiguously interpreted by Hubs and downstream systems without dependence on the `Parameter.longName` field, which is a human-readable label and not guaranteed to be unique or machine-interpretable.
+
+The binding mechanism uses two related fields in the data model:
+
+* `Metadata.namespaces` — declares the naming convention vocabularies in use, associating a short namespace key with a URI that identifies the vocabulary
+* `Parameter.standardNames` — associates each namespace key with the corresponding standard name for the parameter within that vocabulary
+
+Standard name binding follows a three-level hierarchy of vocabularies, described in <<standard-name-hierarchy>>. The use of standard names is optional but recommended where machine-to-machine interoperability is required. A Node may bind a single parameter to standard names from multiple vocabularies simultaneously.
+
 === Namespace declaration
+
+The `Metadata.namespaces` field declares the naming convention vocabularies used by the Node. It is a map from namespace key to namespace URI.
+
+[cols="2,2,6"]
+|===
+|Map entry |Type |Description
+
+|key
+|string
+|A short identifier used to reference this namespace in `Parameter.standardNames` entries (e.g., `"cf"`, `"wmo"`)
+
+|value
+|string
+|A URI that uniquely and durably identifies the vocabulary (e.g., `"https://vocab.nerc.ac.uk/collection/P07/current/"`)
+
+|===
+
+Each namespace key shall be a non-empty string containing only alphanumeric characters and underscores. The namespace URI shall be a resolvable, publicly accessible URI that identifies the vocabulary in a dereferenceable way.
+
+A `Metadata` message may declare zero or more namespace entries. When no standard names are used, the `namespaces` map may be empty or omitted.
 
 === Standard name assignment
 
-=== Recommended: CF Conventions binding
+The `Parameter.standardNames` field maps namespace keys to the standard name for that parameter within the corresponding vocabulary. It is a map from namespace key to standard name value.
+
+[cols="2,2,6"]
+|===
+|Map entry |Type |Description
+
+|key
+|string
+|A namespace key that shall match a key declared in `Metadata.namespaces`
+
+|value
+|string
+|The standard name for this parameter in the vocabulary identified by the namespace key (e.g., `"air_temperature"`)
+
+|===
+
+Each key in `Parameter.standardNames` shall match a key declared in `Metadata.namespaces`. A Node shall not include a standard name entry for a namespace that is not declared in the corresponding `Metadata` message.
+
+A parameter may carry zero, one, or multiple standard name entries. When multiple entries are present, each entry associates the parameter with the equivalent standard name in a different vocabulary.
+
+[NOTE]
+====
+Standard name binding is applied at the `Parameter` level, not the `ParameterDefinition` level. When a `ParameterDefinition` contains multiple `Parameter` entries, each parameter independently carries its own standard name bindings appropriate for the variable it represents.
+====
+
+[[standard-name-hierarchy]]
+=== Standard name hierarchy
+
+Standard names shall be drawn from the following three-level hierarchy, in order of precedence. A higher-level vocabulary shall be used wherever it provides a suitable standard name for the parameter in question.
+
+[[level-1-cf]]
+==== Level 1: CF Metadata Conventions
+
+The Climate and Forecast (CF) Metadata Conventions define the primary vocabulary for standard names in this standard. CF standard names cover the majority of meteorological, hydrological, and oceanographic parameters relevant to first-mile observations. The authoritative list of CF standard names is maintained by the CF Conventions community at `https://cfconventions.org/Data/cf-standard-names/current/build/cf-standard-name-table.html`.
+
+Where a CF standard name exists for a parameter, the Node shall use it in preference to any lower-level vocabulary entry.
+
+The CF namespace shall be declared using the reserved key `"cf"`. The value shall be a URI that resolves to a machine-readable vocabulary server endpoint publishing the CF standard name table.
+
+The CF Conventions community does not currently operate a vocabulary server. Until an official CF vocabulary server endpoint is available, the NERC Vocabulary Server mirror of the CF standard name table (collection P07) should be used:
+
+[source,json]
+----
+"namespaces": {
+  "cf": "https://vocab.nerc.ac.uk/collection/P07/current/"
+}
+----
+
+[NOTE]
+====
+If the CF Conventions community publishes an official vocabulary server endpoint in the future, that URI should be used in preference to the NERC mirror. Hubs should be prepared to recognise URIs from recognised CF standard name vocabulary server mirrors as equivalent for the purposes of name resolution.
+====
+
+CF standard names are lower-case strings with words separated by underscores (e.g., `"air_temperature"`, `"wind_speed"`, `"relative_humidity"`). The CF standard name table at cfconventions.org is the authoritative reference for name validity and definitions, regardless of which vocabulary server URI is used as the namespace identifier.
+
+[[level-2-wmo]]
+==== Level 2: WMO First Mile parameter registry
+
+Parameters that are not covered by the CF standard name vocabulary but are common to first-mile observation deployments are governed by a centrally managed registry maintained by WMO. This registry is hosted at `https://codes.wmo.int` and is governed by SC-IMT using the WMO fast-track code registration mechanism.
+
+Where a parameter is not covered by CF but is included in the WMO First Mile parameter registry, the Node shall use the registry entry in preference to any locally managed vocabulary.
+
+The WMO First Mile registry namespace shall be declared using the reserved key `"wmo"` with the URI of the registry collection.
+
+[NOTE]
+====
+Parameters that may require Level 2 registry entries include quantities typically measured by data loggers but absent from CF, such as supply voltage, internal device temperature, and station-level pressure (QFF). The registry is managed separately from this standard; refer to `https://codes.wmo.int` for the current list of registered entries.
+====
+
+[[level-3-local]]
+==== Level 3: Locally managed vocabularies
+
+Where a parameter is not covered by either the CF standard name vocabulary (<<level-1-cf>>) or the WMO First Mile parameter registry (<<level-2-wmo>>), a Node may use a locally managed vocabulary.
+
+Locally managed vocabularies shall conform to the FAIR Guiding Principles for scientific data management (Findable, Accessible, Interoperable, Reusable). In particular:
+
+* The vocabulary shall be findable via a persistent, unique identifier (the namespace URI)
+* The vocabulary shall be accessible at that URI to all parties participating in the data exchange
+* The vocabulary shall use an open, standardised representation (e.g., SKOS/RDF)
+* Entries shall be stable; their identifiers and meanings shall remain unchanged once published
+
+[NOTE]
+====
+A conformant Hub shall be capable of resolving namespace URIs as configured for the deployment, including URIs accessible only within a private or organisational network. A conformant Node shall use namespace URIs that are resolvable by the Hub within the operational context of the deployment.
+====
+
+Local namespace entries may be included alongside Level 1 or Level 2 standard names. A Hub shall be able to identify and interpret any parameter using the standard names alone.
+
+[IMPORTANT]
+====
+Where a standard name exists at Level 1 (CF) or Level 2 (WMO registry), that standard name shall be included in `Parameter.standardNames`. Any locally managed entries for the same parameter are supplementary to, not a replacement for, the applicable standard name.
+====
+
+=== Informative example
+
+The following example shows a `Metadata` message extract demonstrating standard name binding across multiple vocabulary levels for a meteorological and hydrological station.
+
+[source,json]
+----
+{
+  "parameterDefinitions": [
+    {
+      "id": 1,
+      "description": "Surface meteorological observations",
+      "parameters": [
+        {
+          "longName": "Air Temperature",
+          "unit": "°C",
+          "standardNames": { "cf": "air_temperature" },
+          "device": { "observerId": 1 },
+          "cellMethod": "MEAN",
+          "cellPeriodSeconds": 60
+        },
+        {
+          "longName": "Wind Speed",
+          "unit": "m/s",
+          "standardNames": { "cf": "wind_speed" },
+          "device": { "observerId": 2 },
+          "cellMethod": "MEAN",
+          "cellPeriodSeconds": 600
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "description": "Station power and diagnostics",
+      "parameters": [
+        {
+          "longName": "Supply Voltage",
+          "unit": "V",
+          "standardNames": { "wmo": "supply_voltage" },
+          "device": { "host": {} },
+          "cellMethod": "POINT",
+          "cellPeriodSeconds": 0
+        }
+      ]
+    }
+  ],
+  "namespaces": {
+    "cf": "https://vocab.nerc.ac.uk/collection/P07/current/",
+    "wmo": "https://codes.wmo.int/first-mile/standard-names/"
+  }
+}
+----

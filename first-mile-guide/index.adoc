@@ -54,4 +54,4 @@ include::sections/clause9/index.adoc[]
 
 include::sections/clause10/index.adoc[]
 
-include::sections/clause11/index.adoc[]
+// include::sections/clause11/index.adoc[]
