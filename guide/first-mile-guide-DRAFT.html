@@ -96,7 +96,7 @@ body {
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong class="big">World Meteorological Organization</strong></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Date: 2026-06-09</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Date: 2026-06-10</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Version: 0.1</p></td>
@@ -243,16 +243,16 @@ body {
 <li><a href="#_retained_messages">10.1.3. Retained messages</a></li>
 </ul>
 </li>
-<li><a href="#_data_publication">10.2. Data publication</a>
+</ul>
+</li>
+<li><a href="#_data_publication">11. Data publication</a>
 <ul class="sectlevel3">
-<li><a href="#_mandatory_fields_2">10.2.1. Mandatory fields</a></li>
-<li><a href="#_observation_timestamps">10.2.2. Observation timestamps</a></li>
+<li><a href="#_mandatory_fields_2">11.1. Mandatory fields</a></li>
+<li><a href="#_observation_timestamps">11.2. Observation timestamps</a></li>
+<li><a href="#_device_identification">11.3. Device identification</a></li>
 </ul>
 </li>
-<li><a href="#_device_identification">10.3. Device identification</a></li>
-</ul>
-</li>
-<li><a href="#_data_receiver_structure_tbd">11. Data receiver (structure TBD)</a></li>
+<li><a href="#_data_receiver_structure_tbd">12. Data receiver (structure TBD)</a></li>
 </ul>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1604,31 +1604,111 @@ The Data Receiver can only intepret data correctly if it has received the releva
 <div class="paragraph">
 <p>The hub is unable to process any Data Messages without a current Metadata Message.</p>
 </div>
+<div class="paragraph">
+<p>As a minimum, a new/updated Metadata Message must be transmitted whenever the Metadata changes.  This is particularly important when:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Sensors are added or removed</p>
+</li>
+<li>
+<p>New Observations (or statistics on existing observations, for example max/min values) are provided.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To balance network transmission costs for Metadata Messages with impost of storing Data messages until the relevant Metadata message is received and the Data Messages can be understood, recommended practice is (re)sending of the Metadata Message:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>on power-on/restart of hub</p>
+</li>
+<li>
+<p>on a "heartbeat" schedule of at least once per day.</p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_retained_messages"><a class="anchor" href="#_retained_messages"></a>10.1.3. Retained messages</h4>
-
+<div class="paragraph">
+<p>The Data Messages cannot be understood without their associated Metadata Message.  To meet Archiving requirements <sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup> in most jurisdictions the Data Messages, and associated Metadata Messages must both be retained.  Typically, this can be a one (Metadata Message) to many (Data Messages) relationship</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_data_publication"><a class="anchor" href="#_data_publication"></a>10.2. Data publication</h3>
-<div class="sect3">
-<h4 id="_mandatory_fields_2"><a class="anchor" href="#_mandatory_fields_2"></a>10.2.1. Mandatory fields</h4>
-
-</div>
-<div class="sect3">
-<h4 id="_observation_timestamps"><a class="anchor" href="#_observation_timestamps"></a>10.2.2. Observation timestamps</h4>
-
-</div>
-</div>
-<div class="sect2">
-<h3 id="_device_identification"><a class="anchor" href="#_device_identification"></a>10.3. Device identification</h3>
-
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_data_receiver_structure_tbd"><a class="anchor" href="#_data_receiver_structure_tbd"></a>11. Data receiver (structure TBD)</h2>
+<h2 id="_data_publication"><a class="anchor" href="#_data_publication"></a>11. Data publication</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The First Mile Format enables efficient communication of Data:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the message is a compact/efficient binary format.</p>
+</li>
+<li>
+<p>only the Observation/Data values are transmitted [as the less often transmitted Metadata Message carries the information to understand the values]</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_mandatory_fields_2"><a class="anchor" href="#_mandatory_fields_2"></a>11.1. Mandatory fields</h4>
+<div class="paragraph">
+<p>Every Data message must contain at least:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">parameterDefinitionId</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Enables the Data to be matched to the definition from the Metadata Message</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">time</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">(at least one) value</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_observation_timestamps"><a class="anchor" href="#_observation_timestamps"></a>11.2. Observation timestamps</h4>
+<div class="paragraph">
+<p>The Data (Observation) Timestamp uses the google.protobuf.Timestamp structure for each observation.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>message Timestamp {
+    int64 seconds = 1; // Seconds since UTC (Unix) epoch (1/1/1970)
+    int32 nanos = 2; // non-negative nanosecond fractions
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The structure enables date/time resolutions to nanoseconds for observations.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_device_identification"><a class="anchor" href="#_device_identification"></a>11.3. Device identification</h3>
+<div class="paragraph">
+<p>The Data Message does not contain any Station/Device information in the message.  Instead, the MQTT topic hierarchy NodeID (Level 4) would be used for Station/Device Identification and should be archived with the Data Message.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_data_receiver_structure_tbd"><a class="anchor" href="#_data_receiver_structure_tbd"></a>12. Data receiver (structure TBD)</h2>
 <div class="sectionbody">
 
 </div>
@@ -1642,10 +1722,13 @@ The Data Receiver can only intepret data correctly if it has received the releva
 <div class="footnote" id="_footnotedef_2">
 <a href="#_footnoteref_2">2</a>. <a href="https://community.wmo.int/governance/commission-membership/infcom" class="bare">https://community.wmo.int/governance/commission-membership/infcom</a>
 </div>
+<div class="footnote" id="_footnotedef_3">
+<a href="#_footnoteref_3">3</a>. For Example WMO 1238 (2023) 2.5.5
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-06-09 10:59:36 UTC
+Last updated 2026-06-10 07:05:08 UTC
 </div>
 </div>
 </body>
