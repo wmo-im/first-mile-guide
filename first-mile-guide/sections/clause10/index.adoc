@@ -32,15 +32,50 @@ If machine to machine translation is expected, then the following following addi
 |===
 
 ==== Transmission triggers
-The hub is unable to process any Data Messages without a current Metadata Message.  
+The hub is unable to process any Data Messages without a current Metadata Message.
 
+As a minimum, a new/updated Metadata Message must be transmitted whenever the Metadata changes.  This is particularly important when:
+
+* Sensors are added or removed
+
+* New Observations (or statistics on existing observations, for example max/min values) are provided.
+
+To balance network transmission costs for Metadata Messages with impost of storing Data messages until the relevant Metadata message is received and the Data Messages can be understood, recommended practice is (re)sending of the Metadata Message:
+
+* on power-on/restart of hub
+
+* on a "heartbeat" schedule of at least once per day.
 
 ==== Retained messages
+The Data Messages cannot be understood without their associated Metadata Message.  To meet Archiving requirements footnote:[For Example WMO 1238 (2023) 2.5.5 ] in most jurisdictions the Data Messages, and associated Metadata Messages must both be retained.  Typically, this can be a one (Metadata Message) to many (Data Messages) relationship
 
-=== Data publication
+== Data publication
+The First Mile Format enables efficient communication of Data:
+
+* the message is a compact/efficient binary format.
+* only the Observation/Data values are transmitted [as the less often transmitted Metadata Message carries the information to understand the values]
 
 ==== Mandatory fields
+Every Data message must contain at least:
+
+|===
+|parameterDefinitionId | Enables the Data to be matched to the definition from the Metadata Message
+|time|
+| (at least one) value |
+|===
+
 
 ==== Observation timestamps
+The Data (Observation) Timestamp uses the google.protobuf.Timestamp structure for each observation.
+
+----
+message Timestamp {
+    int64 seconds = 1; // Seconds since UTC (Unix) epoch (1/1/1970)
+    int32 nanos = 2; // non-negative nanosecond fractions
+}
+----
+
+The structure enables date/time resolutions to nanoseconds for observations.
 
 === Device identification
+The Data Message does not contain any Station/Device information in the message.  Instead, the MQTT topic hierarchy NodeID (Level 4) would be used for Station/Device Identification and should be archived with the Data Message.
