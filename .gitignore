@@ -4,3 +4,4 @@ first-mile-guide/*.html
 first-mile-guide/*.pdf
 reference-implementations/python-example/protospy/
 reference-implementations/c-nanopb-example/build
+.idea/
