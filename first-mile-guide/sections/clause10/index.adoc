@@ -5,7 +5,7 @@ A key feature of the First Mile Format, is the structured inclusion of metadata.
 
 |===
 | Benefit | Definition | Required in implementation
-| Machine Translation | Received data can be correctly assigned to observations in database without human interpretation/intervention | Standard Names
+| Machine Translation | Received data can be correctly assigned to observations in database/products/services without human interpretation/intervention | Standard Names
 | Stranger Interpretation | Siting (particularly location and height of observations) and equipment can be deduced from data, enabling assessment of observation quality without access to other information | Location, URL (for additional information)
 | Efficient Communication | Metadata is not included in every message (reducing bandwidth requirements), only to ensure efficient processing by the Receiver| Transmission Triggers
 |===
@@ -28,7 +28,7 @@ If machine to machine translation is expected, then the following following addi
 |===
 |Message|Field|Justification
 |Parameter|standardNames|Enables machine to machine translation of definition, irrespective of parameter name
-|Parameter|CellMethod|If any data processing is done at the edge, this enables for example the mean and standard deviation to be differentiated (as they will have the same standardNames, units)
+|Parameter|CellMethod|If any data processing is done at the edge, this enables, for example, the mean and standard deviation to be differentiated (as they will have the same standardNames, units)
 |===
 
 ==== Transmission triggers
@@ -40,7 +40,7 @@ As a minimum, a new/updated Metadata Message must be transmitted whenever the Me
 
 * New Observations (or statistics on existing observations, for example max/min values) are provided.
 
-To balance network transmission costs for Metadata Messages with impost of storing Data messages until the relevant Metadata message is received and the Data Messages can be understood, recommended practice is (re)sending of the Metadata Message:
+To balance network transmission costs for Metadata Messages (which are typically significantly larger than Data Messages) with overhead of storing Data messages until the relevant Metadata message is received and the Data Messages can be understood, recommended practice is (re)sending of the Metadata Message:
 
 * on power-on/restart of hub
 
@@ -70,7 +70,7 @@ The Data (Observation) Timestamp uses the google.protobuf.Timestamp structure fo
 
 ----
 message Timestamp {
-    int64 seconds = 1; // Seconds since UTC (Unix) epoch (1/1/1970)
+    int64 seconds = 1; // seconds since UTC (Unix) epoch (1/1/1970)
     int32 nanos = 2; // non-negative nanosecond fractions
 }
 ----
@@ -78,4 +78,4 @@ message Timestamp {
 The structure enables date/time resolutions to nanoseconds for observations.
 
 === Device identification
-The Data Message does not contain any Station/Device information in the message.  Instead, the MQTT topic hierarchy NodeID (Level 4) would be used for Station/Device Identification and should be archived with the Data Message.
+The Data Message does not contain any Station/Device information in the message.  Instead, the MQTT topic hierarchy NodeID (Level 4) [and possibly GroupID (Level 3)] would be used for Station/Device Identification and should be archived with the Data Message.
