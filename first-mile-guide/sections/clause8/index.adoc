@@ -166,7 +166,7 @@ The following example shows a `Metadata` message extract demonstrating standard 
           "longName": "Supply Voltage",
           "unit": "V",
           "standardNames": { "wmo": "supply_voltage" },
-          "device": { "host": {} },
+          "device": { "node": {} },
           "cellMethod": "POINT",
           "cellPeriodSeconds": 0
         }

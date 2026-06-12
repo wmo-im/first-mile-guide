@@ -1,6 +1,6 @@
 == Overview (informative)
 
-This clause provides a high-level view of the First-Mile Data Collection Guide. Communication is strictly unidirectional, with the Node transmitting protobuf payloads over MQTT to the Host. The two top-level payloads are the `Data` message, which carries Observation content, and the `Metadata` message, which carries the descriptive context needed to interpret those observations.
+This clause provides a high-level view of the First-Mile Data Collection Guide. Communication is strictly unidirectional, with the Node transmitting protobuf payloads over MQTT to the Hub. The two top-level payloads are the `Data` message, which carries Observation content, and the `Metadata` message, which carries the descriptive context needed to interpret those observations.
 
 === System architecture
 
@@ -18,12 +18,12 @@ The Node represents the remote station or logger through a Node Device and may d
 	          | over MQTT                      | over MQTT
 	          v                                v
 	+----------------------------------------------------------+
-	|                         Host                             |
+	|                         Hub                              |
 	| Receives, decodes, and interprets protobuf payloads      |
 	+----------------------------------------------------------+
 
 	              Multiple Nodes may publish
-	              to a single Host.
+	              to a single Hub.
 ----
 
 === Message flow
@@ -43,11 +43,11 @@ In typical operation, the `Metadata` message is sent when the Node is initialize
 |Covers how Parameter Definition entries associate parameters with controlled standard-name vocabularies and namespaces.
 
 |MQTT Protocol Binding
-|Covers how protobuf payloads are conveyed over MQTT in the unidirectional exchange between Node and Host.
+|Covers how protobuf payloads are conveyed over MQTT in the unidirectional exchange between Node and Hub.
 
 |Node
 |Covers the sender-side behavior for constructing and publishing `Metadata` message and `Data` message payloads.
 
-|Host
+|Hub
 |Covers the receiver-side behavior for accepting, decoding, and interpreting payloads received from the Node.
 |===
