@@ -96,7 +96,7 @@ body {
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong class="big">World Meteorological Organization</strong></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Date: 2026-06-11</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Date: 2026-06-12</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Version: 0.1</p></td>
@@ -130,8 +130,8 @@ body {
 <li><a href="#_requirements_class_core_data_model">2.1.1. Requirements Class: Core Data Model</a></li>
 <li><a href="#_requirements_class_standard_name_binding">2.1.2. Requirements Class: Standard Name Binding</a></li>
 <li><a href="#_requirements_class_mqtt_protocol_binding">2.1.3. Requirements Class: MQTT Protocol Binding</a></li>
-<li><a href="#_requirements_class_data_sender">2.1.4. Requirements Class: Data Sender</a></li>
-<li><a href="#_requirements_class_data_receiver">2.1.5. Requirements Class: Data Receiver</a></li>
+<li><a href="#_requirements_class_node">2.1.4. Requirements Class: Node</a></li>
+<li><a href="#_requirements_class_host">2.1.5. Requirements Class: Host</a></li>
 </ul>
 </li>
 </ul>
@@ -142,7 +142,7 @@ body {
 <li><a href="#_terms_and_definitions">4.1. Terms and definitions</a>
 <ul class="sectlevel3">
 <li><a href="#_first_mile">4.1.1. First mile</a></li>
-<li><a href="#_host_device">4.1.2. Host device</a></li>
+<li><a href="#_node_device">4.1.2. Node device</a></li>
 <li><a href="#_observer_device">4.1.3. Observer device</a></li>
 <li><a href="#_observation">4.1.4. Observation</a></li>
 <li><a href="#_parameter_definition">4.1.5. Parameter definition</a></li>
@@ -187,7 +187,7 @@ body {
 </li>
 <li><a href="#_devices">7.3. Devices</a>
 <ul class="sectlevel3">
-<li><a href="#_host_device_2">7.3.1. Host device</a></li>
+<li><a href="#_node_device_2">7.3.1. Node device</a></li>
 <li><a href="#_observer_device_2">7.3.2. Observer device</a></li>
 <li><a href="#_location_and_reference_surfaces">7.3.3. Location and reference surfaces</a></li>
 </ul>
@@ -282,11 +282,11 @@ body {
 
 </div>
 <div class="sect3">
-<h4 id="_requirements_class_data_sender"><a class="anchor" href="#_requirements_class_data_sender"></a>2.1.4. Requirements Class: Data Sender</h4>
+<h4 id="_requirements_class_node"><a class="anchor" href="#_requirements_class_node"></a>2.1.4. Requirements Class: Node</h4>
 
 </div>
 <div class="sect3">
-<h4 id="_requirements_class_data_receiver"><a class="anchor" href="#_requirements_class_data_receiver"></a>2.1.5. Requirements Class: Data Receiver</h4>
+<h4 id="_requirements_class_host"><a class="anchor" href="#_requirements_class_host"></a>2.1.5. Requirements Class: Host</h4>
 
 </div>
 </div>
@@ -308,7 +308,7 @@ body {
 
 </div>
 <div class="sect3">
-<h4 id="_host_device"><a class="anchor" href="#_host_device"></a>4.1.2. Host device</h4>
+<h4 id="_node_device"><a class="anchor" href="#_node_device"></a>4.1.2. Node device</h4>
 
 </div>
 <div class="sect3">
@@ -398,38 +398,38 @@ body {
 <h2 id="_overview_informative"><a class="anchor" href="#_overview_informative"></a>6. Overview (informative)</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This clause provides a high-level view of the First-Mile Data Collection Guide. Communication is strictly unidirectional, with the Data Sender transmitting protobuf payloads over MQTT to the Data Receiver. The two top-level payloads are the <code>Data</code> message, which carries Observation content, and the <code>Metadata</code> message, which carries the descriptive context needed to interpret those observations.</p>
+<p>This clause provides a high-level view of the First-Mile Data Collection Guide. Communication is strictly unidirectional, with the Node transmitting protobuf payloads over MQTT to the Host. The two top-level payloads are the <code>Data</code> message, which carries Observation content, and the <code>Metadata</code> message, which carries the descriptive context needed to interpret those observations.</p>
 </div>
 <div class="sect2">
 <h3 id="_system_architecture"><a class="anchor" href="#_system_architecture"></a>6.1. System architecture</h3>
 <div class="paragraph">
-<p>The Data Sender represents the remote station or logger through a Host Device and may describe attached sensors as Observer Device entries. The <code>Metadata</code> message carries the Host Device, Observer Device, Parameter Definition, and namespace information, while the <code>Data</code> message carries one or more Observation instances that refer to those Parameter Definition identifiers. Detailed message structure is described in Clause 7, standard name binding in Clause 8, and MQTT protocol binding in Clause 9.</p>
+<p>The Node represents the remote station or logger through a Node Device and may describe attached sensors as Observer Device entries. The <code>Metadata</code> message carries the Node Device, Observer Device, Parameter Definition, and namespace information, while the <code>Data</code> message carries one or more Observation instances that refer to those Parameter Definition identifiers. Detailed message structure is described in Clause 7, standard name binding in Clause 8, and MQTT protocol binding in Clause 9.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-text" data-lang="text">	+-------------------+            +-------------------+
-	| Data Sender A     |            | Data Sender B     |
-	| Host Device       |            | Host Device       |
+	| Node A            |            | Node B            |
+	| Node Device       |            | Node Device       |
 	| + Observers       |            | + Observers       |
 	+-------------------+            +-------------------+
-						|                                |
-						| Metadata and Data messages     | Metadata and Data messages
-						| over MQTT                      | over MQTT
-						v                                v
+	          |                                |
+	          | Metadata and Data messages     | Metadata and Data messages
+	          | over MQTT                      | over MQTT
+	          v                                v
 	+----------------------------------------------------------+
-	|                      Data Receiver                        |
+	|                         Host                             |
 	| Receives, decodes, and interprets protobuf payloads      |
 	+----------------------------------------------------------+
 
-										Multiple Data Senders may publish
-										to a single Data Receiver.</code></pre>
+	              Multiple Nodes may publish
+	              to a single Host.</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_message_flow"><a class="anchor" href="#_message_flow"></a>6.2. Message flow</h3>
 <div class="paragraph">
-<p>In typical operation, the <code>Metadata</code> message is sent when the Data Sender is initialized and whenever the station configuration changes, and the <code>Data</code> message is sent as observations become available. This separates relatively stable descriptive information from frequently changing measurement values and supports both individual and batched Observation delivery. Where a measurement is unavailable, the value is represented explicitly using <code>emptyValue</code> rather than being inferred from zero or omission.</p>
+<p>In typical operation, the <code>Metadata</code> message is sent when the Node is initialized and whenever the station configuration changes, and the <code>Data</code> message is sent as observations become available. This separates relatively stable descriptive information from frequently changing measurement values and supports both individual and batched Observation delivery. Where a measurement is unavailable, the value is represented explicitly using <code>emptyValue</code> rather than being inferred from zero or omission.</p>
 </div>
 </div>
 <div class="sect2">
@@ -456,15 +456,15 @@ body {
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">MQTT Protocol Binding</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Covers how protobuf payloads are conveyed over MQTT in the unidirectional exchange between Data Sender and Data Receiver.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Covers how protobuf payloads are conveyed over MQTT in the unidirectional exchange between Node and Host.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Data Sender</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Node</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Covers the sender-side behavior for constructing and publishing <code>Metadata</code> message and <code>Data</code> message payloads.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Data Receiver</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Covers the receiver-side behavior for accepting, decoding, and interpreting payloads received from the Data Sender.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Host</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Covers the receiver-side behavior for accepting, decoding, and interpreting payloads received from the Node.</p></td>
 </tr>
 </tbody>
 </table>
@@ -477,7 +477,7 @@ body {
 <div class="sect2">
 <h3 id="_overview"><a class="anchor" href="#_overview"></a>7.1. Overview</h3>
 <div class="paragraph">
-<p>The data model defines the structure and organization of information transmitted from the Data Sender to the Data Receiver using Protocol Buffers (Protobuf) as the Data Format. The data model is formally specified in the protobuf schema <code>firstmile.proto</code>.</p>
+<p>The data model defines the structure and organization of information transmitted from the Node to the Host using Protocol Buffers (Protobuf) as the Data Format. The data model is formally specified in the protobuf schema <code>firstmile.proto</code>.</p>
 </div>
 <div class="paragraph">
 <p>The data model supports two primary use cases:</p>
@@ -485,10 +485,10 @@ body {
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p><strong>Transmission of observation data</strong> - The Data Sender transmits measurement values collected from sensors</p>
+<p><strong>Transmission of observation data</strong> - The Node transmits measurement values collected from sensors</p>
 </li>
 <li>
-<p><strong>Transmission of metadata</strong> - The Data Sender transmits information about the monitoring site, devices, and parameter definitions</p>
+<p><strong>Transmission of metadata</strong> - The Node transmits information about the monitoring site, devices, and parameter definitions</p>
 </li>
 </ol>
 </div>
@@ -498,7 +498,7 @@ body {
 <div class="sect3">
 <h4 id="_communication_pattern"><a class="anchor" href="#_communication_pattern"></a>7.1.1. Communication pattern</h4>
 <div class="paragraph">
-<p>The communication follows a unidirectional pattern where data flows from the Data Sender to the Data Receiver. The Data Sender may transmit messages in the following patterns:</p>
+<p>The communication follows a unidirectional pattern where data flows from the Node to the Host. The Node may transmit messages in the following patterns:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -511,8 +511,8 @@ body {
 </ul>
 </div>
 <div class="paragraph">
-<p>The Data Sender should transmit the <code>Metadata</code> message at least once after initialization and whenever the configuration of devices or parameter definitions changes. The <code>Data</code> message may be transmitted as frequently as needed to deliver observations.
-The Data Receiver can only intepret data correctly if it has received the relevant <code>Metadata</code> message that defines the devices and parameters being observed. Therefore, it is recommended to transmit the <code>Metadata</code> message at least once before transmitting any <code>Data</code> messages.</p>
+<p>The Node should transmit the <code>Metadata</code> message at least once after initialization and whenever the configuration of devices or parameter definitions changes. The <code>Data</code> message may be transmitted as frequently as needed to deliver observations.
+The Host can only intepret data correctly if it has received the relevant <code>Metadata</code> message that defines the devices and parameters being observed. Therefore, it is recommended to transmit the <code>Metadata</code> message at least once before transmitting any <code>Data</code> messages.</p>
 </div>
 </div>
 <div class="sect3">
@@ -526,7 +526,7 @@ The Data Receiver can only intepret data correctly if it has received the releva
 <p><strong>Messages</strong> - Top-level containers (<code>Data</code> and <code>Metadata</code>) that are transmitted as independent payloads</p>
 </li>
 <li>
-<p><strong>Devices</strong> - Descriptions of physical equipment including the Host Device (data sender) and Observer Devices (sensors)</p>
+<p><strong>Devices</strong> - Descriptions of physical equipment including the Node Device (node) and Observer Devices (sensors)</p>
 </li>
 <li>
 <p><strong>Observations</strong> - Measurement data points consisting of a parameter identifier, timestamp, and one or more values</p>
@@ -577,7 +577,7 @@ The Data Receiver can only intepret data correctly if it has received the releva
 <div class="sect3">
 <h4 id="_metadata_message"><a class="anchor" href="#_metadata_message"></a>7.2.1. Metadata message</h4>
 <div class="paragraph">
-<p>The <code>Metadata</code> message provides configuration and contextual information about the Data Sender, including descriptions of devices and the parameters they measure. This message shall be transmitted at least once after Data Sender initialization and whenever the configuration changes.</p>
+<p>The <code>Metadata</code> message provides configuration and contextual information about the Node, including descriptions of devices and the parameters they measure. This message shall be transmitted at least once after Node initialization and whenever the configuration changes.</p>
 </div>
 <div class="paragraph">
 <p>The <code>Metadata</code> message contains the following fields:</p>
@@ -599,16 +599,16 @@ The Data Receiver can only intepret data correctly if it has received the releva
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">host</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">HostDevice</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">node</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Node</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">required</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Description of the Data Sender device (datalogger or station)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Description of the Node device (datalogger or station)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">observers</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">ObserverDevice</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">repeated</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Descriptions of individual sensor devices connected to the host</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Descriptions of individual sensor devices connected to the node</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">parameterDefinitions</p></td>
@@ -631,7 +631,7 @@ The Data Receiver can only intepret data correctly if it has received the releva
 <div class="sect3">
 <h4 id="_data_message"><a class="anchor" href="#_data_message"></a>7.2.2. Data message</h4>
 <div class="paragraph">
-<p>The <code>Data</code> message is the primary container for transmitting observation data from the Data Sender to the Data Receiver. This message may be transmitted as frequently as needed to deliver current or batched observations.</p>
+<p>The <code>Data</code> message is the primary container for transmitting observation data from the Node to the Host. This message may be transmitted as frequently as needed to deliver current or batched observations.</p>
 </div>
 <div class="paragraph">
 <p>The <code>Data</code> message contains the following fields:</p>
@@ -671,7 +671,7 @@ The Data Receiver can only intepret data correctly if it has received the releva
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The Data Sender may transmit <code>Data</code> messages containing observations that reference parameter definitions not yet received by the Data Receiver. In this case, the Data Receiver shall buffer or queue such observations until the corresponding <code>Metadata</code> message is received.</p>
+<p>The Node may transmit <code>Data</code> messages containing observations that reference parameter definitions not yet received by the Host. In this case, the Host shall buffer or queue such observations until the corresponding <code>Metadata</code> message is received.</p>
 </div>
 </td>
 </tr>
@@ -682,12 +682,12 @@ The Data Receiver can only intepret data correctly if it has received the releva
 <div class="sect2">
 <h3 id="_devices"><a class="anchor" href="#_devices"></a>7.3. Devices</h3>
 <div class="sect3">
-<h4 id="_host_device_2"><a class="anchor" href="#_host_device_2"></a>7.3.1. Host device</h4>
+<h4 id="_node_device_2"><a class="anchor" href="#_node_device_2"></a>7.3.1. Node device</h4>
 <div class="paragraph">
-<p>The <code>HostDevice</code> message describes the Data Sender device itself, typically a datalogger or observation station.</p>
+<p>The <code>Node</code> message describes the Node device itself, typically a datalogger or observation station.</p>
 </div>
 <div class="paragraph">
-<p>The <code>HostDevice</code> message contains the following fields:</p>
+<p>The <code>Node</code> message contains the following fields:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -709,13 +709,13 @@ The Data Receiver can only intepret data correctly if it has received the releva
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">name</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">string</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">required</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Name or model designation of the host device</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Name or model designation of the node device</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">location</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Location</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">optional</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Geographic location of the host device</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Geographic location of the node device</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">url</p></td>
@@ -744,7 +744,7 @@ The Data Receiver can only intepret data correctly if it has received the releva
 <div class="sect3">
 <h4 id="_observer_device_2"><a class="anchor" href="#_observer_device_2"></a>7.3.2. Observer device</h4>
 <div class="paragraph">
-<p>The <code>ObserverDevice</code> message describes an individual sensor or measurement device connected to the Host Device.</p>
+<p>The <code>ObserverDevice</code> message describes an individual sensor or measurement device connected to the Node Device.</p>
 </div>
 <div class="paragraph">
 <p>The <code>ObserverDevice</code> message contains the following fields:</p>
@@ -769,7 +769,7 @@ The Data Receiver can only intepret data correctly if it has received the releva
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">id</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">uint32</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">required</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Unique identifier for this observer within the context of this host</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Unique identifier for this observer within the context of this node</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">name</p></td>
@@ -804,7 +804,7 @@ The Data Receiver can only intepret data correctly if it has received the releva
 </tbody>
 </table>
 <div class="paragraph">
-<p>The <code>id</code> field shall be unique among all observers associated with a single host device. This identifier is used by the <code>DeviceRef</code> message to associate parameters with specific observer devices.</p>
+<p>The <code>id</code> field shall be unique among all observers associated with a single node device. This identifier is used by the <code>DeviceRef</code> message to associate parameters with specific observer devices.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -814,7 +814,7 @@ The Data Receiver can only intepret data correctly if it has received the releva
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Observer device identifiers shall remain stable across Data Sender restarts and metadata updates to ensure consistent parameter-to-device associations.</p>
+<p>Observer device identifiers shall remain stable across Node restarts and metadata updates to ensure consistent parameter-to-device associations.</p>
 </div>
 </td>
 </tr>
@@ -824,7 +824,7 @@ The Data Receiver can only intepret data correctly if it has received the releva
 <div class="sect3">
 <h4 id="_location_and_reference_surfaces"><a class="anchor" href="#_location_and_reference_surfaces"></a>7.3.3. Location and reference surfaces</h4>
 <div class="paragraph">
-<p>The <code>Location</code> message specifies the geographic position of a device (either host or observer).</p>
+<p>The <code>Location</code> message specifies the geographic position of a device (either node or observer).</p>
 </div>
 <div class="paragraph">
 <p>The <code>Location</code> message contains the following fields:</p>
@@ -891,7 +891,7 @@ The Data Receiver can only intepret data correctly if it has received the releva
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">REFERENCE_SURFACE_UNSPECIFIED</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Reserved default value. Shall not be explicitly set by Data Senders.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Reserved default value. Shall not be explicitly set by Nodes.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">MSL</p></td>
@@ -1243,7 +1243,7 @@ The Data Receiver can only intepret data correctly if it has received the releva
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">device</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">DeviceRef</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">required</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Reference to the device (host or observer) that measures this parameter</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Reference to the device (node or observer) that measures this parameter</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">cellMethod</p></td>
@@ -1260,10 +1260,10 @@ The Data Receiver can only intepret data correctly if it has received the releva
 </tbody>
 </table>
 <div class="paragraph">
-<p>The <code>standardNames</code> field enables mapping to external naming conventions such as Climate and Forecast (CF) standard names. This allows parameters to be referenced by different standard parameter types according to the target application of the device using the protocol. The Data Sender is not bound to a specific standard but may include mappings to multiple standards as appropriate for the intended use case. The keys in this map shall correspond to namespace prefixes defined in <code>Metadata.namespaces</code>.</p>
+<p>The <code>standardNames</code> field enables mapping to external naming conventions such as Climate and Forecast (CF) standard names. This allows parameters to be referenced by different standard parameter types according to the target application of the device using the protocol. The Node is not bound to a specific standard but may include mappings to multiple standards as appropriate for the intended use case. The keys in this map shall correspond to namespace prefixes defined in <code>Metadata.namespaces</code>.</p>
 </div>
 <div class="paragraph">
-<p>The <code>device</code> field specifies which device (either the host or a specific observer) performs this measurement.</p>
+<p>The <code>device</code> field specifies which device (either the node or a specific observer) performs this measurement.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1285,7 +1285,7 @@ The Data Receiver can only intepret data correctly if it has received the releva
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">CELL_METHOD_UNSPECIFIED</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Reserved default value. Shall not be explicitly set by Data Senders.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Reserved default value. Shall not be explicitly set by Nodes.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">POINT</p></td>
@@ -1397,7 +1397,7 @@ The Data Receiver can only intepret data correctly if it has received the releva
 <div class="sect3">
 <h4 id="_device_reference"><a class="anchor" href="#_device_reference"></a>7.5.4. Device reference</h4>
 <div class="paragraph">
-<p>The <code>DeviceRef</code> message associates a parameter with the device that measures it. This message uses a <code>oneof</code> field to reference either the host device or a specific observer device.</p>
+<p>The <code>DeviceRef</code> message associates a parameter with the device that measures it. This message uses a <code>oneof</code> field to reference either the node device or a specific observer device.</p>
 </div>
 <div class="paragraph">
 <p>The <code>DeviceRef</code> message contains exactly one of the following fields:</p>
@@ -1417,9 +1417,9 @@ The Data Receiver can only intepret data correctly if it has received the releva
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">host</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">node</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">google.protobuf.Empty</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">References the host device; the presence of this field (even though empty) indicates the parameter is measured by the host</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">References the node device; the presence of this field (even though empty) indicates the parameter is measured by the node</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">observerId</p></td>
@@ -1432,7 +1432,7 @@ The Data Receiver can only intepret data correctly if it has received the releva
 <p>The <code>oneof</code> constraint ensures that exactly one of these fields is set, unambiguously identifying which device performs the measurement.</p>
 </div>
 <div class="paragraph">
-<p>When the <code>host</code> field is present, the parameter is measured by the Host Device itself (such as internal voltage or temperature of a datalogger). When the <code>observerId</code> field is set, it shall match the <code>id</code> of an <code>ObserverDevice</code> defined in the <code>Metadata</code> message.</p>
+<p>When the <code>node</code> field is present, the parameter is measured by the Node Device itself (such as internal voltage or temperature of a datalogger). When the <code>observerId</code> field is set, it shall match the <code>id</code> of an <code>ObserverDevice</code> defined in the <code>Metadata</code> message.</p>
 </div>
 </div>
 </div>
@@ -1545,7 +1545,7 @@ The Data Receiver can only intepret data correctly if it has received the releva
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Justification</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">HostDevice</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Node</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">name</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Enables the identification of the end node</p></td>
 </tr>
@@ -1728,7 +1728,7 @@ The Data Receiver can only intepret data correctly if it has received the releva
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-06-11 09:04:31 UTC
+Last updated 2026-06-12 08:32:34 UTC
 </div>
 </div>
 </body>
