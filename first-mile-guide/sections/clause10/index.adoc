@@ -40,7 +40,7 @@ As a minimum, a new/updated Metadata Message must be transmitted whenever the Me
 
 * New Observations (or statistics on existing observations, for example max/min values) are provided.
 
-To balance network transmission costs for Metadata Messages (which are typically significantly larger than Data Messages) with impost of storing Data messages until the relevant Metadata message is received and the Data Messages can be understood, recommended practice is (re)sending of the Metadata Message:
+To balance network transmission costs for Metadata Messages (which are typically significantly larger than Data Messages) with overhead of storing Data messages until the relevant Metadata message is received and the Data Messages can be understood, recommended practice is (re)sending of the Metadata Message:
 
 * on power-on/restart of hub
 
@@ -78,4 +78,4 @@ message Timestamp {
 The structure enables date/time resolutions to nanoseconds for observations.
 
 === Device identification
-The Data Message does not contain any Station/Device information in the message.  Instead, the MQTT topic hierarchy NodeID (Level 4) [and possibly GroupID (Level 3) would be used for Station/Device Identification and should be archived with the Data Message.
+The Data Message does not contain any Station/Device information in the message.  Instead, the MQTT topic hierarchy NodeID (Level 4) [and possibly GroupID (Level 3)] would be used for Station/Device Identification and should be archived with the Data Message.
