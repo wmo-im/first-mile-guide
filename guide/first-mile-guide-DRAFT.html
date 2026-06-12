@@ -211,14 +211,22 @@ body {
 </li>
 <li><a href="#_standard_name_binding">8. Standard name binding</a>
 <ul class="sectlevel2">
-<li><a href="#_namespace_declaration">8.1. Namespace declaration</a></li>
-<li><a href="#_standard_name_assignment">8.2. Standard name assignment</a></li>
-<li><a href="#_recommended_cf_conventions_binding">8.3. Recommended: CF Conventions binding</a></li>
+<li><a href="#_overview_2">8.1. Overview</a></li>
+<li><a href="#_namespace_declaration">8.2. Namespace declaration</a></li>
+<li><a href="#_standard_name_assignment">8.3. Standard name assignment</a></li>
+<li><a href="#standard-name-hierarchy">8.4. Standard name hierarchy</a>
+<ul class="sectlevel3">
+<li><a href="#level-1-cf">8.4.1. Level 1: CF Metadata Conventions</a></li>
+<li><a href="#level-2-wmo">8.4.2. Level 2: WMO First Mile parameter registry</a></li>
+<li><a href="#level-3-local">8.4.3. Level 3: Locally managed vocabularies</a></li>
+</ul>
+</li>
+<li><a href="#_informative_example">8.5. Informative example</a></li>
 </ul>
 </li>
 <li><a href="#_protocol_binding">9. Protocol binding</a>
 <ul class="sectlevel2">
-<li><a href="#_overview_2">9.1. Overview</a></li>
+<li><a href="#_overview_3">9.1. Overview</a></li>
 <li><a href="#_mqtt_version_requirements">9.2. MQTT version requirements</a></li>
 <li><a href="#_topic_structure">9.3. Topic structure</a>
 <ul class="sectlevel3">
@@ -252,7 +260,6 @@ body {
 <li><a href="#_device_identification">11.3. Device identification</a></li>
 </ul>
 </li>
-<li><a href="#_data_receiver_structure_tbd">12. Data receiver (structure TBD)</a></li>
 </ul>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1442,16 +1449,297 @@ The Host can only intepret data correctly if it has received the relevant <code>
 <h2 id="_standard_name_binding"><a class="anchor" href="#_standard_name_binding"></a>8. Standard name binding</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_namespace_declaration"><a class="anchor" href="#_namespace_declaration"></a>8.1. Namespace declaration</h3>
-
+<h3 id="_overview_2"><a class="anchor" href="#_overview_2"></a>8.1. Overview</h3>
+<div class="paragraph">
+<p>Standard name binding enables <code>Parameter</code> definitions within a <code>Metadata</code> message to be associated with controlled vocabulary entries from external naming conventions. This allows observation data to be unambiguously interpreted by Hubs and downstream systems without dependence on the <code>Parameter.longName</code> field, which is a human-readable label and not guaranteed to be unique or machine-interpretable.</p>
+</div>
+<div class="paragraph">
+<p>The binding mechanism uses two related fields in the data model:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Metadata.namespaces</code> — declares the naming convention vocabularies in use, associating a short namespace key with a URI that identifies the vocabulary</p>
+</li>
+<li>
+<p><code>Parameter.standardNames</code> — associates each namespace key with the corresponding standard name for the parameter within that vocabulary</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Standard name binding follows a three-level hierarchy of vocabularies, described in <a href="#standard-name-hierarchy">Standard name hierarchy</a>. The use of standard names is optional but recommended where machine-to-machine interoperability is required. A Node may bind a single parameter to standard names from multiple vocabularies simultaneously.</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_standard_name_assignment"><a class="anchor" href="#_standard_name_assignment"></a>8.2. Standard name assignment</h3>
-
+<h3 id="_namespace_declaration"><a class="anchor" href="#_namespace_declaration"></a>8.2. Namespace declaration</h3>
+<div class="paragraph">
+<p>The <code>Metadata.namespaces</code> field declares the naming convention vocabularies used by the Node. It is a map from namespace key to namespace URI.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Map entry</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Type</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">key</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A short identifier used to reference this namespace in <code>Parameter.standardNames</code> entries (e.g., <code>"cf"</code>, <code>"wmo"</code>)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">value</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A URI that uniquely and durably identifies the vocabulary (e.g., <code>"https://vocab.nerc.ac.uk/collection/P07/current/"</code>)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Each namespace key shall be a non-empty string containing only alphanumeric characters and underscores. The namespace URI shall be a resolvable, publicly accessible URI that identifies the vocabulary in a dereferenceable way.</p>
+</div>
+<div class="paragraph">
+<p>A <code>Metadata</code> message may declare zero or more namespace entries. When no standard names are used, the <code>namespaces</code> map may be empty or omitted.</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_recommended_cf_conventions_binding"><a class="anchor" href="#_recommended_cf_conventions_binding"></a>8.3. Recommended: CF Conventions binding</h3>
-
+<h3 id="_standard_name_assignment"><a class="anchor" href="#_standard_name_assignment"></a>8.3. Standard name assignment</h3>
+<div class="paragraph">
+<p>The <code>Parameter.standardNames</code> field maps namespace keys to the standard name for that parameter within the corresponding vocabulary. It is a map from namespace key to standard name value.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Map entry</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Type</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">key</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A namespace key that shall match a key declared in <code>Metadata.namespaces</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">value</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The standard name for this parameter in the vocabulary identified by the namespace key (e.g., <code>"air_temperature"</code>)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Each key in <code>Parameter.standardNames</code> shall match a key declared in <code>Metadata.namespaces</code>. A Node shall not include a standard name entry for a namespace that is not declared in the corresponding <code>Metadata</code> message.</p>
+</div>
+<div class="paragraph">
+<p>A parameter may carry zero, one, or multiple standard name entries. When multiple entries are present, each entry associates the parameter with the equivalent standard name in a different vocabulary.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Standard name binding is applied at the <code>Parameter</code> level, not the <code>ParameterDefinition</code> level. When a <code>ParameterDefinition</code> contains multiple <code>Parameter</code> entries, each parameter independently carries its own standard name bindings appropriate for the variable it represents.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="standard-name-hierarchy"><a class="anchor" href="#standard-name-hierarchy"></a>8.4. Standard name hierarchy</h3>
+<div class="paragraph">
+<p>Standard names shall be drawn from the following three-level hierarchy, in order of precedence. A higher-level vocabulary shall be used wherever it provides a suitable standard name for the parameter in question.</p>
+</div>
+<div class="sect3">
+<h4 id="level-1-cf"><a class="anchor" href="#level-1-cf"></a>8.4.1. Level 1: CF Metadata Conventions</h4>
+<div class="paragraph">
+<p>The Climate and Forecast (CF) Metadata Conventions define the primary vocabulary for standard names in this standard. CF standard names cover the majority of meteorological, hydrological, and oceanographic parameters relevant to first-mile observations. The authoritative list of CF standard names is maintained by the CF Conventions community at <code><a href="https://cfconventions.org/Data/cf-standard-names/current/build/cf-standard-name-table.html" class="bare">https://cfconventions.org/Data/cf-standard-names/current/build/cf-standard-name-table.html</a></code>.</p>
+</div>
+<div class="paragraph">
+<p>Where a CF standard name exists for a parameter, the Node shall use it in preference to any lower-level vocabulary entry.</p>
+</div>
+<div class="paragraph">
+<p>The CF namespace shall be declared using the reserved key <code>"cf"</code>. The value shall be a URI that resolves to a machine-readable vocabulary server endpoint publishing the CF standard name table.</p>
+</div>
+<div class="paragraph">
+<p>The CF Conventions community does not currently operate a vocabulary server. Until an official CF vocabulary server endpoint is available, the NERC Vocabulary Server mirror of the CF standard name table (collection P07) should be used:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">"namespaces": {
+  "cf": "https://vocab.nerc.ac.uk/collection/P07/current/"
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If the CF Conventions community publishes an official vocabulary server endpoint in the future, that URI should be used in preference to the NERC mirror. Hubs should be prepared to recognise URIs from recognised CF standard name vocabulary server mirrors as equivalent for the purposes of name resolution.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>CF standard names are lower-case strings with words separated by underscores (e.g., <code>"air_temperature"</code>, <code>"wind_speed"</code>, <code>"relative_humidity"</code>). The CF standard name table at cfconventions.org is the authoritative reference for name validity and definitions, regardless of which vocabulary server URI is used as the namespace identifier.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="level-2-wmo"><a class="anchor" href="#level-2-wmo"></a>8.4.2. Level 2: WMO First Mile parameter registry</h4>
+<div class="paragraph">
+<p>Parameters that are not covered by the CF standard name vocabulary but are common to first-mile observation deployments are governed by a centrally managed registry maintained by WMO and hosted at <code><a href="https://codes.wmo.int" class="bare">https://codes.wmo.int</a></code>.</p>
+</div>
+<div class="paragraph">
+<p>Where a parameter is not covered by CF but is included in the WMO First Mile parameter registry, the Node shall use the registry entry in preference to any locally managed vocabulary.</p>
+</div>
+<div class="paragraph">
+<p>The WMO First Mile registry namespace shall be declared using the reserved key <code>"wmo"</code> with the URI of the registry collection.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Parameters that may require Level 2 registry entries include quantities typically measured by data loggers but absent from CF, such as supply voltage, internal device temperature, and station-level pressure (QFF). The registry is managed separately from this standard; refer to <code><a href="https://codes.wmo.int" class="bare">https://codes.wmo.int</a></code> for the current list of registered entries.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="level-3-local"><a class="anchor" href="#level-3-local"></a>8.4.3. Level 3: Locally managed vocabularies</h4>
+<div class="paragraph">
+<p>Where a parameter is not covered by either the CF standard name vocabulary (<a href="#level-1-cf">Level 1: CF Metadata Conventions</a>) or the WMO First Mile parameter registry (<a href="#level-2-wmo">Level 2: WMO First Mile parameter registry</a>), a Node may use a locally managed vocabulary.</p>
+</div>
+<div class="paragraph">
+<p>Locally managed vocabularies shall conform to the FAIR Guiding Principles for scientific data management (Findable, Accessible, Interoperable, Reusable). In particular:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The vocabulary shall be findable via a persistent, unique identifier (the namespace URI)</p>
+</li>
+<li>
+<p>The vocabulary shall be accessible at that URI to all parties participating in the data exchange</p>
+</li>
+<li>
+<p>The vocabulary shall use an open, standardised representation (e.g., SKOS/RDF)</p>
+</li>
+<li>
+<p>Entries shall be stable; their identifiers and meanings shall remain unchanged once published</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A conformant Hub shall be capable of resolving namespace URIs as configured for the deployment, including URIs accessible only within a private or organisational network. A conformant Node shall use namespace URIs that are resolvable by the Hub within the operational context of the deployment.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Local namespace entries may be included alongside Level 1 or Level 2 standard names. A Hub shall be able to identify and interpret any parameter using the standard names alone.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Important</div>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Where a standard name exists at Level 1 (CF) or Level 2 (WMO registry), that standard name shall be included in <code>Parameter.standardNames</code>. Any locally managed entries for the same parameter are supplementary to, not a replacement for, the applicable standard name.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_informative_example"><a class="anchor" href="#_informative_example"></a>8.5. Informative example</h3>
+<div class="paragraph">
+<p>The following example shows a <code>Metadata</code> message extract demonstrating standard name binding across multiple vocabulary levels for a meteorological and hydrological station.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-json" data-lang="json">{
+  "parameterDefinitions": [
+    {
+      "id": 1,
+      "description": "Surface meteorological observations",
+      "parameters": [
+        {
+          "longName": "Air Temperature",
+          "unit": "°C",
+          "standardNames": { "cf": "air_temperature" },
+          "device": { "observerId": 1 },
+          "cellMethod": "MEAN",
+          "cellPeriodSeconds": 60
+        },
+        {
+          "longName": "Wind Speed",
+          "unit": "m/s",
+          "standardNames": { "cf": "wind_speed" },
+          "device": { "observerId": 2 },
+          "cellMethod": "MEAN",
+          "cellPeriodSeconds": 600
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "description": "Station power and diagnostics",
+      "parameters": [
+        {
+          "longName": "Supply Voltage",
+          "unit": "V",
+          "standardNames": { "wmo": "supply_voltage" },
+          "device": { "host": {} },
+          "cellMethod": "POINT",
+          "cellPeriodSeconds": 0
+        }
+      ]
+    }
+  ],
+  "namespaces": {
+    "cf": "https://vocab.nerc.ac.uk/collection/P07/current/",
+    "wmo": "https://codes.wmo.int/first-mile/standard-names/"
+  }
+}</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1459,7 +1747,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 <h2 id="_protocol_binding"><a class="anchor" href="#_protocol_binding"></a>9. Protocol binding</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_overview_2"><a class="anchor" href="#_overview_2"></a>9.1. Overview</h3>
+<h3 id="_overview_3"><a class="anchor" href="#_overview_3"></a>9.1. Overview</h3>
 
 </div>
 <div class="sect2">
@@ -1707,12 +1995,6 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 </div>
-<div class="sect1">
-<h2 id="_data_receiver_structure_tbd"><a class="anchor" href="#_data_receiver_structure_tbd"></a>12. Data receiver (structure TBD)</h2>
-<div class="sectionbody">
-
-</div>
-</div>
 </div>
 <div id="footnotes">
 <hr>
@@ -1728,7 +2010,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-06-12 08:32:34 UTC
+Last updated 2026-06-12 08:38:31 UTC
 </div>
 </div>
 </body>
