@@ -1800,7 +1800,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Machine Translation</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Received data can be correctly assigned to observations in database without human interpretation/intervention</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Received data can be correctly assigned to observations in database/products/services without human interpretation/intervention</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Standard Names</p></td>
 </tr>
 <tr>
@@ -1882,7 +1882,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Parameter</p></td>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">CellMethod</p></td>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">If any data processing is done at the edge, this enables for example the mean and standard deviation to be differentiated (as they will have the same standardNames, units)</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">If any data processing is done at the edge, this enables, for example, the mean and standard deviation to be differentiated (as they will have the same standardNames, units)</p></td>
 </tr>
 </tbody>
 </table>
@@ -1906,7 +1906,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </ul>
 </div>
 <div class="paragraph">
-<p>To balance network transmission costs for Metadata Messages with impost of storing Data messages until the relevant Metadata message is received and the Data Messages can be understood, recommended practice is (re)sending of the Metadata Message:</p>
+<p>To balance network transmission costs for Metadata Messages (which are typically significantly larger than Data Messages) with overhead of storing Data messages until the relevant Metadata message is received and the Data Messages can be understood, recommended practice is (re)sending of the Metadata Message:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1978,7 +1978,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 <div class="listingblock">
 <div class="content">
 <pre>message Timestamp {
-    int64 seconds = 1; // Seconds since UTC (Unix) epoch (1/1/1970)
+    int64 seconds = 1; // seconds since UTC (Unix) epoch (1/1/1970)
     int32 nanos = 2; // non-negative nanosecond fractions
 }</pre>
 </div>
@@ -1990,7 +1990,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 <div class="sect2">
 <h3 id="_device_identification"><a class="anchor" href="#_device_identification"></a>11.3. Device identification</h3>
 <div class="paragraph">
-<p>The Data Message does not contain any Station/Device information in the message.  Instead, the MQTT topic hierarchy NodeID (Level 4) would be used for Station/Device Identification and should be archived with the Data Message.</p>
+<p>The Data Message does not contain any Station/Device information in the message.  Instead, the MQTT topic hierarchy NodeID (Level 4) [and possibly GroupID (Level 3)] would be used for Station/Device Identification and should be archived with the Data Message.</p>
 </div>
 </div>
 </div>
@@ -2010,7 +2010,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-06-12 08:38:31 UTC
+Last updated 2026-06-12 08:42:44 UTC
 </div>
 </div>
 </body>
