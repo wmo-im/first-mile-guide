@@ -93,7 +93,7 @@ CF standard names are lower-case strings with words separated by underscores (e.
 [[level-2-wmo]]
 ==== Level 2: WMO First Mile parameter registry
 
-Parameters that are not covered by the CF standard name vocabulary but are common to first-mile observation deployments are governed by a centrally managed registry maintained by WMO. This registry is hosted at `https://codes.wmo.int` and is governed by SC-IMT using the WMO fast-track code registration mechanism.
+Parameters that are not covered by the CF standard name vocabulary but are common to first-mile observation deployments are governed by a centrally managed registry maintained by WMO and hosted at `https://codes.wmo.int`.
 
 Where a parameter is not covered by CF but is included in the WMO First Mile parameter registry, the Node shall use the registry entry in preference to any locally managed vocabulary.
 
