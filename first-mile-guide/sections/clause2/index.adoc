@@ -10,4 +10,4 @@
 
 ==== Requirements Class: Node
 
-==== Requirements Class: Host
+==== Requirements Class: Hub

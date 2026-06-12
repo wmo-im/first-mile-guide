@@ -2,7 +2,7 @@
 
 === Overview
 
-The data model defines the structure and organization of information transmitted from the Node to the Host using Protocol Buffers (Protobuf) as the Data Format. The data model is formally specified in the protobuf schema `firstmile.proto`.
+The data model defines the structure and organization of information transmitted from the Node to the Hub using Protocol Buffers (Protobuf) as the Data Format. The data model is formally specified in the protobuf schema `firstmile.proto`.
 
 The data model supports two primary use cases:
 
@@ -13,13 +13,13 @@ These use cases are supported by two top-level message types: the `Data` message
 
 ==== Communication pattern
 
-The communication follows a unidirectional pattern where data flows from the Node to the Host. The Node may transmit messages in the following patterns:
+The communication follows a unidirectional pattern where data flows from the Node to the Hub. The Node may transmit messages in the following patterns:
 
 * **Data-only transmission** - Frequent transmission of `Data` messages containing current or batched observations
 * **Metadata transmission** - Transmission of `Metadata` messages when the configuration changes or upon initialization
 
 The Node should transmit the `Metadata` message at least once after initialization and whenever the configuration of devices or parameter definitions changes. The `Data` message may be transmitted as frequently as needed to deliver observations.
-The Host can only intepret data correctly if it has received the relevant `Metadata` message that defines the devices and parameters being observed. Therefore, it is recommended to transmit the `Metadata` message at least once before transmitting any `Data` messages.
+The Hub can only intepret data correctly if it has received the relevant `Metadata` message that defines the devices and parameters being observed. Therefore, it is recommended to transmit the `Metadata` message at least once before transmitting any `Data` messages.
 
 ==== Message hierarchy
 
@@ -82,7 +82,7 @@ The `namespaces` field provides the mapping between namespace keys used in `Para
 
 ==== Data message
 
-The `Data` message is the primary container for transmitting observation data from the Node to the Host. This message may be transmitted as frequently as needed to deliver current or batched observations.
+The `Data` message is the primary container for transmitting observation data from the Node to the Hub. This message may be transmitted as frequently as needed to deliver current or batched observations.
 
 The `Data` message contains the following fields:
 
@@ -101,7 +101,7 @@ A `Data` message may contain multiple `Observation` messages, enabling efficient
 
 [NOTE]
 ====
-The Node may transmit `Data` messages containing observations that reference parameter definitions not yet received by the Host. In this case, the Host shall buffer or queue such observations until the corresponding `Metadata` message is received.
+The Node may transmit `Data` messages containing observations that reference parameter definitions not yet received by the Hub. In this case, the Hub shall buffer or queue such observations until the corresponding `Metadata` message is received.
 ====
 
 === Devices
