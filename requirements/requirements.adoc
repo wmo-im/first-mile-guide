@@ -6,8 +6,8 @@ This document defines the technical requirements for the Proof of Concept (PoC) 
 == Glossary
 
 * Node - The "thing" that collects and sends data. Typically at the remote site, such as a weather station. This would be a device such as a datalogger or a sensor.
-* Host - The software at the central server that receives data from the Node and prepares it for further processing. It must be able to receive the data usingthe agreed Data Format and Protocol.
-* Protocol - The IP based set of rules that determine how data is transferred from the Node to the Host.
+* Hub - The software at the central server that receives data from the Node and prepares it for further processing. It must be able to receive the data usingthe agreed Data Format and Protocol.
+* Protocol - The IP based set of rules that determine how data is transferred from the Node to the Hub.
 * Data Format - A data format is the organisation of information according to specifications. It defines how the data is structured and encoded.
 * Data Serialization - The process of converting structured data into a Data Format that can be easily transmitted and reconstructed later.
 * Data Schema - A formal description in the declarative language defining the structure and constraints for the Data Format.
@@ -18,22 +18,22 @@ This document defines the technical requirements for the Proof of Concept (PoC) 
 
 The key principles of the protocol are as follows:
 
-* The First-Mile Data Collection protocol facilitates the transfer of data from the Node to the Host.
-* Communication is strictly unidirectional — data flows only from the Node to the Host.
+* The First-Mile Data Collection protocol facilitates the transfer of data from the Node to the Hub.
+* Communication is strictly unidirectional — data flows only from the Node to the Hub.
 * The transmission of either measurement data alone or both measurement data and related metadata is supported.
 * Protobuf is used as Data Format: Data payloads are encoded using the Protocol Buffers (Protobuf) format, based on a defined and finalized proto schema which is the part of this specification document.
-* The Protocol (communication transport layer) used is MQTT. MQTT serves as the message delivery Protocol for transmitting the Protobuf payloads from the Node to the Host.
-* For bandwidth-constrained environments (such as satellite links), the "First-Mile" is considered data transmission from the satellite ground base station to the Host. The actual data transmitted from the datalogger through the satellite link to the ground station can use any suitable Data Format and Protocol. This Data Format should then be transcoded to the First-Mile Data Collection format when the satellite data is transfered from the satellite ground station to the Host.
+* The Protocol (communication transport layer) used is MQTT. MQTT serves as the message delivery Protocol for transmitting the Protobuf payloads from the Node to the Hub.
+* For bandwidth-constrained environments (such as satellite links), the "First-Mile" is considered data transmission from the satellite ground base station to the Hub. The actual data transmitted from the datalogger through the satellite link to the ground station can use any suitable Data Format and Protocol. This Data Format should then be transcoded to the First-Mile Data Collection format when the satellite data is transfered from the satellite ground station to the Hub.
 
 == Overview of the Protocol
 
-The Node has some measurement data that it wants to send to the Host. The Node encodes the measurement data into a Protobuf payload using the agreed/defined Data Schema. The Node then transmits this Protobuf payload over MQTT to the Host.
+The Node has some measurement data that it wants to send to the Hub. The Node encodes the measurement data into a Protobuf payload using the agreed/defined Data Schema. The Node then transmits this Protobuf payload over MQTT to the Hub.
 
 The Data Schema allows sending multiple Observations in a single Protobuf payload. Each Observation contains a parameter identifier and a timestamp. The parameter identifier refers to a specific measured variable, such as temperature or humidity. The timestamp indicates when the measurement was taken. 
 
 The Data Schema allows the Node to encode only the Measurement data, or to encode both the measurement data and the metadata. The metadata describes the monitoring site, sensors, measured variables, measurement units, and other relevant information. It is up to the Node to decide whether and when to send the metadata along with the measurement data.
 
-For simplicity, there is no way to send the alarms or other events in the current version of the protocol. The Node can only send the measurement data and metadata. If needed, alarms could be sent as a regular measurement value which is of type bool. The Host can then interpret this value as an alarm or event based on the context of the measurement.
+For simplicity, there is no way to send the alarms or other events in the current version of the protocol. The Node can only send the measurement data and metadata. If needed, alarms could be sent as a regular measurement value which is of type bool. The Hub can then interpret this value as an alarm or event based on the context of the measurement.
 
 == Protobuf Schema
 
@@ -42,12 +42,12 @@ For simplicity, there is no way to send the alarms or other events in the curren
 include::../standard/protobuf-schema/firstmile.proto[]
 ----
 
-The `Data` message is the main message that is sent from the Node to the Host. It contains the following fields:
+The `Data` message is the main message that is sent from the Node to the Hub. It contains the following fields:
 
 * `version` - The Version of the protobuf schema used; it should be 1 for the first published version of the schema.
 * `observations` - A list of `Observation` messages, containing the actual measurement data.
 
-The `Metadata` message contains the site's configuration details, including the types of sensors installed and the measurement parameters along with their units. This message must be sent to the Host at least once after each configuration update. It contains the following fields:
+The `Metadata` message contains the site's configuration details, including the types of sensors installed and the measurement parameters along with their units. This message must be sent to the Hub at least once after each configuration update. It contains the following fields:
 * `node` - The `Node` message that describes the Node, such as the datalogger.
 * `observers` - A list of `ObserverDevice` messages that describe the individual observers (sensors) that are locally connected to the Node. 
 * `parameterDefinitions` - A list of `ParameterDefinition` messages that describe the parameters used in the observations.
@@ -256,13 +256,13 @@ Example `Metadata` message:
 The PoC Node should be able to:
 
 * Collect measurement data from sensors and encode it into the Protobuf format, depending on the actual setup of the monitoring site.
-* Transmit the Protobuf payload over MQTT to the Host.
+* Transmit the Protobuf payload over MQTT to the Hub.
 * Both `Metadata` and `Data` messages should be wrapped in a `FirstMileMessage` and published to topic in the following format: `firstmile/[version]/[vendor_name]/nodeId`, with QoS=1.
 * The `Metadata` message (wrapped in `FirstMileMessage`) should be published with retain flag set to 1.
 * The `Data` message (wrapped in `FirstMileMessage`) should be published with retain flag set to 0.
 * Ensure that the `metadata` message is send to the receiver and updated if configuration of the node changes.
 
-The PoC Host should be able to:
+The PoC Hub should be able to:
 
 * Receive the Protobuf payload over MQTT from the Node.
 * Decode the Protobuf payload to JSON to recover the observations data and the included metadata.
