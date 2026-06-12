@@ -1,6 +1,6 @@
 [
   {
-    "host": {
+    "node": {
       "name": "Geolux SmartObserver",
       "location": {
         "latitude": 44.826443,
@@ -24,41 +24,41 @@
             "longName": "Device Temperature",
             "unit": "°C",
             "device": {
-              "host": {}
+              "node": {}
             }
           },
           {
             "longName": "Device Relative Humidity",
             "unit": "%",
             "device": {
-              "host": {}
+              "node": {}
             }
           },
           {
             "longName": "Battery Voltage",
             "unit": "V",
             "device": {
-              "host": {}
+              "node": {}
             }
           },
           {
             "longName": "Input Voltage",
             "unit": "V",
             "device": {
-              "host": {}
+              "node": {}
             }
           },
           {
             "longName": "Battery Charge Current",
             "unit": "A",
             "device": {
-              "host": {}
+              "node": {}
             }
           },
           {
             "longName": "GPRS Modem RSSI",
             "device": {
-              "host": {}
+              "node": {}
             }
           }
         ]
@@ -112,7 +112,7 @@
             "longName": "Absolute Water Level",
             "unit": "m",
             "device": {
-              "host": {}
+              "node": {}
             }
           }
         ]

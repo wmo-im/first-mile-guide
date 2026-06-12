@@ -4,7 +4,7 @@
 
 ==== First mile
 
-==== Host device
+==== Node device
 
 ==== Observer device
 

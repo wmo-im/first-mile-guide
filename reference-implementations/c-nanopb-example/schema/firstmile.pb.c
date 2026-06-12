@@ -27,7 +27,7 @@ PB_BIND(wmo_firstmile_poc1_Observation, wmo_firstmile_poc1_Observation, AUTO)
 PB_BIND(wmo_firstmile_poc1_Location, wmo_firstmile_poc1_Location, AUTO)
 
 
-PB_BIND(wmo_firstmile_poc1_HostDevice, wmo_firstmile_poc1_HostDevice, AUTO)
+PB_BIND(wmo_firstmile_poc1_Node, wmo_firstmile_poc1_Node, AUTO)
 
 
 PB_BIND(wmo_firstmile_poc1_ObserverDevice, wmo_firstmile_poc1_ObserverDevice, AUTO)

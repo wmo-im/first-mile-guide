@@ -13,4 +13,5 @@ dash = "*"
 dash-bootstrap-components = "*"
 plotly = "*"
 pandas = "*"
-grpcio-tools = "*"
+
+[dev-packages]

@@ -17,7 +17,7 @@ To enable evolution of the First Mile Standard, while maximising backward compat
 
 |===
 |Message|Field|Justification
-|HostDevice|name|Enables the identification of the end node
+|Node|name|Enables the identification of the end node
 |ObserverDevice|id| Enables parameters (observation data) to be matched to the sensing/observing/measuring device
 |ParameterDefinition|id|Enables content from Data messages to be interpreted
 |Parameter|unit| Critical to hub interpretation of received data

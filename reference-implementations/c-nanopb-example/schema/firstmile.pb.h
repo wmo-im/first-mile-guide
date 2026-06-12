@@ -46,7 +46,7 @@ typedef enum _wmo_firstmile_poc1_ReferenceSurface {
 typedef struct _wmo_firstmile_poc1_DeviceRef {
     pb_size_t which_target;
     union {
-        google_protobuf_Empty host; /* if field is present => refers to the single host */
+        google_protobuf_Empty node; /* if field is present => refers to the single node */
         uint32_t observerId;
     } target;
 } wmo_firstmile_poc1_DeviceRef;
@@ -103,14 +103,14 @@ typedef struct _wmo_firstmile_poc1_Location {
     wmo_firstmile_poc1_ReferenceSurface referenceSurface;
 } wmo_firstmile_poc1_Location;
 
-typedef struct _wmo_firstmile_poc1_HostDevice {
+typedef struct _wmo_firstmile_poc1_Node {
     pb_callback_t name;
     bool has_location;
     wmo_firstmile_poc1_Location location;
     pb_callback_t url;
     pb_callback_t serialNumber;
     pb_callback_t firmwareVersion;
-} wmo_firstmile_poc1_HostDevice;
+} wmo_firstmile_poc1_Node;
 
 typedef struct _wmo_firstmile_poc1_ObserverDevice {
     uint32_t id;
@@ -127,8 +127,8 @@ typedef struct _wmo_firstmile_poc1_Data {
 } wmo_firstmile_poc1_Data;
 
 typedef struct _wmo_firstmile_poc1_Metadata {
-    bool has_host;
-    wmo_firstmile_poc1_HostDevice host;
+    bool has_node;
+    wmo_firstmile_poc1_Node node;
     pb_callback_t observers;
     pb_callback_t parameterDefinitions;
     pb_callback_t namespaces;
@@ -187,10 +187,10 @@ extern "C" {
 #define wmo_firstmile_poc1_Value_init_default    {0, {0}}
 #define wmo_firstmile_poc1_Observation_init_default {0, false, google_protobuf_Timestamp_init_default, {{NULL}, NULL}}
 #define wmo_firstmile_poc1_Location_init_default {false, 0, false, 0, 0, _wmo_firstmile_poc1_ReferenceSurface_MIN}
-#define wmo_firstmile_poc1_HostDevice_init_default {{{NULL}, NULL}, false, wmo_firstmile_poc1_Location_init_default, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define wmo_firstmile_poc1_Node_init_default     {{{NULL}, NULL}, false, wmo_firstmile_poc1_Location_init_default, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define wmo_firstmile_poc1_ObserverDevice_init_default {0, {{NULL}, NULL}, false, wmo_firstmile_poc1_Location_init_default, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define wmo_firstmile_poc1_Data_init_default     {{{NULL}, NULL}}
-#define wmo_firstmile_poc1_Metadata_init_default {false, wmo_firstmile_poc1_HostDevice_init_default, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define wmo_firstmile_poc1_Metadata_init_default {false, wmo_firstmile_poc1_Node_init_default, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define wmo_firstmile_poc1_Metadata_NamespacesEntry_init_default {{{NULL}, NULL}, {{NULL}, NULL}}
 #define wmo_firstmile_poc1_FirstMileMessage_init_default {0, {wmo_firstmile_poc1_Metadata_init_default}}
 #define wmo_firstmile_poc1_DeviceRef_init_zero   {0, {google_protobuf_Empty_init_zero}}
@@ -200,15 +200,15 @@ extern "C" {
 #define wmo_firstmile_poc1_Value_init_zero       {0, {0}}
 #define wmo_firstmile_poc1_Observation_init_zero {0, false, google_protobuf_Timestamp_init_zero, {{NULL}, NULL}}
 #define wmo_firstmile_poc1_Location_init_zero    {false, 0, false, 0, 0, _wmo_firstmile_poc1_ReferenceSurface_MIN}
-#define wmo_firstmile_poc1_HostDevice_init_zero  {{{NULL}, NULL}, false, wmo_firstmile_poc1_Location_init_zero, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define wmo_firstmile_poc1_Node_init_zero        {{{NULL}, NULL}, false, wmo_firstmile_poc1_Location_init_zero, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define wmo_firstmile_poc1_ObserverDevice_init_zero {0, {{NULL}, NULL}, false, wmo_firstmile_poc1_Location_init_zero, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define wmo_firstmile_poc1_Data_init_zero        {{{NULL}, NULL}}
-#define wmo_firstmile_poc1_Metadata_init_zero    {false, wmo_firstmile_poc1_HostDevice_init_zero, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
+#define wmo_firstmile_poc1_Metadata_init_zero    {false, wmo_firstmile_poc1_Node_init_zero, {{NULL}, NULL}, {{NULL}, NULL}, {{NULL}, NULL}}
 #define wmo_firstmile_poc1_Metadata_NamespacesEntry_init_zero {{{NULL}, NULL}, {{NULL}, NULL}}
 #define wmo_firstmile_poc1_FirstMileMessage_init_zero {0, {wmo_firstmile_poc1_Metadata_init_zero}}
 
 /* Field tags (for use in manual encoding/decoding) */
-#define wmo_firstmile_poc1_DeviceRef_host_tag    1
+#define wmo_firstmile_poc1_DeviceRef_node_tag    1
 #define wmo_firstmile_poc1_DeviceRef_observerId_tag 2
 #define wmo_firstmile_poc1_Parameter_longName_tag 1
 #define wmo_firstmile_poc1_Parameter_unit_tag    2
@@ -237,11 +237,11 @@ extern "C" {
 #define wmo_firstmile_poc1_Location_longitude_tag 2
 #define wmo_firstmile_poc1_Location_heightMeter_tag 3
 #define wmo_firstmile_poc1_Location_referenceSurface_tag 4
-#define wmo_firstmile_poc1_HostDevice_name_tag   1
-#define wmo_firstmile_poc1_HostDevice_location_tag 2
-#define wmo_firstmile_poc1_HostDevice_url_tag    3
-#define wmo_firstmile_poc1_HostDevice_serialNumber_tag 4
-#define wmo_firstmile_poc1_HostDevice_firmwareVersion_tag 5
+#define wmo_firstmile_poc1_Node_name_tag         1
+#define wmo_firstmile_poc1_Node_location_tag     2
+#define wmo_firstmile_poc1_Node_url_tag          3
+#define wmo_firstmile_poc1_Node_serialNumber_tag 4
+#define wmo_firstmile_poc1_Node_firmwareVersion_tag 5
 #define wmo_firstmile_poc1_ObserverDevice_id_tag 1
 #define wmo_firstmile_poc1_ObserverDevice_name_tag 2
 #define wmo_firstmile_poc1_ObserverDevice_location_tag 3
@@ -249,7 +249,7 @@ extern "C" {
 #define wmo_firstmile_poc1_ObserverDevice_serialNumber_tag 5
 #define wmo_firstmile_poc1_ObserverDevice_firmwareVersion_tag 6
 #define wmo_firstmile_poc1_Data_observations_tag 1
-#define wmo_firstmile_poc1_Metadata_host_tag     1
+#define wmo_firstmile_poc1_Metadata_node_tag     1
 #define wmo_firstmile_poc1_Metadata_observers_tag 2
 #define wmo_firstmile_poc1_Metadata_parameterDefinitions_tag 3
 #define wmo_firstmile_poc1_Metadata_namespaces_tag 4
@@ -260,11 +260,11 @@ extern "C" {
 
 /* Struct field encoding specification for nanopb */
 #define wmo_firstmile_poc1_DeviceRef_FIELDLIST(X, a) \
-X(a, STATIC,   ONEOF,    MESSAGE,  (target,host,target.host),   1) \
+X(a, STATIC,   ONEOF,    MESSAGE,  (target,node,target.node),   1) \
 X(a, STATIC,   ONEOF,    UINT32,   (target,observerId,target.observerId),   2)
 #define wmo_firstmile_poc1_DeviceRef_CALLBACK NULL
 #define wmo_firstmile_poc1_DeviceRef_DEFAULT NULL
-#define wmo_firstmile_poc1_DeviceRef_target_host_MSGTYPE google_protobuf_Empty
+#define wmo_firstmile_poc1_DeviceRef_target_node_MSGTYPE google_protobuf_Empty
 
 #define wmo_firstmile_poc1_Parameter_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   longName,          1) \
@@ -323,15 +323,15 @@ X(a, STATIC,   SINGULAR, UENUM,    referenceSurface,   4)
 #define wmo_firstmile_poc1_Location_CALLBACK NULL
 #define wmo_firstmile_poc1_Location_DEFAULT NULL
 
-#define wmo_firstmile_poc1_HostDevice_FIELDLIST(X, a) \
+#define wmo_firstmile_poc1_Node_FIELDLIST(X, a) \
 X(a, CALLBACK, SINGULAR, STRING,   name,              1) \
 X(a, STATIC,   OPTIONAL, MESSAGE,  location,          2) \
 X(a, CALLBACK, OPTIONAL, STRING,   url,               3) \
 X(a, CALLBACK, OPTIONAL, STRING,   serialNumber,      4) \
 X(a, CALLBACK, OPTIONAL, STRING,   firmwareVersion,   5)
-#define wmo_firstmile_poc1_HostDevice_CALLBACK pb_default_field_callback
-#define wmo_firstmile_poc1_HostDevice_DEFAULT NULL
-#define wmo_firstmile_poc1_HostDevice_location_MSGTYPE wmo_firstmile_poc1_Location
+#define wmo_firstmile_poc1_Node_CALLBACK pb_default_field_callback
+#define wmo_firstmile_poc1_Node_DEFAULT NULL
+#define wmo_firstmile_poc1_Node_location_MSGTYPE wmo_firstmile_poc1_Location
 
 #define wmo_firstmile_poc1_ObserverDevice_FIELDLIST(X, a) \
 X(a, STATIC,   SINGULAR, UINT32,   id,                1) \
@@ -351,13 +351,13 @@ X(a, CALLBACK, REPEATED, MESSAGE,  observations,      1)
 #define wmo_firstmile_poc1_Data_observations_MSGTYPE wmo_firstmile_poc1_Observation
 
 #define wmo_firstmile_poc1_Metadata_FIELDLIST(X, a) \
-X(a, STATIC,   OPTIONAL, MESSAGE,  host,              1) \
+X(a, STATIC,   OPTIONAL, MESSAGE,  node,              1) \
 X(a, CALLBACK, REPEATED, MESSAGE,  observers,         2) \
 X(a, CALLBACK, REPEATED, MESSAGE,  parameterDefinitions,   3) \
 X(a, CALLBACK, REPEATED, MESSAGE,  namespaces,        4)
 #define wmo_firstmile_poc1_Metadata_CALLBACK pb_default_field_callback
 #define wmo_firstmile_poc1_Metadata_DEFAULT NULL
-#define wmo_firstmile_poc1_Metadata_host_MSGTYPE wmo_firstmile_poc1_HostDevice
+#define wmo_firstmile_poc1_Metadata_node_MSGTYPE wmo_firstmile_poc1_Node
 #define wmo_firstmile_poc1_Metadata_observers_MSGTYPE wmo_firstmile_poc1_ObserverDevice
 #define wmo_firstmile_poc1_Metadata_parameterDefinitions_MSGTYPE wmo_firstmile_poc1_ParameterDefinition
 #define wmo_firstmile_poc1_Metadata_namespaces_MSGTYPE wmo_firstmile_poc1_Metadata_NamespacesEntry
@@ -383,7 +383,7 @@ extern const pb_msgdesc_t wmo_firstmile_poc1_ParameterDefinition_msg;
 extern const pb_msgdesc_t wmo_firstmile_poc1_Value_msg;
 extern const pb_msgdesc_t wmo_firstmile_poc1_Observation_msg;
 extern const pb_msgdesc_t wmo_firstmile_poc1_Location_msg;
-extern const pb_msgdesc_t wmo_firstmile_poc1_HostDevice_msg;
+extern const pb_msgdesc_t wmo_firstmile_poc1_Node_msg;
 extern const pb_msgdesc_t wmo_firstmile_poc1_ObserverDevice_msg;
 extern const pb_msgdesc_t wmo_firstmile_poc1_Data_msg;
 extern const pb_msgdesc_t wmo_firstmile_poc1_Metadata_msg;
@@ -398,7 +398,7 @@ extern const pb_msgdesc_t wmo_firstmile_poc1_FirstMileMessage_msg;
 #define wmo_firstmile_poc1_Value_fields &wmo_firstmile_poc1_Value_msg
 #define wmo_firstmile_poc1_Observation_fields &wmo_firstmile_poc1_Observation_msg
 #define wmo_firstmile_poc1_Location_fields &wmo_firstmile_poc1_Location_msg
-#define wmo_firstmile_poc1_HostDevice_fields &wmo_firstmile_poc1_HostDevice_msg
+#define wmo_firstmile_poc1_Node_fields &wmo_firstmile_poc1_Node_msg
 #define wmo_firstmile_poc1_ObserverDevice_fields &wmo_firstmile_poc1_ObserverDevice_msg
 #define wmo_firstmile_poc1_Data_fields &wmo_firstmile_poc1_Data_msg
 #define wmo_firstmile_poc1_Metadata_fields &wmo_firstmile_poc1_Metadata_msg
@@ -411,7 +411,7 @@ extern const pb_msgdesc_t wmo_firstmile_poc1_FirstMileMessage_msg;
 /* wmo_firstmile_poc1_ParameterDefinition_size depends on runtime parameters */
 /* wmo_firstmile_poc1_Value_size depends on runtime parameters */
 /* wmo_firstmile_poc1_Observation_size depends on runtime parameters */
-/* wmo_firstmile_poc1_HostDevice_size depends on runtime parameters */
+/* wmo_firstmile_poc1_Node_size depends on runtime parameters */
 /* wmo_firstmile_poc1_ObserverDevice_size depends on runtime parameters */
 /* wmo_firstmile_poc1_Data_size depends on runtime parameters */
 /* wmo_firstmile_poc1_Metadata_size depends on runtime parameters */

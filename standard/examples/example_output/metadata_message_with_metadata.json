@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "host": {
+    "node": {
         "name": "data-logger",
         "serialNumber": "SN494839"
     },
@@ -98,14 +98,14 @@
                     "longName": "Supply Voltage",
                     "unit": "V",
                     "device": {
-                        "host": {}
+                        "node": {}
                     }
                 },
                 {
                     "longName": "Internal Temperature",
                     "unit": "°C",
                     "device": {
-                        "host": {}
+                        "node": {}
                     }
                 }
             ]

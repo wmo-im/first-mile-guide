@@ -67,14 +67,14 @@
                     "longName": "Supply Voltage",
                     "unit": "V",
                     "device": {
-                        "host": {}
+                        "node": {}
                     }
                 },
                 {
                     "longName": "Internal Temperature",
                     "unit": "°C",
                     "device": {
-                        "host": {}
+                        "node": {}
                     }
                 }
             ]

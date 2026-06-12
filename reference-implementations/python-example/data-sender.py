@@ -1,4 +1,4 @@
-# Simple data sender
+# Simple node
 # Emulates an AWS then sends periodic temperature measurements using 1M-TT protocol.
 # The script will first send a single Metadata message with site configuration info, it will be sent as MQTT retained message.
 # Then it will periodically publish Data messages with temperature and voltage readings.
@@ -8,7 +8,7 @@
 # pipenv run build-proto
 #
 # Example fo running this script (replace username and password with your own credentials):
-# python3 data-sender.py --period 10 --vendor geolux --hostid "AWS123" --broker s87beff9.ala.eu-central-1.emqxsl.com --username geolux --password "XXXX" --port 8883 --tls --insecure
+# python3 data-sender.py --period 10 --vendor geolux --nodeid "AWS123" --broker s87beff9.ala.eu-central-1.emqxsl.com --username geolux --password "XXXX" --port 8883 --tls --insecure
 
 import argparse
 import random
@@ -48,7 +48,7 @@ def define_parameters():
     param_voltage = pb2.Parameter(
         longName = "Supply Voltage",
         unit = "V",
-        device = pb2.DeviceRef(host = Empty.Empty()),
+        device = pb2.DeviceRef(node = Empty.Empty()),
         cellMethod = pb2.POINT,
         cellPeriodSeconds = 0
     )
@@ -56,7 +56,7 @@ def define_parameters():
     param_internal_temp = pb2.Parameter(
         longName = "Internal Temperature",
         unit = "°C",
-        device = pb2.DeviceRef(host = Empty.Empty()),
+        device = pb2.DeviceRef(node = Empty.Empty()),
         cellMethod = pb2.MEAN,
         cellPeriodSeconds = 5
     )
@@ -109,8 +109,8 @@ def generate_observations(parameter_defs):
 
 # Create the metadata
 def create_metadata():
-    # Host device
-    host = pb2.HostDevice(
+    # Node device
+    node = pb2.Node(
         name = "ArcticX100 Data Logger",
         location = pb2.Location(
             latitude = -90,
@@ -138,10 +138,10 @@ def create_metadata():
     firmwareVersion = "5.6A-Rev2"
     )
 
-    return host, [observer]
+    return node, [observer]
 
 # This is the main function to construct Data message
-def build_data_transmission(hostid):
+def build_data_transmission(nodeid):
     observations = generate_observations(define_parameters())
 
     transmission = pb2.Data(
@@ -152,14 +152,14 @@ def build_data_transmission(hostid):
 
 # This is the main function to construct Metadata message
 def build_metadata_transmission():
-    # Define the host device and observers
-    host, observers = create_metadata()
+    # Define the node device and observers
+    node, observers = create_metadata()
 
     # Define the measurement parameters
     param_defs = define_parameters()
 
     metadata = pb2.Metadata(
-        host = host,
+        node = node,
         observers = observers,
         parameterDefinitions = param_defs,
         namespaces = {"cf" : "https://vocab.nerc.ac.uk/collection/P07/current/"}
@@ -199,11 +199,11 @@ def send_mqtt_payload(args, topic, payload_bytes, retain=False):
 
 # Main
 def main():
-    parser = argparse.ArgumentParser(description="AWS MQTT Data Sender PoC")
+    parser = argparse.ArgumentParser(description="AWS MQTT Node PoC")
     parser.add_argument("--broker", required=True, help="MQTT broker address")
     parser.add_argument("--port", type=int, default=1883, help="MQTT broker port")
     parser.add_argument("--vendor", required=True, help="Vendor name")
-    parser.add_argument("--hostid", required=True, help="Host ID")
+    parser.add_argument("--nodeid", required=True, help="Node ID")
     parser.add_argument("--period", type=int, default=10, help="Period in seconds between measurements")
     parser.add_argument("--username", help="MQTT username (optional)")
     parser.add_argument("--password", help="MQTT password (optional)")
@@ -217,7 +217,7 @@ def main():
     args = parser.parse_args()
 
     # unified topic for both metadata and data
-    topic = f"firstmile/{proto_version}/{args.vendor}/{args.hostid}"
+    topic = f"firstmile/{proto_version}/{args.vendor}/{args.nodeid}"
 
     # build and send metadata transmission (retained)
     metadata = build_metadata_transmission()
@@ -227,7 +227,7 @@ def main():
 
     while True:
         # build and send data transmission (not retained)
-        data_transmission = build_data_transmission(args.hostid)
+        data_transmission = build_data_transmission(args.nodeid)
         msg = pb2.FirstMileMessage(data=data_transmission)
         payload_bytes = msg.SerializeToString()
         send_mqtt_payload(args, topic, payload_bytes)
