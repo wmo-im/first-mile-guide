@@ -51,3 +51,276 @@ In typical operation, the `Metadata` message is sent when the Node is initialize
 |Host
 |Covers the receiver-side behavior for accepting, decoding, and interpreting payloads received from the Node.
 |===
+
+
+== First-Mile MQTT protocol binding
+
+* The MQTT protocol footnote:[See MQTT Specifications: https://mqtt.org/mqtt-specification/.] is to be used for all firstmile data management workflows (publication and subscription).
+* MQTT v5.0 is the chosen protocols for the publication of and subscription 
+* To improve the overall level of security of firstmile systems, the secure version of the MQTT protocol is preferred. If used, the certificate must be valid.
+* The standard Transmission Control Protocol (TCP) ports to be used are 8883 for Secure MQTT (MQTTS) and 443 for Secure Web Socket (WSS).
+
+=== First-Mile Topic Hierarchy
+
+The First-Mile Topic Hierarchy (FMTH) provides a mechanism for systems and operators to publish
+and subscribe to data or metadata notifications originating from first-mile compliant environments.
+ It is used by first-mile brokers, nodes and hubs platform.
+
+The normative provisions in the FMTH are denoted by the base Uniform Resource Identifier (URI)
+`http://wis.wmo.int/spec/fmth/1` and requirements are denoted by partial URIs which are
+relative to this base.
+Topics, values and examples are represented with ``shaded text``.
+
+==== 1. Requirements Class Core
+
+===== 1.1 Overview
+
+[cols="2,8",options="header"]
+|===
+| URI          | http://wis.wmo.int/spec/fmth/1/req/core
+| Target type  | Topic classification
+| Dependency   | https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html[MQTT v5.0]
+| Dependency   | https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html[MQTT v3.1.1]
+| Preconditions | Topics conform to the Topic Name requirements of MQTT
+|===
+
+The FMTH is composed of five fixed levels and one notification-type level.
+
+All levels are mandatory.
+The representation is encoded as a simple text string of values at each topic level, separated
+by a slash (`/`).
+
+_Examples_:
+----
+``firstmile/a/my-group/station-001/data``
+``firstmile/a/my-group/station-001/metadata``
+``firstmile/a/relief-ops/camp-alpha/data``
+``firstmile/a/relief-ops/camp-alpha/metadata``
+----
+
+<<table-fmth-levels>> provides an overview of the topic levels.
+
+[[table-fmth-levels]]
+.FMTH topic levels
+[cols="1,2,5",options="header"]
+|===
+| Level | Name              | Description
+| 1     | `channel`         | Fixed value of ``firstmile``, identifying this as a first-mile topic.
+| 2     | `version`         | Alphabetical version of the topic hierarchy, currently: `a`.
+| 3     | `group-id`        | Identifier for the group or organisational entity responsible for one or more
+                              first-mile nodes. It is a lowercase alphanumeric string; hyphens (`-`) may be
+                              used to separate words. The value is locally defined and shall be unique
+                              within the scope of the broker.
+| 4     | `node-id`         | Identifier for the individual first-mile node (e.g. a gateway, an AWS,...). It is a lowercase alphanumeric string;
+                              hyphens (`-`) may be used to separate words. The value shall be unique within
+                              the `group-id` namespace.
+| 5     | `notification-type` | The type of notification: either `data` or `metadata`.
+|===
+
+===== 1.2 Publishing
+
+Data and metadata notifications shall be published to the exact five-level topic structure defined by the FMTH.
+
+.Examples
+----
+firstmile/a/my-group/station-001/data
+firstmile/a/my-group/station-001/metadata
+----
+
+[cols="1,4,8",options="header"]
+|===
+| Requirement 1 | `/req/core/publishing` |
+
+| A
+| A notification SHALL be published with a topic hierarchy that conforms to the FMTH structure.
+|
+
+| B
+| A `data` notification SHALL be published to a topic using the value `data` at level 5.
+|
+
+| C
+| A `metadata` notification SHALL be published to a topic using the value `metadata` at level 5.
+|
+|===
+
+===== 1.3 Management
+
+The topic levels are managed in a consistent manner to maintain stability and interoperability.
+
+[cols="1,4,8",options="header"]
+|===
+| Requirement 2 | `/req/core/management` |
+
+| A
+| Levels 1 and 2 (`firstmile` and `a`) SHALL be fixed and SHALL NOT be modified.
+|
+
+| B
+| The value of `group-id` (level 3) SHALL be determined and maintained
+  by the operator of the first-mile broker.
+|
+
+| C
+| The value of `node-id` (level 4) SHALL be determined and maintained
+  by the operator of the first-mile broker.
+|
+
+| D
+| The value of `notification-type` (level 5) SHALL be limited
+  to `data` or `metadata`.
+|
+|===
+
+===== 1.4 Versioning
+
+The topic hierarchy version supports change management and transition for operators and
+consuming systems.
+
+[cols="1,4,8",options="header"]
+|===
+| Requirement 3 | `/req/core/versioning` |
+
+| A
+| A minor update to the FMTH SHALL NOT result in a change to the version level. Adding values to the level 5 of the FMTH (for example, adding a new notification type) is an example of a minor update that would not require a version change.
+|
+
+| B
+| A major update to the FMTH SHALL result in a change to the version level (for example, `a` becomes `b`).
+|
+
+| C
+| Removal of a topic level SHALL result in a major version update.
+|
+
+| D
+| Renaming of a topic level SHALL result in a major version update.
+|
+
+| E
+| A change in the structure of the topic hierarchy SHALL result in a major version update.
+|
+|===
+
+===== 1.5 Conventions
+
+All levels of the topic hierarchy are defined in a consistent manner to support a normalised
+and predictable structure.
+
+[cols="1,4,8",options="header"]
+|===
+| Requirement 4 | `/req/core/conventions` |
+
+| A
+| Topic level definitions SHALL be lowercase.
+|
+
+| B
+| Topic level definitions SHALL be encoded using only ASCII alphanumeric characters and hyphens (`-`).
+|
+
+| C
+| Topic level definitions SHALL NOT utilise dots (`.`).
+|
+
+| D
+| Topic level definitions SHALL NOT utilise underscores (`_`).
+|
+
+| E
+| Topic level definitions SHALL utilise hyphens (`-`) to separate words (such as `my-group`).
+|
+
+
+|===
+
+===== 1.6 Group and Node Identification
+
+The `group-id` (level 3) identifies an organisational entity — such as an agency, project,
+or operational cluster — that is responsible for one or more first-mile nodes.
+The `node-id` (level 4) identifies a specific first-mile node within the group.
+
+Together, `group-id` and `node-id` form the address of a first-mile data source within the
+FMTH namespace.
+
+[cols="1,4,8",options="header"]
+|===
+| Requirement 5 | `/req/core/group-id` |
+
+| A
+| The `group-id` SHALL consist only of lowercase ASCII alphanumeric characters and hyphens (`-`).
+|
+
+| B
+| The `group-id` SHALL NOT begin or end with a hyphen.
+|
+
+| C
+| The `group-id` SHALL NOT be empty.
+|
+|===
+
+[cols="1,4,8",options="header"]
+|===
+| Requirement 6 | `/req/core/node-id` |
+
+| A
+| The `node-id` SHALL consist only of lowercase ASCII alphanumeric characters and hyphens (`-`).
+|
+
+| B
+| The `node-id` SHALL NOT begin or end with a hyphen.
+|
+
+| C
+| The `node-id` SHALL NOT be empty.
+|
+
+| D
+| The `node-id` SHALL be unique within the namespace of its associated `group-id`.
+|
+|===
+
+
+=== First-Mile MQTT protocol provisions
+
+Considering the anticipated relatively low level of traffic, compare to typical MQTT situation, and the critical importance of the data and metadata exchanges in first-mile context, the following additional provisions apply to the publication of any message 
+
+==== 1. Requirements Class Core
+
+[cols="1,4,8",options="header"]
+|===    
+| Requirement 7 | `/req/core/mqtt` |  
+
+| A
+| Data and Metadata notifications SHALL be published using the QoS level 2 of MQTT to ensure that they are delivered and received exactly once. 
+|
+
+| B
+| The connection of both the hub and the node to the broker SHALL set the *Receive Maximum = 1* when establishing the MQTT session. 
+|
+|===
+
+Considering the solution used to exchange data, it is important to ensure that metadata messages are always available at the hub before any data is published. This is to ensure that consuming systems can access the necessary metadata to interpret the data correctly.
+
+[cols="1,4,8",options="header"]
+|===    
+| Requirement 8 | `/req/core/metadata-first` |  
+
+| A
+| Metadata notifications SHALL be published before any data notifications for the same `node-id` are published. This ensures that consuming systems have access to the necessary metadata to interpret the data correctly.
+|
+
+| B
+| Metadata notifications SHALL be published with the retain flag to true.
+|
+
+| C
+| Metadata notifications SHALL be published to the FMTH before any data notifications for the same `node-id` are published. This ensures that consuming systems have access to the necessary metadata to interpret the data correctly.
+|
+
+| D
+| Metadata notifications SHALL published regularly, at least once every 24 hours and immediately after any change in the node configuration that would affect the metadata content.
+|
+|===
+
