@@ -96,7 +96,7 @@ body {
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><strong class="big">World Meteorological Organization</strong></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Date: 2026-06-12</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Date: 2026-06-15</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Version: 0.1</p></td>
@@ -170,94 +170,108 @@ body {
 <li><a href="#_conformance_class_summary">6.3. Conformance class summary</a></li>
 </ul>
 </li>
-<li><a href="#_data_model">7. Data model</a>
+<li><a href="#_first_mile_mqtt_protocol_binding">7. First-Mile MQTT protocol binding</a>
 <ul class="sectlevel2">
-<li><a href="#_overview">7.1. Overview</a>
+<li><a href="#_first_mile_topic_hierarchy">7.1. First-Mile Topic Hierarchy</a>
 <ul class="sectlevel3">
-<li><a href="#_communication_pattern">7.1.1. Communication pattern</a></li>
-<li><a href="#_message_hierarchy">7.1.2. Message hierarchy</a></li>
-<li><a href="#_design_principles">7.1.3. Design principles</a></li>
+<li><a href="#_1_requirements_class_core">7.1.1. 1. Requirements Class Core</a></li>
 </ul>
 </li>
-<li><a href="#_messages">7.2. Messages</a>
+<li><a href="#_first_mile_mqtt_protocol_provisions">7.2. First-Mile MQTT protocol provisions</a>
 <ul class="sectlevel3">
-<li><a href="#_metadata_message">7.2.1. Metadata message</a></li>
-<li><a href="#_data_message">7.2.2. Data message</a></li>
-</ul>
-</li>
-<li><a href="#_devices">7.3. Devices</a>
-<ul class="sectlevel3">
-<li><a href="#_node_device_2">7.3.1. Node device</a></li>
-<li><a href="#_observer_device_2">7.3.2. Observer device</a></li>
-<li><a href="#_location_and_reference_surfaces">7.3.3. Location and reference surfaces</a></li>
-</ul>
-</li>
-<li><a href="#_observations_and_values">7.4. Observations and values</a>
-<ul class="sectlevel3">
-<li><a href="#_observation_2">7.4.1. Observation</a></li>
-<li><a href="#_value_types">7.4.2. Value types</a></li>
-<li><a href="#_missing_and_error_values">7.4.3. Missing and error values</a></li>
-</ul>
-</li>
-<li><a href="#_parameter_definitions">7.5. Parameter definitions</a>
-<ul class="sectlevel3">
-<li><a href="#_parameter">7.5.1. Parameter</a></li>
-<li><a href="#_cell_method_2">7.5.2. Cell method</a></li>
-<li><a href="#_cell_period_2">7.5.3. Cell period</a></li>
-<li><a href="#_device_reference">7.5.4. Device reference</a></li>
+<li><a href="#_1_requirements_class_core_2">7.2.1. 1. Requirements Class Core</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_standard_name_binding">8. Standard name binding</a>
+<li><a href="#_data_model">8. Data model</a>
 <ul class="sectlevel2">
-<li><a href="#_overview_2">8.1. Overview</a></li>
-<li><a href="#_namespace_declaration">8.2. Namespace declaration</a></li>
-<li><a href="#_standard_name_assignment">8.3. Standard name assignment</a></li>
-<li><a href="#standard-name-hierarchy">8.4. Standard name hierarchy</a>
+<li><a href="#_overview">8.1. Overview</a>
 <ul class="sectlevel3">
-<li><a href="#level-1-cf">8.4.1. Level 1: CF Metadata Conventions</a></li>
-<li><a href="#level-2-wmo">8.4.2. Level 2: WMO First Mile parameter registry</a></li>
-<li><a href="#level-3-local">8.4.3. Level 3: Locally managed vocabularies</a></li>
+<li><a href="#_communication_pattern">8.1.1. Communication pattern</a></li>
+<li><a href="#_message_hierarchy">8.1.2. Message hierarchy</a></li>
+<li><a href="#_design_principles">8.1.3. Design principles</a></li>
 </ul>
 </li>
-<li><a href="#_informative_example">8.5. Informative example</a></li>
+<li><a href="#_messages">8.2. Messages</a>
+<ul class="sectlevel3">
+<li><a href="#_metadata_message">8.2.1. Metadata message</a></li>
+<li><a href="#_data_message">8.2.2. Data message</a></li>
 </ul>
 </li>
-<li><a href="#_protocol_binding">9. Protocol binding</a>
+<li><a href="#_devices">8.3. Devices</a>
+<ul class="sectlevel3">
+<li><a href="#_node_device_2">8.3.1. Node device</a></li>
+<li><a href="#_observer_device_2">8.3.2. Observer device</a></li>
+<li><a href="#_location_and_reference_surfaces">8.3.3. Location and reference surfaces</a></li>
+</ul>
+</li>
+<li><a href="#_observations_and_values">8.4. Observations and values</a>
+<ul class="sectlevel3">
+<li><a href="#_observation_2">8.4.1. Observation</a></li>
+<li><a href="#_value_types">8.4.2. Value types</a></li>
+<li><a href="#_missing_and_error_values">8.4.3. Missing and error values</a></li>
+</ul>
+</li>
+<li><a href="#_parameter_definitions">8.5. Parameter definitions</a>
+<ul class="sectlevel3">
+<li><a href="#_parameter">8.5.1. Parameter</a></li>
+<li><a href="#_cell_method_2">8.5.2. Cell method</a></li>
+<li><a href="#_cell_period_2">8.5.3. Cell period</a></li>
+<li><a href="#_device_reference">8.5.4. Device reference</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_standard_name_binding">9. Standard name binding</a>
 <ul class="sectlevel2">
-<li><a href="#_overview_3">9.1. Overview</a></li>
-<li><a href="#_mqtt_version_requirements">9.2. MQTT version requirements</a></li>
-<li><a href="#_topic_structure">9.3. Topic structure</a>
+<li><a href="#_overview_2">9.1. Overview</a></li>
+<li><a href="#_namespace_declaration">9.2. Namespace declaration</a></li>
+<li><a href="#_standard_name_assignment">9.3. Standard name assignment</a></li>
+<li><a href="#standard-name-hierarchy">9.4. Standard name hierarchy</a>
 <ul class="sectlevel3">
-<li><a href="#_topic_pattern">9.3.1. Topic pattern</a></li>
-<li><a href="#_level_definitions_and_allowed_values">9.3.2. Level definitions and allowed values</a></li>
+<li><a href="#level-1-cf">9.4.1. Level 1: CF Metadata Conventions</a></li>
+<li><a href="#level-2-wmo">9.4.2. Level 2: WMO First Mile parameter registry</a></li>
+<li><a href="#level-3-local">9.4.3. Level 3: Locally managed vocabularies</a></li>
 </ul>
 </li>
-<li><a href="#_quality_of_service">9.4. Quality of service</a>
-<ul class="sectlevel3">
-<li><a href="#_metadata_messages">9.4.1. Metadata messages</a></li>
-<li><a href="#_data_messages">9.4.2. Data messages</a></li>
+<li><a href="#_informative_example">9.5. Informative example</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a href="#_data_sender">10. Data sender</a>
+<li><a href="#_protocol_binding">10. Protocol binding</a>
 <ul class="sectlevel2">
-<li><a href="#_metadata_publication">10.1. Metadata publication</a>
+<li><a href="#_overview_3">10.1. Overview</a></li>
+<li><a href="#_mqtt_version_requirements">10.2. MQTT version requirements</a></li>
+<li><a href="#_topic_structure">10.3. Topic structure</a>
 <ul class="sectlevel3">
-<li><a href="#_mandatory_fields">10.1.1. Mandatory fields</a></li>
-<li><a href="#_transmission_triggers">10.1.2. Transmission triggers</a></li>
-<li><a href="#_retained_messages">10.1.3. Retained messages</a></li>
+<li><a href="#_topic_pattern">10.3.1. Topic pattern</a></li>
+<li><a href="#_level_definitions_and_allowed_values">10.3.2. Level definitions and allowed values</a></li>
+</ul>
+</li>
+<li><a href="#_quality_of_service">10.4. Quality of service</a>
+<ul class="sectlevel3">
+<li><a href="#_metadata_messages">10.4.1. Metadata messages</a></li>
+<li><a href="#_data_messages">10.4.2. Data messages</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#_data_publication">11. Data publication</a>
+<li><a href="#_data_sender">11. Data sender</a>
+<ul class="sectlevel2">
+<li><a href="#_metadata_publication">11.1. Metadata publication</a>
 <ul class="sectlevel3">
-<li><a href="#_mandatory_fields_2">11.1. Mandatory fields</a></li>
-<li><a href="#_observation_timestamps">11.2. Observation timestamps</a></li>
-<li><a href="#_device_identification">11.3. Device identification</a></li>
+<li><a href="#_mandatory_fields">11.1.1. Mandatory fields</a></li>
+<li><a href="#_transmission_triggers">11.1.2. Transmission triggers</a></li>
+<li><a href="#_retained_messages">11.1.3. Retained messages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_data_publication">12. Data publication</a>
+<ul class="sectlevel3">
+<li><a href="#_mandatory_fields_2">12.1. Mandatory fields</a></li>
+<li><a href="#_observation_timestamps">12.2. Observation timestamps</a></li>
+<li><a href="#_device_identification">12.3. Device identification</a></li>
 </ul>
 </li>
 </ul>
@@ -479,10 +493,488 @@ body {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_data_model"><a class="anchor" href="#_data_model"></a>7. Data model</h2>
+<h2 id="_first_mile_mqtt_protocol_binding"><a class="anchor" href="#_first_mile_mqtt_protocol_binding"></a>7. First-Mile MQTT protocol binding</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>The MQTT protocol <sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup> is to be used for all firstmile data management workflows (publication and subscription).</p>
+</li>
+<li>
+<p>MQTT v5.0 is the chosen protocols for the publication of and subscription</p>
+</li>
+<li>
+<p>To improve the overall level of security of firstmile systems, the secure version of the MQTT protocol is preferred. If used, the certificate must be valid.</p>
+</li>
+<li>
+<p>The standard Transmission Control Protocol (TCP) ports to be used are 8883 for Secure MQTT (MQTTS) and 443 for Secure Web Socket (WSS).</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_first_mile_topic_hierarchy"><a class="anchor" href="#_first_mile_topic_hierarchy"></a>7.1. First-Mile Topic Hierarchy</h3>
+<div class="paragraph">
+<p>The First-Mile Topic Hierarchy (FMTH) provides a mechanism for systems and operators to publish
+and subscribe to data or metadata notifications originating from first-mile compliant environments.
+ It is used by first-mile brokers, nodes and hubs platform.</p>
+</div>
+<div class="paragraph">
+<p>The normative provisions in the FMTH are denoted by the base Uniform Resource Identifier (URI)
+<code><a href="http://wis.wmo.int/spec/fmth/1" class="bare">http://wis.wmo.int/spec/fmth/1</a></code> and requirements are denoted by partial URIs which are
+relative to this base.
+Topics, values and examples are represented with <code>shaded text</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="_1_requirements_class_core"><a class="anchor" href="#_1_requirements_class_core"></a>7.1.1. 1. Requirements Class Core</h4>
+<div class="sect4">
+<h5 id="_1_1_overview"><a class="anchor" href="#_1_1_overview"></a>7.1.1.1. 1.1 Overview</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">URI</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><a href="http://wis.wmo.int/spec/fmth/1/req/core" class="bare">http://wis.wmo.int/spec/fmth/1/req/core</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Target type</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Topic classification</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Dependency</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="https://docs.oasis-open.org/mqtt/mqtt/v5.0/mqtt-v5.0.html">MQTT v5.0</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Dependency</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="https://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html">MQTT v3.1.1</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Preconditions</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Topics conform to the Topic Name requirements of MQTT</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The FMTH is composed of five fixed levels and one notification-type level.</p>
+</div>
+<div class="paragraph">
+<p>All levels are mandatory.
+The representation is encoded as a simple text string of values at each topic level, separated
+by a slash (<code>/</code>).</p>
+</div>
+<div class="paragraph">
+<p><em>Examples</em>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>``firstmile/a/my-group/station-001/data``
+``firstmile/a/my-group/station-001/metadata``
+``firstmile/a/relief-ops/camp-alpha/data``
+``firstmile/a/relief-ops/camp-alpha/metadata``</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#table-fmth-levels">FMTH topic levels</a> provides an overview of the topic levels.</p>
+</div>
+<table id="table-fmth-levels" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. FMTH topic levels</caption>
+<colgroup>
+<col style="width: 12.5%;">
+<col style="width: 25%;">
+<col style="width: 62.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Level</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Name</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>channel</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Fixed value of <code>firstmile</code>, identifying this as a first-mile topic.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>version</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Alphabetical version of the topic hierarchy, currently: <code>a</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>group-id</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Identifier for the group or organisational entity responsible for one or more
+                              first-mile nodes. It is a lowercase alphanumeric string; hyphens (<code>-</code>) may be
+                              used to separate words. The value is locally defined and shall be unique
+                              within the scope of the broker.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>node-id</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Identifier for the individual first-mile node (e.g. a gateway, an AWS,&#8230;&#8203;). It is a lowercase alphanumeric string;
+                              hyphens (<code>-</code>) may be used to separate words. The value shall be unique within
+                              the <code>group-id</code> namespace.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><code>notification-type</code></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The type of notification: either <code>data</code> or <code>metadata</code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_1_2_publishing"><a class="anchor" href="#_1_2_publishing"></a>7.1.1.2. 1.2 Publishing</h5>
+<div class="paragraph">
+<p>Data and metadata notifications shall be published to the exact five-level topic structure defined by the FMTH.</p>
+</div>
+<div class="listingblock">
+<div class="title">Examples</div>
+<div class="content">
+<pre>firstmile/a/my-group/station-001/data
+firstmile/a/my-group/station-001/metadata</pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 7.6923%;">
+<col style="width: 30.7692%;">
+<col style="width: 61.5385%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Requirement 1</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><code>/req/core/publishing</code></th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A notification SHALL be published with a topic hierarchy that conforms to the FMTH structure.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">B</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A <code>data</code> notification SHALL be published to a topic using the value <code>data</code> at level 5.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">C</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A <code>metadata</code> notification SHALL be published to a topic using the value <code>metadata</code> at level 5.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_1_3_management"><a class="anchor" href="#_1_3_management"></a>7.1.1.3. 1.3 Management</h5>
+<div class="paragraph">
+<p>The topic levels are managed in a consistent manner to maintain stability and interoperability.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 7.6923%;">
+<col style="width: 30.7692%;">
+<col style="width: 61.5385%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Requirement 2</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><code>/req/core/management</code></th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Levels 1 and 2 (<code>firstmile</code> and <code>a</code>) SHALL be fixed and SHALL NOT be modified.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">B</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The value of <code>group-id</code> (level 3) SHALL be determined and maintained
+  by the operator of the first-mile broker.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">C</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The value of <code>node-id</code> (level 4) SHALL be determined and maintained
+  by the operator of the first-mile broker.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">D</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The value of <code>notification-type</code> (level 5) SHALL be limited
+  to <code>data</code> or <code>metadata</code>.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_1_4_versioning"><a class="anchor" href="#_1_4_versioning"></a>7.1.1.4. 1.4 Versioning</h5>
+<div class="paragraph">
+<p>The topic hierarchy version supports change management and transition for operators and
+consuming systems.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 7.6923%;">
+<col style="width: 30.7692%;">
+<col style="width: 61.5385%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Requirement 3</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><code>/req/core/versioning</code></th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A minor update to the FMTH SHALL NOT result in a change to the version level. Adding values to the level 5 of the FMTH (for example, adding a new notification type) is an example of a minor update that would not require a version change.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">B</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A major update to the FMTH SHALL result in a change to the version level (for example, <code>a</code> becomes <code>b</code>).</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">C</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Removal of a topic level SHALL result in a major version update.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">D</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Renaming of a topic level SHALL result in a major version update.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">E</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A change in the structure of the topic hierarchy SHALL result in a major version update.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_1_5_conventions"><a class="anchor" href="#_1_5_conventions"></a>7.1.1.5. 1.5 Conventions</h5>
+<div class="paragraph">
+<p>All levels of the topic hierarchy are defined in a consistent manner to support a normalised
+and predictable structure.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 7.6923%;">
+<col style="width: 30.7692%;">
+<col style="width: 61.5385%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Requirement 4</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><code>/req/core/conventions</code></th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Topic level definitions SHALL be lowercase.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">B</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Topic level definitions SHALL be encoded using only ASCII alphanumeric characters and hyphens (<code>-</code>).</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">C</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Topic level definitions SHALL NOT utilise dots (<code>.</code>).</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">D</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Topic level definitions SHALL NOT utilise underscores (<code>_</code>).</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">E</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Topic level definitions SHALL utilise hyphens (<code>-</code>) to separate words (such as <code>my-group</code>).</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_1_6_group_and_node_identification"><a class="anchor" href="#_1_6_group_and_node_identification"></a>7.1.1.6. 1.6 Group and Node Identification</h5>
+<div class="paragraph">
+<p>The <code>group-id</code> (level 3) identifies an organisational entity — such as an agency, project,
+or operational cluster — that is responsible for one or more first-mile nodes.
+The <code>node-id</code> (level 4) identifies a specific first-mile node within the group.</p>
+</div>
+<div class="paragraph">
+<p>Together, <code>group-id</code> and <code>node-id</code> form the address of a first-mile data source within the
+FMTH namespace.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 7.6923%;">
+<col style="width: 30.7692%;">
+<col style="width: 61.5385%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Requirement 5</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><code>/req/core/group-id</code></th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The <code>group-id</code> SHALL consist only of lowercase ASCII alphanumeric characters and hyphens (<code>-</code>).</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">B</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The <code>group-id</code> SHALL NOT begin or end with a hyphen.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">C</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The <code>group-id</code> SHALL NOT be empty.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 7.6923%;">
+<col style="width: 30.7692%;">
+<col style="width: 61.5385%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Requirement 6</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><code>/req/core/node-id</code></th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The <code>node-id</code> SHALL consist only of lowercase ASCII alphanumeric characters and hyphens (<code>-</code>).</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">B</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The <code>node-id</code> SHALL NOT begin or end with a hyphen.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">C</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The <code>node-id</code> SHALL NOT be empty.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">D</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The <code>node-id</code> SHALL be unique within the namespace of its associated <code>group-id</code>.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_first_mile_mqtt_protocol_provisions"><a class="anchor" href="#_first_mile_mqtt_protocol_provisions"></a>7.2. First-Mile MQTT protocol provisions</h3>
+<div class="paragraph">
+<p>Considering the anticipated relatively low level of traffic, compare to typical MQTT situation, and the critical importance of the data and metadata exchanges in first-mile context, the following additional provisions apply to the publication of any message</p>
+</div>
+<div class="sect3">
+<h4 id="_1_requirements_class_core_2"><a class="anchor" href="#_1_requirements_class_core_2"></a>7.2.1. 1. Requirements Class Core</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 7.6923%;">
+<col style="width: 30.7692%;">
+<col style="width: 61.5385%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Requirement 7</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><code>/req/core/mqtt</code></th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Data and Metadata notifications SHALL be published using the QoS level 2 of MQTT to ensure that they are delivered and received exactly once.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">B</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">The connection of both the hub and the node to the broker SHALL set the <strong>Receive Maximum = 1</strong> when establishing the MQTT session.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Considering the solution used to exchange data, it is important to ensure that metadata messages are always available at the hub before any data is published. This is to ensure that consuming systems can access the necessary metadata to interpret the data correctly.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 7.6923%;">
+<col style="width: 30.7692%;">
+<col style="width: 61.5385%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;">Requirement 8</th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><code>/req/core/metadata-first</code></th>
+<th class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">A</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Metadata notifications SHALL be published before any data notifications for the same <code>node-id</code> are published. This ensures that consuming systems have access to the necessary metadata to interpret the data correctly.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">B</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Metadata notifications SHALL be published with the retain flag to true.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">C</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Metadata notifications SHALL be published to the FMTH before any data notifications for the same <code>node-id</code> are published. This ensures that consuming systems have access to the necessary metadata to interpret the data correctly.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">D</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Metadata notifications SHALL published regularly, at least once every 24 hours and immediately after any change in the node configuration that would affect the metadata content.</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_data_model"><a class="anchor" href="#_data_model"></a>8. Data model</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_overview"><a class="anchor" href="#_overview"></a>7.1. Overview</h3>
+<h3 id="_overview"><a class="anchor" href="#_overview"></a>8.1. Overview</h3>
 <div class="paragraph">
 <p>The data model defines the structure and organization of information transmitted from the Node to the Host using Protocol Buffers (Protobuf) as the Data Format. The data model is formally specified in the protobuf schema <code>firstmile.proto</code>.</p>
 </div>
@@ -503,7 +995,7 @@ body {
 <p>These use cases are supported by two top-level message types: the <code>Data</code> message containing observations, and the <code>Metadata</code> message containing configuration and contextual information. Both messages are defined in a single protobuf schema and transmitted as independent payloads over MQTT. The <code>Metadata</code> message provides the necessary context for interpreting the <code>Data</code> message, including descriptions of devices and parameters.</p>
 </div>
 <div class="sect3">
-<h4 id="_communication_pattern"><a class="anchor" href="#_communication_pattern"></a>7.1.1. Communication pattern</h4>
+<h4 id="_communication_pattern"><a class="anchor" href="#_communication_pattern"></a>8.1.1. Communication pattern</h4>
 <div class="paragraph">
 <p>The communication follows a unidirectional pattern where data flows from the Node to the Host. The Node may transmit messages in the following patterns:</p>
 </div>
@@ -523,7 +1015,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_message_hierarchy"><a class="anchor" href="#_message_hierarchy"></a>7.1.2. Message hierarchy</h4>
+<h4 id="_message_hierarchy"><a class="anchor" href="#_message_hierarchy"></a>8.1.2. Message hierarchy</h4>
 <div class="paragraph">
 <p>The data model organizes information hierarchically:</p>
 </div>
@@ -551,7 +1043,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_design_principles"><a class="anchor" href="#_design_principles"></a>7.1.3. Design principles</h4>
+<h4 id="_design_principles"><a class="anchor" href="#_design_principles"></a>8.1.3. Design principles</h4>
 <div class="paragraph">
 <p>The data model is designed according to the following principles:</p>
 </div>
@@ -580,9 +1072,9 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_messages"><a class="anchor" href="#_messages"></a>7.2. Messages</h3>
+<h3 id="_messages"><a class="anchor" href="#_messages"></a>8.2. Messages</h3>
 <div class="sect3">
-<h4 id="_metadata_message"><a class="anchor" href="#_metadata_message"></a>7.2.1. Metadata message</h4>
+<h4 id="_metadata_message"><a class="anchor" href="#_metadata_message"></a>8.2.1. Metadata message</h4>
 <div class="paragraph">
 <p>The <code>Metadata</code> message provides configuration and contextual information about the Node, including descriptions of devices and the parameters they measure. This message shall be transmitted at least once after Node initialization and whenever the configuration changes.</p>
 </div>
@@ -636,7 +1128,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_data_message"><a class="anchor" href="#_data_message"></a>7.2.2. Data message</h4>
+<h4 id="_data_message"><a class="anchor" href="#_data_message"></a>8.2.2. Data message</h4>
 <div class="paragraph">
 <p>The <code>Data</code> message is the primary container for transmitting observation data from the Node to the Host. This message may be transmitted as frequently as needed to deliver current or batched observations.</p>
 </div>
@@ -687,9 +1179,9 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_devices"><a class="anchor" href="#_devices"></a>7.3. Devices</h3>
+<h3 id="_devices"><a class="anchor" href="#_devices"></a>8.3. Devices</h3>
 <div class="sect3">
-<h4 id="_node_device_2"><a class="anchor" href="#_node_device_2"></a>7.3.1. Node device</h4>
+<h4 id="_node_device_2"><a class="anchor" href="#_node_device_2"></a>8.3.1. Node device</h4>
 <div class="paragraph">
 <p>The <code>Node</code> message describes the Node device itself, typically a datalogger or observation station.</p>
 </div>
@@ -749,7 +1241,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_observer_device_2"><a class="anchor" href="#_observer_device_2"></a>7.3.2. Observer device</h4>
+<h4 id="_observer_device_2"><a class="anchor" href="#_observer_device_2"></a>8.3.2. Observer device</h4>
 <div class="paragraph">
 <p>The <code>ObserverDevice</code> message describes an individual sensor or measurement device connected to the Node Device.</p>
 </div>
@@ -829,7 +1321,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_location_and_reference_surfaces"><a class="anchor" href="#_location_and_reference_surfaces"></a>7.3.3. Location and reference surfaces</h4>
+<h4 id="_location_and_reference_surfaces"><a class="anchor" href="#_location_and_reference_surfaces"></a>8.3.3. Location and reference surfaces</h4>
 <div class="paragraph">
 <p>The <code>Location</code> message specifies the geographic position of a device (either node or observer).</p>
 </div>
@@ -939,9 +1431,9 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_observations_and_values"><a class="anchor" href="#_observations_and_values"></a>7.4. Observations and values</h3>
+<h3 id="_observations_and_values"><a class="anchor" href="#_observations_and_values"></a>8.4. Observations and values</h3>
 <div class="sect3">
-<h4 id="_observation_2"><a class="anchor" href="#_observation_2"></a>7.4.1. Observation</h4>
+<h4 id="_observation_2"><a class="anchor" href="#_observation_2"></a>8.4.1. Observation</h4>
 <div class="paragraph">
 <p>The <code>Observation</code> message represents a single measurement data point collected at a specific time.</p>
 </div>
@@ -1009,7 +1501,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_value_types"><a class="anchor" href="#_value_types"></a>7.4.2. Value types</h4>
+<h4 id="_value_types"><a class="anchor" href="#_value_types"></a>8.4.2. Value types</h4>
 <div class="paragraph">
 <p>The <code>Value</code> message is a polymorphic container that can represent measurement data of different types. The message uses a <code>oneof</code> field, meaning exactly one of the following value types shall be set:</p>
 </div>
@@ -1109,7 +1601,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_missing_and_error_values"><a class="anchor" href="#_missing_and_error_values"></a>7.4.3. Missing and error values</h4>
+<h4 id="_missing_and_error_values"><a class="anchor" href="#_missing_and_error_values"></a>8.4.3. Missing and error values</h4>
 <div class="paragraph">
 <p>When a measurement value is unavailable due to sensor malfunction, communication error, or other causes, the value shall be represented using the <code>emptyValue</code> field of type <code>google.protobuf.Empty</code>.</p>
 </div>
@@ -1155,7 +1647,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_parameter_definitions"><a class="anchor" href="#_parameter_definitions"></a>7.5. Parameter definitions</h3>
+<h3 id="_parameter_definitions"><a class="anchor" href="#_parameter_definitions"></a>8.5. Parameter definitions</h3>
 <div class="paragraph">
 <p>A <code>ParameterDefinition</code> groups one or more related measurement parameters that share common context. Each parameter definition has a unique identifier that is referenced by observations. Parameters are typically grouped when they are measured at the same timestamp, allowing multiple values to share a single timestamp in observations and thus reducing payload size.</p>
 </div>
@@ -1205,7 +1697,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 <p>The <code>parameters</code> field contains one or more <code>Parameter</code> messages describing individual measurable variables. When multiple parameters are grouped in a single definition, each observation referencing this definition shall provide values in the same order as the parameters are defined.</p>
 </div>
 <div class="sect3">
-<h4 id="_parameter"><a class="anchor" href="#_parameter"></a>7.5.1. Parameter</h4>
+<h4 id="_parameter"><a class="anchor" href="#_parameter"></a>8.5.1. Parameter</h4>
 <div class="paragraph">
 <p>The <code>Parameter</code> message specifies a single measurable variable, including its name, unit of measurement, aggregation method, and associated device.</p>
 </div>
@@ -1274,7 +1766,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_cell_method_2"><a class="anchor" href="#_cell_method_2"></a>7.5.2. Cell method</h4>
+<h4 id="_cell_method_2"><a class="anchor" href="#_cell_method_2"></a>8.5.2. Cell method</h4>
 <div class="paragraph">
 <p>The <code>cellMethod</code> field specifies how measurement data is aggregated or processed over the cell period. The <code>CellMethod</code> enumeration defines the following values:</p>
 </div>
@@ -1380,7 +1872,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_cell_period_2"><a class="anchor" href="#_cell_period_2"></a>7.5.3. Cell period</h4>
+<h4 id="_cell_period_2"><a class="anchor" href="#_cell_period_2"></a>8.5.3. Cell period</h4>
 <div class="paragraph">
 <p>The <code>cellPeriodSeconds</code> field specifies the time period in seconds over which the cell method is applied.</p>
 </div>
@@ -1402,7 +1894,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_device_reference"><a class="anchor" href="#_device_reference"></a>7.5.4. Device reference</h4>
+<h4 id="_device_reference"><a class="anchor" href="#_device_reference"></a>8.5.4. Device reference</h4>
 <div class="paragraph">
 <p>The <code>DeviceRef</code> message associates a parameter with the device that measures it. This message uses a <code>oneof</code> field to reference either the node device or a specific observer device.</p>
 </div>
@@ -1446,10 +1938,10 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_standard_name_binding"><a class="anchor" href="#_standard_name_binding"></a>8. Standard name binding</h2>
+<h2 id="_standard_name_binding"><a class="anchor" href="#_standard_name_binding"></a>9. Standard name binding</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_overview_2"><a class="anchor" href="#_overview_2"></a>8.1. Overview</h3>
+<h3 id="_overview_2"><a class="anchor" href="#_overview_2"></a>9.1. Overview</h3>
 <div class="paragraph">
 <p>Standard name binding enables <code>Parameter</code> definitions within a <code>Metadata</code> message to be associated with controlled vocabulary entries from external naming conventions. This allows observation data to be unambiguously interpreted by Hubs and downstream systems without dependence on the <code>Parameter.longName</code> field, which is a human-readable label and not guaranteed to be unique or machine-interpretable.</p>
 </div>
@@ -1471,7 +1963,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_namespace_declaration"><a class="anchor" href="#_namespace_declaration"></a>8.2. Namespace declaration</h3>
+<h3 id="_namespace_declaration"><a class="anchor" href="#_namespace_declaration"></a>9.2. Namespace declaration</h3>
 <div class="paragraph">
 <p>The <code>Metadata.namespaces</code> field declares the naming convention vocabularies used by the Node. It is a map from namespace key to namespace URI.</p>
 </div>
@@ -1509,7 +2001,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_standard_name_assignment"><a class="anchor" href="#_standard_name_assignment"></a>8.3. Standard name assignment</h3>
+<h3 id="_standard_name_assignment"><a class="anchor" href="#_standard_name_assignment"></a>9.3. Standard name assignment</h3>
 <div class="paragraph">
 <p>The <code>Parameter.standardNames</code> field maps namespace keys to the standard name for that parameter within the corresponding vocabulary. It is a map from namespace key to standard name value.</p>
 </div>
@@ -1561,12 +2053,12 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="standard-name-hierarchy"><a class="anchor" href="#standard-name-hierarchy"></a>8.4. Standard name hierarchy</h3>
+<h3 id="standard-name-hierarchy"><a class="anchor" href="#standard-name-hierarchy"></a>9.4. Standard name hierarchy</h3>
 <div class="paragraph">
 <p>Standard names shall be drawn from the following three-level hierarchy, in order of precedence. A higher-level vocabulary shall be used wherever it provides a suitable standard name for the parameter in question.</p>
 </div>
 <div class="sect3">
-<h4 id="level-1-cf"><a class="anchor" href="#level-1-cf"></a>8.4.1. Level 1: CF Metadata Conventions</h4>
+<h4 id="level-1-cf"><a class="anchor" href="#level-1-cf"></a>9.4.1. Level 1: CF Metadata Conventions</h4>
 <div class="paragraph">
 <p>The Climate and Forecast (CF) Metadata Conventions define the primary vocabulary for standard names in this standard. CF standard names cover the majority of meteorological, hydrological, and oceanographic parameters relevant to first-mile observations. The authoritative list of CF standard names is maintained by the CF Conventions community at <code><a href="https://cfconventions.org/Data/cf-standard-names/current/build/cf-standard-name-table.html" class="bare">https://cfconventions.org/Data/cf-standard-names/current/build/cf-standard-name-table.html</a></code>.</p>
 </div>
@@ -1605,7 +2097,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="level-2-wmo"><a class="anchor" href="#level-2-wmo"></a>8.4.2. Level 2: WMO First Mile parameter registry</h4>
+<h4 id="level-2-wmo"><a class="anchor" href="#level-2-wmo"></a>9.4.2. Level 2: WMO First Mile parameter registry</h4>
 <div class="paragraph">
 <p>Parameters that are not covered by the CF standard name vocabulary but are common to first-mile observation deployments are governed by a centrally managed registry maintained by WMO and hosted at <code><a href="https://codes.wmo.int" class="bare">https://codes.wmo.int</a></code>.</p>
 </div>
@@ -1631,7 +2123,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="level-3-local"><a class="anchor" href="#level-3-local"></a>8.4.3. Level 3: Locally managed vocabularies</h4>
+<h4 id="level-3-local"><a class="anchor" href="#level-3-local"></a>9.4.3. Level 3: Locally managed vocabularies</h4>
 <div class="paragraph">
 <p>Where a parameter is not covered by either the CF standard name vocabulary (<a href="#level-1-cf">Level 1: CF Metadata Conventions</a>) or the WMO First Mile parameter registry (<a href="#level-2-wmo">Level 2: WMO First Mile parameter registry</a>), a Node may use a locally managed vocabulary.</p>
 </div>
@@ -1688,7 +2180,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_informative_example"><a class="anchor" href="#_informative_example"></a>8.5. Informative example</h3>
+<h3 id="_informative_example"><a class="anchor" href="#_informative_example"></a>9.5. Informative example</h3>
 <div class="paragraph">
 <p>The following example shows a <code>Metadata</code> message extract demonstrating standard name binding across multiple vocabulary levels for a meteorological and hydrological station.</p>
 </div>
@@ -1744,45 +2236,45 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_protocol_binding"><a class="anchor" href="#_protocol_binding"></a>9. Protocol binding</h2>
+<h2 id="_protocol_binding"><a class="anchor" href="#_protocol_binding"></a>10. Protocol binding</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_overview_3"><a class="anchor" href="#_overview_3"></a>9.1. Overview</h3>
+<h3 id="_overview_3"><a class="anchor" href="#_overview_3"></a>10.1. Overview</h3>
 
 </div>
 <div class="sect2">
-<h3 id="_mqtt_version_requirements"><a class="anchor" href="#_mqtt_version_requirements"></a>9.2. MQTT version requirements</h3>
+<h3 id="_mqtt_version_requirements"><a class="anchor" href="#_mqtt_version_requirements"></a>10.2. MQTT version requirements</h3>
 
 </div>
 <div class="sect2">
-<h3 id="_topic_structure"><a class="anchor" href="#_topic_structure"></a>9.3. Topic structure</h3>
+<h3 id="_topic_structure"><a class="anchor" href="#_topic_structure"></a>10.3. Topic structure</h3>
 <div class="sect3">
-<h4 id="_topic_pattern"><a class="anchor" href="#_topic_pattern"></a>9.3.1. Topic pattern</h4>
+<h4 id="_topic_pattern"><a class="anchor" href="#_topic_pattern"></a>10.3.1. Topic pattern</h4>
 
 </div>
 <div class="sect3">
-<h4 id="_level_definitions_and_allowed_values"><a class="anchor" href="#_level_definitions_and_allowed_values"></a>9.3.2. Level definitions and allowed values</h4>
+<h4 id="_level_definitions_and_allowed_values"><a class="anchor" href="#_level_definitions_and_allowed_values"></a>10.3.2. Level definitions and allowed values</h4>
 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_quality_of_service"><a class="anchor" href="#_quality_of_service"></a>9.4. Quality of service</h3>
+<h3 id="_quality_of_service"><a class="anchor" href="#_quality_of_service"></a>10.4. Quality of service</h3>
 <div class="sect3">
-<h4 id="_metadata_messages"><a class="anchor" href="#_metadata_messages"></a>9.4.1. Metadata messages</h4>
+<h4 id="_metadata_messages"><a class="anchor" href="#_metadata_messages"></a>10.4.1. Metadata messages</h4>
 
 </div>
 <div class="sect3">
-<h4 id="_data_messages"><a class="anchor" href="#_data_messages"></a>9.4.2. Data messages</h4>
+<h4 id="_data_messages"><a class="anchor" href="#_data_messages"></a>10.4.2. Data messages</h4>
 
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_data_sender"><a class="anchor" href="#_data_sender"></a>10. Data sender</h2>
+<h2 id="_data_sender"><a class="anchor" href="#_data_sender"></a>11. Data sender</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_metadata_publication"><a class="anchor" href="#_metadata_publication"></a>10.1. Metadata publication</h3>
+<h3 id="_metadata_publication"><a class="anchor" href="#_metadata_publication"></a>11.1. Metadata publication</h3>
 <div class="paragraph">
 <p>A key feature of the First Mile Format, is the structured inclusion of metadata.  This enables</p>
 </div>
@@ -1816,7 +2308,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </tbody>
 </table>
 <div class="sect3">
-<h4 id="_mandatory_fields"><a class="anchor" href="#_mandatory_fields"></a>10.1.1. Mandatory fields</h4>
+<h4 id="_mandatory_fields"><a class="anchor" href="#_mandatory_fields"></a>11.1.1. Mandatory fields</h4>
 <div class="paragraph">
 <p>To enable evolution of the First Mile Standard, while maximising backward compatability, the Protobuf <strong>REQUIRED</strong> keyword is not used.  However, omission of key values can render the other included information unusable as it is ambiguous as to how it is related to the other content.</p>
 </div>
@@ -1888,7 +2380,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_transmission_triggers"><a class="anchor" href="#_transmission_triggers"></a>10.1.2. Transmission triggers</h4>
+<h4 id="_transmission_triggers"><a class="anchor" href="#_transmission_triggers"></a>11.1.2. Transmission triggers</h4>
 <div class="paragraph">
 <p>The hub is unable to process any Data Messages without a current Metadata Message.</p>
 </div>
@@ -1920,16 +2412,16 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_retained_messages"><a class="anchor" href="#_retained_messages"></a>10.1.3. Retained messages</h4>
+<h4 id="_retained_messages"><a class="anchor" href="#_retained_messages"></a>11.1.3. Retained messages</h4>
 <div class="paragraph">
-<p>The Data Messages cannot be understood without their associated Metadata Message.  To meet Archiving requirements <sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnotedef_3" title="View footnote.">3</a>]</sup> in most jurisdictions the Data Messages, and associated Metadata Messages must both be retained.  Typically, this can be a one (Metadata Message) to many (Data Messages) relationship</p>
+<p>The Data Messages cannot be understood without their associated Metadata Message.  To meet Archiving requirements <sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnotedef_4" title="View footnote.">4</a>]</sup> in most jurisdictions the Data Messages, and associated Metadata Messages must both be retained.  Typically, this can be a one (Metadata Message) to many (Data Messages) relationship</p>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_data_publication"><a class="anchor" href="#_data_publication"></a>11. Data publication</h2>
+<h2 id="_data_publication"><a class="anchor" href="#_data_publication"></a>12. Data publication</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The First Mile Format enables efficient communication of Data:</p>
@@ -1945,7 +2437,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_mandatory_fields_2"><a class="anchor" href="#_mandatory_fields_2"></a>11.1. Mandatory fields</h4>
+<h4 id="_mandatory_fields_2"><a class="anchor" href="#_mandatory_fields_2"></a>12.1. Mandatory fields</h4>
 <div class="paragraph">
 <p>Every Data message must contain at least:</p>
 </div>
@@ -1971,7 +2463,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </table>
 </div>
 <div class="sect3">
-<h4 id="_observation_timestamps"><a class="anchor" href="#_observation_timestamps"></a>11.2. Observation timestamps</h4>
+<h4 id="_observation_timestamps"><a class="anchor" href="#_observation_timestamps"></a>12.2. Observation timestamps</h4>
 <div class="paragraph">
 <p>The Data (Observation) Timestamp uses the google.protobuf.Timestamp structure for each observation.</p>
 </div>
@@ -1988,7 +2480,7 @@ The Host can only intepret data correctly if it has received the relevant <code>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_device_identification"><a class="anchor" href="#_device_identification"></a>11.3. Device identification</h3>
+<h3 id="_device_identification"><a class="anchor" href="#_device_identification"></a>12.3. Device identification</h3>
 <div class="paragraph">
 <p>The Data Message does not contain any Station/Device information in the message.  Instead, the MQTT topic hierarchy NodeID (Level 4) [and possibly GroupID (Level 3)] would be used for Station/Device Identification and should be archived with the Data Message.</p>
 </div>
@@ -2005,12 +2497,15 @@ The Host can only intepret data correctly if it has received the relevant <code>
 <a href="#_footnoteref_2">2</a>. <a href="https://community.wmo.int/governance/commission-membership/infcom" class="bare">https://community.wmo.int/governance/commission-membership/infcom</a>
 </div>
 <div class="footnote" id="_footnotedef_3">
-<a href="#_footnoteref_3">3</a>. For Example WMO 1238 (2023) 2.5.5
+<a href="#_footnoteref_3">3</a>. See MQTT Specifications: <a href="https://mqtt.org/mqtt-specification/" class="bare">https://mqtt.org/mqtt-specification/</a>.
+</div>
+<div class="footnote" id="_footnotedef_4">
+<a href="#_footnoteref_4">4</a>. For Example WMO 1238 (2023) 2.5.5
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2026-06-12 08:42:44 UTC
+Last updated 2026-06-15 23:57:40 UTC
 </div>
 </div>
 </body>
