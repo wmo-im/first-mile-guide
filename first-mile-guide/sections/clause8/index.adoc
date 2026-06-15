@@ -2,7 +2,7 @@
 
 === Overview
 
-Standard name binding enables `Parameter` definitions within a `Metadata` message to be associated with controlled vocabulary entries from external naming conventions. This allows observation data to be unambiguously interpreted by Hubs and downstream systems without dependence on the `Parameter.longName` field, which is a human-readable label and not guaranteed to be unique or machine-interpretable.
+Standard name binding enables `Parameter` definitions within a `metadata` message to be associated with controlled vocabulary entries from external naming conventions. This allows observation data to be unambiguously interpreted by Hubs and downstream systems without dependence on the `Parameter.longName` field, which is a human-readable label and not guaranteed to be unique or machine-interpretable.
 
 The binding mechanism uses two related fields in the data model:
 
@@ -31,7 +31,7 @@ The `Metadata.namespaces` field declares the naming convention vocabularies used
 
 Each namespace key shall be a non-empty string containing only alphanumeric characters and underscores. The namespace URI shall be a resolvable, publicly accessible URI that identifies the vocabulary in a dereferenceable way.
 
-A `Metadata` message may declare zero or more namespace entries. When no standard names are used, the `namespaces` map may be empty or omitted.
+A `metadata` message may declare zero or more namespace entries. When no standard names are used, the `namespaces` map may be empty or omitted.
 
 === Standard name assignment
 
@@ -51,7 +51,7 @@ The `Parameter.standardNames` field maps namespace keys to the standard name for
 
 |===
 
-Each key in `Parameter.standardNames` shall match a key declared in `Metadata.namespaces`. A Node shall not include a standard name entry for a namespace that is not declared in the corresponding `Metadata` message.
+Each key in `Parameter.standardNames` shall match a key declared in `Metadata.namespaces`. A Node shall not include a standard name entry for a namespace that is not declared in the corresponding `metadata` message.
 
 A parameter may carry zero, one, or multiple standard name entries. When multiple entries are present, each entry associates the parameter with the equivalent standard name in a different vocabulary.
 
@@ -130,7 +130,7 @@ Where a standard name exists at Level 1 (CF) or Level 2 (WMO registry), that sta
 
 === Informative example
 
-The following example shows a `Metadata` message extract demonstrating standard name binding across multiple vocabulary levels for a meteorological and hydrological station.
+The following example shows a `metadata` message extract demonstrating standard name binding across multiple vocabulary levels for a meteorological and hydrological station.
 
 [source,json]
 ----

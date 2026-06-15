@@ -9,17 +9,17 @@ The data model supports two primary use cases:
 1. **Transmission of observation data** - The Node transmits measurement values collected from sensors
 2. **Transmission of metadata** - The Node transmits information about the monitoring site, devices, and parameter definitions
 
-These use cases are supported by two top-level message types: the `Data` message containing observations, and the `Metadata` message containing configuration and contextual information. Both messages are defined in a single protobuf schema and transmitted as independent payloads over MQTT. The `Metadata` message provides the necessary context for interpreting the `Data` message, including descriptions of devices and parameters.
+These use cases are supported by two top-level message types: the `data` message containing observations, and the `metadata` message containing configuration and contextual information. Both messages are defined in a single protobuf schema and transmitted as independent payloads over MQTT. The `metadata` message provides the necessary context for interpreting the `data` message, including descriptions of devices and parameters.
 
 ==== Communication pattern
 
 The communication follows a unidirectional pattern where data flows from the Node to the Hub. The Node may transmit messages in the following patterns:
 
-* **Data-only transmission** - Frequent transmission of `Data` messages containing current or batched observations
-* **Metadata transmission** - Transmission of `Metadata` messages when the configuration changes or upon initialization
+* **Data-only transmission** - Frequent transmission of `data` messages containing current or batched observations
+* **Metadata transmission** - Transmission of `metadata` messages when the configuration changes or upon initialization
 
-The Node should transmit the `Metadata` message at least once after initialization and whenever the configuration of devices or parameter definitions changes. The `Data` message may be transmitted as frequently as needed to deliver observations.
-The Hub can only intepret data correctly if it has received the relevant `Metadata` message that defines the devices and parameters being observed. Therefore, it is recommended to transmit the `Metadata` message at least once before transmitting any `Data` messages.
+The Node should transmit the `metadata` message at least once after initialization and whenever the configuration of devices or parameter definitions changes. The `data` message may be transmitted as frequently as needed to deliver observations.
+The Hub can only intepret data correctly if it has received the relevant `metadata` message that defines the devices and parameters being observed. Therefore, it is recommended to transmit the `metadata` message at least once before transmitting any `data` messages.
 
 ==== Message hierarchy
 
@@ -28,7 +28,7 @@ The data model organizes information hierarchically:
 * **Messages** - Top-level containers (`Data` and `Metadata`) that are transmitted as independent payloads
 * **Devices** - Descriptions of physical equipment including the Node Device (node) and Observer Devices (sensors)
 * **Observations** - Measurement data points consisting of a parameter identifier, timestamp, and one or more values
-* **Parameter definitions** - Metadata describing what is being measured, including units, aggregation methods, and standard name mappings. Parameter definitions also describe how observations are structured in `Data` messages.
+* **Parameter definitions** - Metadata describing what is being measured, including units, aggregation methods, and standard name mappings. Parameter definitions also describe how observations are structured in `data` messages.
 * **Values** - The actual measurement data, supporting multiple numeric types, strings, booleans, and explicit representation of missing data
 
 Each `Observation` references a `ParameterDefinition` by identifier. Each `ParameterDefinition` contains one or more `Parameter` specifications that describe the measured variable, its unit, temporal aggregation method, and which device performs the measurement.
@@ -41,16 +41,16 @@ The data model is designed according to the following principles:
 * **Extensibility** - Support for multiple value types and flexible parameter definitions
 * **Self-description** - Metadata provides complete context for interpreting observations
 * **Explicit missing values** - Clear distinction between unavailable data and zero/false measurements
-* **Batch transmission** - Multiple observations may be included in a single `Data` message
+* **Batch transmission** - Multiple observations may be included in a single `data` message
 * **Standard name interoperability** - Mapping to external naming conventions through namespace definitions
 
 === Messages
 
 ==== Metadata message
 
-The `Metadata` message provides configuration and contextual information about the Node, including descriptions of devices and the parameters they measure. This message shall be transmitted at least once after Node initialization and whenever the configuration changes.
+The `metadata` message provides configuration and contextual information about the Node, including descriptions of devices and the parameters they measure. This message shall be transmitted at least once after Node initialization and whenever the configuration changes.
 
-The `Metadata` message contains the following fields:
+The `metadata` message contains the following fields:
 
 [cols="2,2,1,5"]
 |===
@@ -82,9 +82,9 @@ The `namespaces` field provides the mapping between namespace keys used in `Para
 
 ==== Data message
 
-The `Data` message is the primary container for transmitting observation data from the Node to the Hub. This message may be transmitted as frequently as needed to deliver current or batched observations.
+The `data` message is the primary container for transmitting observation data from the Node to the Hub. This message may be transmitted as frequently as needed to deliver current or batched observations.
 
-The `Data` message contains the following fields:
+The `data` message contains the following fields:
 
 [cols="2,2,1,5"]
 |===
@@ -97,11 +97,11 @@ The `Data` message contains the following fields:
 
 |===
 
-A `Data` message may contain multiple `Observation` messages, enabling efficient batch transmission of measurement data. Each observation is independent and contains its own timestamp and parameter reference.
+A `data` message may contain multiple `Observation` messages, enabling efficient batch transmission of measurement data. Each observation is independent and contains its own timestamp and parameter reference.
 
 [NOTE]
 ====
-The Node may transmit `Data` messages containing observations that reference parameter definitions not yet received by the Hub. In this case, the Hub shall buffer or queue such observations until the corresponding `Metadata` message is received.
+The Node may transmit `data` messages containing observations that reference parameter definitions not yet received by the Hub. In this case, the Hub shall buffer or queue such observations until the corresponding `metadata` message is received.
 ====
 
 === Devices
@@ -274,7 +274,7 @@ The `Observation` message contains the following fields:
 |parameterDefinitionId
 |uint32
 |required
-|Identifier referencing a `ParameterDefinition` in the `Metadata` message
+|Identifier referencing a `ParameterDefinition` in the `metadata` message
 
 |time
 |google.protobuf.Timestamp
@@ -288,7 +288,7 @@ The `Observation` message contains the following fields:
 
 |===
 
-The `parameterDefinitionId` field shall reference a `ParameterDefinition.id` from the `Metadata` message. The number and type of values in the `values` field shall correspond to the number of parameters defined in the referenced `ParameterDefinition`.
+The `parameterDefinitionId` field shall reference a `ParameterDefinition.id` from the `metadata` message. The number and type of values in the `values` field shall correspond to the number of parameters defined in the referenced `ParameterDefinition`.
 
 The `time` field uses the standard `google.protobuf.Timestamp` format, representing time as seconds and nanoseconds since the Unix epoch (1970-01-01T00:00:00Z).
 
@@ -405,7 +405,7 @@ The `ParameterDefinition` message contains the following fields:
 
 |===
 
-The `id` field shall be unique within the scope of a single `Metadata` message. This identifier is used by the `Observation.parameterDefinitionId` field to associate observations with their parameter specifications.
+The `id` field shall be unique within the scope of a single `metadata` message. This identifier is used by the `Observation.parameterDefinitionId` field to associate observations with their parameter specifications.
 
 The `parameters` field contains one or more `Parameter` messages describing individual measurable variables. When multiple parameters are grouped in a single definition, each observation referencing this definition shall provide values in the same order as the parameters are defined.
 
@@ -558,5 +558,5 @@ The `DeviceRef` message contains exactly one of the following fields:
 
 The `oneof` constraint ensures that exactly one of these fields is set, unambiguously identifying which device performs the measurement.
 
-When the `node` field is present, the parameter is measured by the Node Device itself (such as internal voltage or temperature of a datalogger). When the `observerId` field is set, it shall match the `id` of an `ObserverDevice` defined in the `Metadata` message.
+When the `node` field is present, the parameter is measured by the Node Device itself (such as internal voltage or temperature of a datalogger). When the `observerId` field is set, it shall match the `id` of an `ObserverDevice` defined in the `metadata` message.
 

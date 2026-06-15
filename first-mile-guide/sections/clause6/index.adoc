@@ -1,10 +1,10 @@
 == Overview (informative)
 
-This clause provides a high-level view of the First-Mile Data Collection Guide. Communication is strictly unidirectional, with the Node transmitting protobuf payloads over MQTT to the Hub. The two top-level payloads are the `Data` message, which carries Observation content, and the `Metadata` message, which carries the descriptive context needed to interpret those observations.
+This clause provides a high-level view of the First-Mile Data Collection Guide. Communication is strictly unidirectional, with the Node transmitting protobuf payloads over MQTT to the Hub. The two top-level payloads are the `data` message, which carries observational content, and the `metadata` message, which carries the descriptive context needed to interpret those observations.
 
 === System architecture
 
-The Node represents the remote station or logger through a Node Device and may describe attached sensors as Observer Device entries. The `Metadata` message carries the Node Device, Observer Device, Parameter Definition, and namespace information, while the `Data` message carries one or more Observation instances that refer to those Parameter Definition identifiers. Detailed message structure is described in Clause 7, standard name binding in Clause 8, and MQTT protocol binding in Clause 9.
+The Node represents the remote station or logger through a Node Device and may describe attached sensors as Observer Device entries. The `metadata` message carries the Node Device, Observer Device, Parameter Definition, and namespace information, while the `data` message carries one or more Observation instances that refer to those Parameter Definition identifiers. Detailed message structure is described in Clause 7, standard name binding in Clause 8, and MQTT protocol binding in Clause 9.
 
 [source,text]
 ----
@@ -14,7 +14,7 @@ The Node represents the remote station or logger through a Node Device and may d
 	| + Observers       |            | + Observers       |
 	+-------------------+            +-------------------+
 	          |                                |
-	          | Metadata and Data messages     | Metadata and Data messages
+	          | metadata and data messages     | metadata and data messages
 	          | over MQTT                      | over MQTT
 	          v                                v
 	+----------------------------------------------------------+
@@ -28,7 +28,7 @@ The Node represents the remote station or logger through a Node Device and may d
 
 === Message flow
 
-In typical operation, the `Metadata` message is sent when the Node is initialized and whenever the station configuration changes, and the `Data` message is sent as observations become available. This separates relatively stable descriptive information from frequently changing measurement values and supports both individual and batched Observation delivery. Where a measurement is unavailable, the value is represented explicitly using `emptyValue` rather than being inferred from zero or omission.
+In typical operation, the `metadata` message is sent when the Node is initialized and whenever the station configuration changes, and the `data` message is sent as observations become available. This separates relatively stable descriptive information from frequently changing measurement values and supports both individual and batched Observation delivery. Where a measurement is unavailable, the value is represented explicitly using `emptyValue` rather than being inferred from zero or omission.
 
 === Conformance class summary
 
@@ -37,7 +37,7 @@ In typical operation, the `Metadata` message is sent when the Node is initialize
 |Conformance class |Summary
 
 |Core Data Model
-|Covers the protobuf structure and semantics of the `Data` message, `Metadata` message, Observation content, devices, Parameter Definition content, and explicit missing values.
+|Covers the protobuf structure and semantics of the `data` message, `metadata` message, observational content, devices, parameter definition content, and explicit missing values.
 
 |Standard Name Binding
 |Covers how Parameter Definition entries associate parameters with controlled standard-name vocabularies and namespaces.
@@ -46,7 +46,7 @@ In typical operation, the `Metadata` message is sent when the Node is initialize
 |Covers how protobuf payloads are conveyed over MQTT in the unidirectional exchange between Node and Hub.
 
 |Node
-|Covers the sender-side behavior for constructing and publishing `Metadata` message and `Data` message payloads.
+|Covers the sender-side behavior for constructing and publishing `metadata` message and `data` message payloads.
 
 |Hub
 |Covers the receiver-side behavior for accepting, decoding, and interpreting payloads received from the Node.
