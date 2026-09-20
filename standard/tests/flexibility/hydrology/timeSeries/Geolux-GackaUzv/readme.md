@@ -1,1 +1,0 @@
-Data from a Hydrology AWS on Gacka River (Geolux equipment).

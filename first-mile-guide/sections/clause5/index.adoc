@@ -1,7 +1,0 @@
-== Conventions
-
-=== Schema notation (Protocol Buffers v3)
-
-=== Requirements, recommendations and permissions
-
-=== Namespace and identifier conventions
